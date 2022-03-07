@@ -20,7 +20,7 @@ public class CatMap {
 
     public void generateMapIsland() {
         for (int i = 0; i < this.islandsNumber; i++) {
-            this.islands[i] = new Island(this.islandController.getFiniteController()[i]);
+           // this.islands[i] = new Island(this.islandController.getFiniteController()[i]);
         }
     }
 }
