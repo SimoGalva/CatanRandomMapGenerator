@@ -1,6 +1,6 @@
 package engine;
 
-import engine.utility.HexagonalCoordinate4PHandler;
+import coordinate.HexagonalCoordinate4PHandler;
 import hexagon.HexagonPoint;
 import hexagon.material.MaterialCounter;
 import island.IslandController;

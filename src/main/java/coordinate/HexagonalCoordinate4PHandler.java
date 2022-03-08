@@ -1,4 +1,4 @@
-package engine.utility;
+package coordinate;
 
 import hexagon.HexagonPoint;
 
