@@ -19,7 +19,7 @@ public class Island {
         this.generatorEngine = MapGeneratorEngine.getInstance();
         this.controller = controller;
         this.islandCoordHexagonMap = new HashMap<>();
-        this.controller.syncMap(islandCoordHexagonMap);
+        this.controller.syncMap(this.islandCoordHexagonMap);
         //questo generate genera random, è più interessante metterlo da input utente?
         this.IslandHexCenter = generatorEngine.generateIslandHexPointCenter(controller);
     }

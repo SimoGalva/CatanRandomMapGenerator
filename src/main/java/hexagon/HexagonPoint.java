@@ -18,4 +18,8 @@ public class HexagonPoint {
         return diagHexCoord;
     }
 
+    public String toString() {
+        return this.rowHexCoord + ":" + this.diagHexCoord;
+    }
+
 }

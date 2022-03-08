@@ -1,5 +1,66 @@
 package hexagon.number;
 
-public class Numbers {
+import java.util.logging.Logger;
 
+public enum Numbers {
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    NINE(9),
+    TEN(10),
+    ELEVEN(11),
+    TWELVE(12);
+
+    private int numberInt;
+    private static final Logger logger = Logger.getLogger(Numbers.class.getName());
+
+    Numbers(int numberInt) {
+        this.numberInt = numberInt;
+    }
+
+    public static Numbers fromInt(int number) {
+        switch (number) {
+            case 2:
+                return Numbers.TWO;
+            case 3:
+                return Numbers.THREE;
+            case 4:
+                return Numbers.FOUR;
+            case 5:
+                return Numbers.FIVE;
+            case 6:
+                return Numbers.SIX;
+            case 7:
+                return Numbers.SEVEN;
+            case 8:
+                return Numbers.EIGHT;
+            case 9:
+                return Numbers.NINE;
+            case 10:
+                return Numbers.TEN;
+            case 11:
+                return Numbers.ELEVEN;
+            case 12:
+                return Numbers.TWELVE;
+            default:
+                logger.warning("Numbers.fromInt: invalid input number ["+number+"]. Returning null.");
+                return null;
+        }
+    }
+
+
+
+    public Numbers fromString(String number) {
+        Numbers ret =null;
+        try {
+            ret = Numbers.valueOf(number);
+        } catch (Exception e) {
+            logger.warning("fromString: no number with such a name ["+number+"]. Returning null");
+        }
+        return ret;
+    }
 }

@@ -30,6 +30,20 @@ public class MaterialCounter {
 
     }
 
+    public boolean consumeMaterial(Materials material) {
+        if (materialMap.get(material)-1 >= 0) {
+            materialMap.put(material,materialMap.get(material)-1);
+            logger.info("consumeMaterial: ["+material.toString()+"] has ["+ materialMap.get(material)+"] pieces left.");
+            return true;
+        } else {
+            logger.info("consumeMaterial: ["+material.toString()+"] is over.");
+            return false;
+        }
+    }
+
+
+
+
     //implementazione singleton instance
     private static MaterialCounter singletonInstance = null;
 
@@ -43,17 +57,4 @@ public class MaterialCounter {
         }
         return singletonInstance;
     }
-
-    public boolean consumeMaterial(Materials material) {
-        if (materialMap.get(material)-1 >= 0) {
-            materialMap.put(material,materialMap.get(material)-1);
-            logger.info("Material ["+material.toString()+"] has ["+ materialMap.get(material)+"] pieces left.");
-            return true;
-        } else {
-            logger.warning("Material ["+material.toString()+"] is over.");
-            return false;
-        }
-    }
-
-
 }

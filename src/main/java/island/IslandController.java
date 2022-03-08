@@ -13,6 +13,9 @@ public class IslandController {
     private boolean isGenerated;
     private HashMap<String, HexagonalBase> islandMap = null;
 
+    public HashMap<String, HexagonalBase> getIslandMap() {
+        return islandMap;
+    }
 
     public boolean isGenerated() {
         return isGenerated;
