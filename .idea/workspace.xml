@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef6788e5-260e-42aa-a972-c128a23ff037" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/CatMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CatMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/MapGeneratorEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/MapGeneratorEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/island/Island.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/island/Island.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/island/IslandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/island/IslandController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -144,7 +141,49 @@
       <option name="project" value="LOCAL" />
       <updated>1646677857483</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="wip: islandGenerator">
+      <created>1646744180419</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1646744180419</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fix: sistemata la versione del compiler">
+      <created>1646744562580</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1646744562580</updated>
+    </task>
+    <task id="LOCAL-00010" summary="roba a caso">
+      <created>1646745307030</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1646745307030</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat: gestione dei numeri.&#10;&#10;Correzioni minori su altre classi.">
+      <created>1646762049262</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1646762049262</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: gestione dei numeri&#10;&#10;correzioni minori altrove.">
+      <created>1646772083914</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1646772083914</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: numero di pezzi isola &#10;&#10;è predeterminato dai pesi che vengono dati in pasto al controller, se lo si volesse casuale bisogna far generare il peso delle main island a monte causalmente. &#10;Si osservi che per ora il peso massimo consetito è 10, in tal caso tutta l'isola: &#10;se si da 8 con 4 isole di cui 2 main, allora le due main island peseranno 8/10 di 35 e il resto 2, il peso è poi diviso equamente tra le isole della stessa categoria.">
+      <created>1646774341544</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1646774341544</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
@@ -205,7 +244,13 @@
     <MESSAGE value="feat: borning project" />
     <MESSAGE value="wip" />
     <MESSAGE value="fix: recuperato copia codice esistente" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: recuperato copia codice esistente" />
+    <MESSAGE value="wip: islandGenerator" />
+    <MESSAGE value="fix: sistemata la versione del compiler" />
+    <MESSAGE value="roba a caso" />
+    <MESSAGE value="feat: gestione dei numeri.&#10;&#10;Correzioni minori su altre classi." />
+    <MESSAGE value="feat: gestione dei numeri&#10;&#10;correzioni minori altrove." />
+    <MESSAGE value="feat: numero di pezzi isola &#10;&#10;è predeterminato dai pesi che vengono dati in pasto al controller, se lo si volesse casuale bisogna far generare il peso delle main island a monte causalmente. &#10;Si osservi che per ora il peso massimo consetito è 10, in tal caso tutta l'isola: &#10;se si da 8 con 4 isole di cui 2 main, allora le due main island peseranno 8/10 di 35 e il resto 2, il peso è poi diviso equamente tra le isole della stessa categoria." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: numero di pezzi isola &#10;&#10;è predeterminato dai pesi che vengono dati in pasto al controller, se lo si volesse casuale bisogna far generare il peso delle main island a monte causalmente. &#10;Si osservi che per ora il peso massimo consetito è 10, in tal caso tutta l'isola: &#10;se si da 8 con 4 isole di cui 2 main, allora le due main island peseranno 8/10 di 35 e il resto 2, il peso è poi diviso equamente tra le isole della stessa categoria." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

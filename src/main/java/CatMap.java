@@ -13,13 +13,14 @@ public class CatMap {
     private int mainIslandsNumber;
     private IslandController islandController;
 
-    public CatMap(int islandsNumber, int mainIslandsNumber) {
+
+    public CatMap(int islandsNumber, int mainIslandsNumber, int mainIslandWeight) {
         this.islands = new Island[islandsNumber];
         this.materialCounter = MaterialCounter.getInstance();
         this.islandsNumber = islandsNumber;
         this.mainIslandsNumber = mainIslandsNumber;
         //ritorna un islandController che contiere un array di IslandController (i cui sotto array saranno nulli)
-        this.islandController = IslandController.getInstance(islandsNumber,mainIslandsNumber);
+        this.islandController = IslandController.getInstance(islandsNumber,mainIslandsNumber, mainIslandWeight);
     }
 
     public void generateMapIsland() {

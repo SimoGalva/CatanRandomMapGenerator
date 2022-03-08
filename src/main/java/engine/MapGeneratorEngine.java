@@ -13,7 +13,7 @@ public class MapGeneratorEngine {
     private MaterialCounter materialCounter;
     private HexagonalCoordinate4PHandler coordinateHandler;
 
-    public HexagonPoint generateIslandHexPointCenter(IslandController controller) {
+    public void generateIslandHexPointCenter(IslandController controller) {
         HexagonPoint point;
         boolean isDoneGenerating = false;
         do {
@@ -27,12 +27,15 @@ public class MapGeneratorEngine {
             isDoneGenerating = coordinateHandler.consumeCoord(point);
         } while (!isDoneGenerating);
         logger.info("pickRandomPoint: random hexagonal point center of island generated ["+point.getRowHexCoord()+":"+point.getDiagHexCoord()+"]");
-        return point;
+        controller.setIslandHexCenter(point);
     }
 
     public void generateIsland (IslandController controller) {
-        //TODO: genera l'isola senza restituire nulla: aggiorna il controller che automaticamente aggiorna l'isola.
+
     }
+
+
+
 
     //implementazione singleton instance
     private static MapGeneratorEngine singletonInstance = null;

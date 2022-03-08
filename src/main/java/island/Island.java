@@ -1,7 +1,6 @@
 package island;
 
 import engine.MapGeneratorEngine;
-import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 
 import java.util.HashMap;
@@ -11,7 +10,6 @@ public class Island {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     private IslandController controller;
-    private HexagonPoint IslandHexCenter;
     private MapGeneratorEngine generatorEngine;
     private HashMap<String,HexagonalBase> islandCoordHexagonMap;
 
@@ -21,7 +19,7 @@ public class Island {
         this.islandCoordHexagonMap = new HashMap<>();
         this.controller.syncMap(this.islandCoordHexagonMap);
         //questo generate genera random, è più interessante metterlo da input utente?
-        this.IslandHexCenter = generatorEngine.generateIslandHexPointCenter(controller);
+        generatorEngine.generateIslandHexPointCenter(controller);
     }
 
     public void generateIsland() {
