@@ -1,9 +1,18 @@
 package island;
 
+import hexagon.HexagonalBase;
+
+import java.util.HashMap;
+import java.util.logging.Logger;
+
 public class IslandController {
+    private final Logger logger = Logger.getLogger(getClass().getName());
+
     private IslandController[] finiteController = null;
     private boolean isMainIsland;
     private boolean isGenerated;
+    private HashMap<String, HexagonalBase> islandMap = null;
+
 
     public boolean isGenerated() {
         return isGenerated;
@@ -19,6 +28,11 @@ public class IslandController {
     public IslandController[] getFiniteController() {
         return finiteController;
     }
+
+    //sincronizza la mappa del controller con quella dell'isola, ogni modifica a questa mappa nel controllere corrisponde alla stessa per l'isola.
+     public void syncMap(HashMap<String,HexagonalBase> islandMap) {
+        this.islandMap = islandMap;
+     }
 
     //implementazione singleton instance
     private static IslandController singletonInstance = null;

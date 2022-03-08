@@ -2,7 +2,11 @@ import hexagon.material.MaterialCounter;
 import island.Island;
 import island.IslandController;
 
+import java.util.logging.Logger;
+
 public class CatMap {
+    private final Logger logger = Logger.getLogger(getClass().getName());
+
     private Island[] islands;
     private MaterialCounter materialCounter;
     private int islandsNumber;
@@ -20,7 +24,10 @@ public class CatMap {
 
     public void generateMapIsland() {
         for (int i = 0; i < this.islandsNumber; i++) {
-           // this.islands[i] = new Island(this.islandController.getFiniteController()[i]);
+           logger.info("CatMap.generateMapIsland: starting islands generation process.");
+           this.islands[i] = new Island(this.islandController.getFiniteController()[i]);
+           islands[i].generateIsland();
         }
+        logger.info("CatMap.generateMapIsland: generation process ended.");
     }
 }

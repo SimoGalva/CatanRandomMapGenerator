@@ -31,7 +31,7 @@ public class MapGeneratorEngine {
     }
 
     public void generateIsland (IslandController controller) {
-        //TODO: non restituisce perchè mi aspetto sia il controller a riempiere l'isola?
+        //TODO: genera l'isola senza restituire nulla: aggiorna il controller che automaticamente aggiorna l'isola.
     }
 
     //implementazione singleton instance
