@@ -13,7 +13,8 @@ public enum Numbers {
     NINE(9),
     TEN(10),
     ELEVEN(11),
-    TWELVE(12);
+    TWELVE(12),
+    M_ONE(-1);
 
     private int numberInt;
     private static final Logger logger = Logger.getLogger(Numbers.class.getName());
@@ -24,6 +25,8 @@ public enum Numbers {
 
     public static Numbers fromInt(int number) {
         switch (number) {
+            case -1:
+                return Numbers.M_ONE;
             case 2:
                 return Numbers.TWO;
             case 3:
@@ -51,8 +54,6 @@ public enum Numbers {
                 return null;
         }
     }
-
-
 
     public Numbers fromString(String number) {
         Numbers ret =null;

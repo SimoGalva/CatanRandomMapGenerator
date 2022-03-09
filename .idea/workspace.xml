@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef6788e5-260e-42aa-a972-c128a23ff037" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/CatMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CatMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/island/IslandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/island/IslandController.java" afterDir="false" />
+    <list default="true" id="ef6788e5-260e-42aa-a972-c128a23ff037" name="Changes" comment="fix: riorganizzazione package gestione coordinate">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/coordinate/HexagonalCoordinate4PHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/coordinate/HexagonalCoordinate4PHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/engine/MapGeneratorEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/MapGeneratorEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/BorderHexagon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/BorderHexagon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/CentralHexagon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/CentralHexagon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/HexagonPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/HexagonPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/HexagonalBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/HexagonalBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/VertexHexagon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/VertexHexagon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/number/Numbers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/number/Numbers.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +190,28 @@
       <option name="project" value="LOCAL" />
       <updated>1646774341544</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="feat: numero di pezzi isola &#10;&#10;è predeterminato dai pesi che vengono dati in pasto al controller, se lo si volesse casuale bisogna far generare il peso delle main island a monte causalmente. &#10;Si osservi che per ora il peso massimo consetito è 10, se si ha una sola main isola ed è quindi main si ha che il suo peso è 10, quindi ha 35 caselle;&#10;se si da 8 con 4 isole di cui 2 main, allora le due main island peseranno 8/10 di 35 e il resto 2, il peso è poi diviso equamente tra le isole della stessa categoria.">
+      <created>1646775111153</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1646775111153</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat: numero di pezzi isola &#10;&#10;è predeterminato dai pesi che vengono dati in pasto al controller, se lo si volesse casuale bisogna far generare il peso delle main island a monte causalmente. &#10;Si osservi che per ora il peso massimo consetito è 10, se si ha una sola main isola ed è quindi main si ha che il suo peso è 10, quindi ha 35 caselle;&#10;se si da 8 con 4 isole di cui 2 main, allora le due main island peseranno 8/10 di 35 e il resto 2, il peso è poi diviso equamente tra le isole della stessa categoria.">
+      <created>1646775209530</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1646775209530</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fix: riorganizzazione package gestione coordinate">
+      <created>1646775380093</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1646775380093</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
@@ -250,7 +278,9 @@
     <MESSAGE value="feat: gestione dei numeri.&#10;&#10;Correzioni minori su altre classi." />
     <MESSAGE value="feat: gestione dei numeri&#10;&#10;correzioni minori altrove." />
     <MESSAGE value="feat: numero di pezzi isola &#10;&#10;è predeterminato dai pesi che vengono dati in pasto al controller, se lo si volesse casuale bisogna far generare il peso delle main island a monte causalmente. &#10;Si osservi che per ora il peso massimo consetito è 10, in tal caso tutta l'isola: &#10;se si da 8 con 4 isole di cui 2 main, allora le due main island peseranno 8/10 di 35 e il resto 2, il peso è poi diviso equamente tra le isole della stessa categoria." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: numero di pezzi isola &#10;&#10;è predeterminato dai pesi che vengono dati in pasto al controller, se lo si volesse casuale bisogna far generare il peso delle main island a monte causalmente. &#10;Si osservi che per ora il peso massimo consetito è 10, in tal caso tutta l'isola: &#10;se si da 8 con 4 isole di cui 2 main, allora le due main island peseranno 8/10 di 35 e il resto 2, il peso è poi diviso equamente tra le isole della stessa categoria." />
+    <MESSAGE value="feat: numero di pezzi isola &#10;&#10;è predeterminato dai pesi che vengono dati in pasto al controller, se lo si volesse casuale bisogna far generare il peso delle main island a monte causalmente. &#10;Si osservi che per ora il peso massimo consetito è 10, se si ha una sola main isola ed è quindi main si ha che il suo peso è 10, quindi ha 35 caselle;&#10;se si da 8 con 4 isole di cui 2 main, allora le due main island peseranno 8/10 di 35 e il resto 2, il peso è poi diviso equamente tra le isole della stessa categoria." />
+    <MESSAGE value="fix: riorganizzazione package gestione coordinate" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: riorganizzazione package gestione coordinate" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

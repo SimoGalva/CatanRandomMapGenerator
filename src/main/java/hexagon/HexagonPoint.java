@@ -19,7 +19,7 @@ public class HexagonPoint {
     }
 
     public String toString() {
-        return this.rowHexCoord + ":" + this.diagHexCoord;
+        return this.diagHexCoord + ":" + this.rowHexCoord;
     }
 
 }

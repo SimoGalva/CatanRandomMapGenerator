@@ -38,8 +38,8 @@ public class HexagonalCoordinate4PHandler {
     }
 
     public boolean consumeCoord(HexagonPoint hexPoint) {
-        int x = hexPoint.getRowHexCoord();
-        int y = hexPoint.getDiagHexCoord();
+        int x = hexPoint.getDiagHexCoord();
+        int y = hexPoint.getRowHexCoord();
         if (availableCoord.contains(x + ":" + y)) {
             usedCoord.add(x + ":" + y);
             availableCoord.remove(x + ":" + y);
@@ -57,15 +57,28 @@ public class HexagonalCoordinate4PHandler {
         int rowCoord;
         int diagCoord;
         if (onBorderAllowed){
-            rowCoord = random.nextInt(9) - 4;
-            diagCoord = random.nextInt(7) - 3;
-        } else {
+            diagCoord = random.nextInt(9) - 4;
             rowCoord = random.nextInt(7) - 3;
-            diagCoord = random.nextInt(5) - 2;
+        } else {
+            diagCoord = random.nextInt(7) - 3;
+            rowCoord = random.nextInt(5) - 2;
         }
-        logger.info("pickRandomPoint: random hexagonal point generated ["+rowCoord+":"+diagCoord+"] and isOnBorder["+onBorderAllowed+"]");
-        return new HexagonPoint(rowCoord,diagCoord);
+        logger.info("pickRandomPoint: random hexagonal point generated ["+diagCoord+":"+rowCoord+"] and isOnBorder["+onBorderAllowed+"]");
+        return new HexagonPoint(diagCoord,rowCoord);
     }
 
+    public int calculatePointerDimesnsion(HexagonPoint point) {
+        int x = point.getDiagHexCoord();
+        int y = point.getRowHexCoord();
+        if (Math.abs(x) < 4 && Math.abs(y) < 3) {
+            return 6;
+        } else if (Math.abs(x) == 4 && (y == 0 || Math.abs(y) == 3)) {
+            return 3;
+        } else if ((x == -1 && y == -3) || (x == 1 && y == 3)) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
 
 }

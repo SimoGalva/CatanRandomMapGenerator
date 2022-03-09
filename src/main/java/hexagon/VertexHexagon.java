@@ -1,10 +1,11 @@
 package hexagon;
 
 import hexagon.material.Materials;
+import hexagon.number.Numbers;
 
 public class VertexHexagon extends HexagonalBase {
 
-    protected VertexHexagon(Materials material, int number, int pointerDimension) {
-        super(material, number, pointerDimension);
+    public VertexHexagon(Materials material, Numbers number, int pointerDimension, HexagonPoint point) {
+        super(material, number, pointerDimension, point);
     }
 }
