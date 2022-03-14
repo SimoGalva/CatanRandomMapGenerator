@@ -17,6 +17,7 @@ public class NumberCounter {
     private final int COUNTER_TEN = 3;
     private final int COUNTER_ELEVEN = 3;
     private final int COUNTER_TWELVE = 2;
+    private final int COUNTER_M_ONE = 21;
 
     private EnumMap<Numbers, Integer> numbersMap;
 
@@ -32,6 +33,7 @@ public class NumberCounter {
         numbersMap.put(Numbers.TEN, COUNTER_TEN);
         numbersMap.put(Numbers.ELEVEN, COUNTER_ELEVEN);
         numbersMap.put(Numbers.TWELVE, COUNTER_TWELVE);
+        numbersMap.put(Numbers.M_ONE, COUNTER_M_ONE);
     }
 
     public boolean consumeNumber(int number) {
