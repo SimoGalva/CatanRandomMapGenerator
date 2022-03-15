@@ -10,6 +10,10 @@ public class NumberHandler {
     private static final Logger logger = Logger.getLogger(Numbers.class.getName());
 
     public Numbers pickRandomNumber(Materials material) {
+        if (material == null) {
+            logger.warning("pickRandomNumber: material is null. Returning null.");
+            return null;
+        }
         logger.info("pickRandomNumber: generating a number for ["+material.toString()+"]");
         if (Arrays.asList(Materials.DESERT, Materials.WATER).contains(material)) {
             return Numbers.M_ONE;

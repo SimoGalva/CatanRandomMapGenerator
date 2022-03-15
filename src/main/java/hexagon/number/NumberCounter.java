@@ -36,14 +36,17 @@ public class NumberCounter {
         numbersMap.put(Numbers.M_ONE, COUNTER_M_ONE);
     }
 
-    public boolean consumeNumber(int number) {
-        Numbers numberStr = Numbers.fromInt(number);
-        if (numbersMap.get(numberStr) > 0) {
-            numbersMap.put(numberStr, numbersMap.get(numberStr) - 1);
-            logger.info("consumeNumber: ["+number+"] has ["+ numbersMap.get(numberStr)+"] pieces left.");
+    public boolean consumeNumber(Numbers number) {
+        if (number == null) {
+            logger.warning("consumeNumber: number is null. Returning false.");
+            return false;
+        }
+        if (numbersMap.get(number) > 0) {
+            numbersMap.put(number, numbersMap.get(number) - 1);
+            logger.info("consumeNumber: ["+number.toString()+"] has ["+ numbersMap.get(number)+"] pieces left.");
             return true;
         } else {
-            logger.info("consumeNumber: ["+number+"] is over.");
+            logger.info("consumeNumber: ["+number.toString()+"] is over.");
             return false;
         }
     }

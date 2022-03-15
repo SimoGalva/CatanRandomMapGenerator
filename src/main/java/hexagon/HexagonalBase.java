@@ -12,6 +12,10 @@ public abstract class HexagonalBase {
     private final Numbers number;
     private HexagonPoint hexAsPoint;
 
+    public HexagonPoint getHexAsPoint() {
+        return hexAsPoint;
+    }
+
     public HexagonFE getHexagonFEToken() {
         return hexagonFEToken;
     }

@@ -2,8 +2,10 @@ package engine;
 
 import coordinate.HexagonalCoordinate4PHandler;
 import hexagon.*;
+import hexagon.material.MaterialCounter;
 import hexagon.material.MaterialHandler;
 import hexagon.material.Materials;
+import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
 import island.IslandController;
@@ -16,6 +18,8 @@ public class MapGeneratorEngine {
     private HexagonalCoordinate4PHandler coordinateHandler;
     private MaterialHandler materialHandler;
     private NumberHandler numberHandler;
+    private MaterialCounter materialCounter;
+    private NumberCounter numberCounter;
 
     private static final String LAND = "LAND";
     private static final String LAND_NO_RIVER = "LAND_NO_R";
@@ -40,19 +44,35 @@ public class MapGeneratorEngine {
     }
 
     public void generateIsland (IslandController controller) {
+        boolean isNumberValid = false;
+        boolean isMaterialValid = false;
+        Materials materialCntr = null;
+        Numbers numberCntr = null;
+        HexagonalBase cntrHex;
+
         HexagonPoint islandCntr = controller.getIslandHexCenter();
         int pointerCntrDim = coordinateHandler.calculatePointerDimesnsion(islandCntr);
-        Materials materialCntr = materialHandler.pickRandomMaterial("LAND");
-        Numbers numberCntr = numberHandler.pickRandomNumber(materialCntr);
+        do {
+             if (!isMaterialValid) {
+                materialCntr = materialHandler.pickRandomMaterial("LAND");
+                isMaterialValid = materialCounter.consumeMaterial(materialCntr);
+            }
+            if (!isNumberValid) {
+                numberCntr = numberHandler.pickRandomNumber(materialCntr);
+                isNumberValid = numberCounter.consumeNumber(numberCntr);
+            }
+        } while (!isNumberValid && !isMaterialValid);
         if (pointerCntrDim == 6) {
-            HexagonalBase cntrHex = new CentralHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
+             cntrHex = new CentralHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
         } else if (pointerCntrDim == 4) {
-            HexagonalBase cntrHex = new BorderHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
+             cntrHex = new BorderHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
         } else {
-            HexagonalBase cntrHex = new VertexHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
+             cntrHex = new VertexHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
         }
+        controller.populateMap(cntrHex);
 
-        //todo: riprendi da qui
+
+        //todo: riprendi da qui, c'è da implementare la costruizione dell resto dell'isola e controllare che sia diminuito il numero di esagoni dell'isola.
     }
 
 
@@ -63,6 +83,8 @@ public class MapGeneratorEngine {
         this.coordinateHandler = new HexagonalCoordinate4PHandler();
         this.materialHandler = new MaterialHandler();
         this.numberHandler = new NumberHandler();
+        this.materialCounter = MaterialCounter.getInstance();
+        this.numberCounter = NumberCounter.getInstance();
     }
 
     public static final MapGeneratorEngine getInstance() {

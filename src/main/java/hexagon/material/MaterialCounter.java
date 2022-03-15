@@ -31,6 +31,10 @@ public class MaterialCounter {
     }
 
     public boolean consumeMaterial(Materials material) {
+        if (material == null) {
+            logger.warning("consumeMaterial: material is null. Returning false.");
+            return false;
+        }
         if (materialMap.get(material)-1 >= 0) {
             materialMap.put(material,materialMap.get(material)-1);
             logger.info("consumeMaterial: ["+material.toString()+"] has ["+ materialMap.get(material)+"] pieces left.");
