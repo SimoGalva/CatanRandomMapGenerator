@@ -1,9 +1,7 @@
 package engine;
 
 import coordinate.HexagonalCoordinate4PHandler;
-import hexagon.CentralHexagon;
-import hexagon.HexagonPoint;
-import hexagon.HexagonalBase;
+import hexagon.*;
 import hexagon.material.MaterialHandler;
 import hexagon.material.Materials;
 import hexagon.number.NumberHandler;
@@ -46,7 +44,14 @@ public class MapGeneratorEngine {
         int pointerCntrDim = coordinateHandler.calculatePointerDimesnsion(islandCntr);
         Materials materialCntr = materialHandler.pickRandomMaterial("LAND");
         Numbers numberCntr = numberHandler.pickRandomNumber(materialCntr);
-        HexagonalBase  cntrHex = new CentralHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
+        if (pointerCntrDim == 6) {
+            HexagonalBase cntrHex = new CentralHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
+        } else if (pointerCntrDim == 4) {
+            HexagonalBase cntrHex = new BorderHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
+        } else {
+            HexagonalBase cntrHex = new VertexHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
+        }
+
         //todo: riprendi da qui
     }
 
