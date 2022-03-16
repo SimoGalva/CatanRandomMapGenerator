@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 public class HexagonalCoordinate4PHandler {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
+    public final static int distance = 3;
+
     private final ArrayList<String> allCoord;
     private final ArrayList<String> availableCoord;
     private final ArrayList<String> usedCoord;
@@ -50,6 +52,32 @@ public class HexagonalCoordinate4PHandler {
         }
         logger.info("consumeCoord: selected coordinate ["+x + ":" + y+"] was consumed correctly.");
         return true;
+    }
+
+    public boolean checkCenterDisance(HexagonPoint point) {
+        logger.info("checkCenterDisance: checking that the generated center is enough distant from the others.");
+        boolean ret = true;
+        //decomposizione del point
+        String[] pointSplitted = point.toString().split(":");
+        int diagCoordPoint = Integer.parseInt(pointSplitted[0]);
+        int rowCoordPoint = Integer.parseInt(pointSplitted[1]);
+
+        if (usedCoord.isEmpty()) {
+            ret = true;
+        } else {
+            for (String used : usedCoord) {
+                String[] usedIntsAsString = used.split(":");
+                int diagCoordUsed = Integer.parseInt(usedIntsAsString[0]);
+                int rowCoordUsed = Integer.parseInt(usedIntsAsString[1]);
+                if ((diagCoordPoint < diagCoordUsed + distance && diagCoordPoint > diagCoordUsed - distance)
+                    && (rowCoordPoint < rowCoordUsed + distance && rowCoordPoint > rowCoordUsed - distance)) {
+                    logger.info("checkCenterDisance: the selected coordinates ["+point.toString()+"] for center are too close to some other centers. Retrying generation.");
+                    ret = false;
+                    break;
+                }
+            }
+        }
+        return ret;
     }
 
     public HexagonPoint pickRandomPoint(boolean onBorderAllowed) {

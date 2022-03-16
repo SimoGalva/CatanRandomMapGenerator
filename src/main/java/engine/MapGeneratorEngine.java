@@ -29,6 +29,7 @@ public class MapGeneratorEngine {
     public void generateIslandHexPointCenter(IslandController controller) {
         HexagonPoint point;
         boolean isDoneGenerating = false;
+        boolean isCenterFarEnoughFromOthers = false;
         do {
             if (controller.isMainIsland()) {
                 //pickRandomPoint è giustificato all'interno della classe HexagonalCoordinate4PHandler perchè la generazione random dipende strettamente dalla dimensione del tabellone,
@@ -37,8 +38,11 @@ public class MapGeneratorEngine {
             } else {
                 point = coordinateHandler.pickRandomPoint(true);
             }
-            isDoneGenerating = coordinateHandler.consumeCoord(point);
-        } while (!isDoneGenerating);
+            isCenterFarEnoughFromOthers = coordinateHandler.checkCenterDisance(point);
+            if (isCenterFarEnoughFromOthers) {
+                isDoneGenerating = coordinateHandler.consumeCoord(point);
+            }
+        } while (!isCenterFarEnoughFromOthers && !isDoneGenerating);
         logger.info("generateIslandHexPointCenter: random hexagonal point center of island generated ["+point.getDiagHexCoord()+":"+point.getRowHexCoord()+"]");
         controller.setIslandHexCenter(point);
     }

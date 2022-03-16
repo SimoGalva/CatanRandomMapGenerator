@@ -4,31 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef6788e5-260e-42aa-a972-c128a23ff037" name="Changes" comment="fix: generazione esagono IslandCenter">
-      <change afterPath="$PROJECT_DIR$/src/main/java/MainTest.java" afterDir="false" />
+    <list default="true" id="ef6788e5-260e-42aa-a972-c128a23ff037" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CatMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CatMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/coordinate/HexagonalCoordinate4PHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/coordinate/HexagonalCoordinate4PHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/MapGeneratorEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/MapGeneratorEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/HexagonPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/HexagonPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/HexagonalBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/HexagonalBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/material/MaterialCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/material/MaterialCounter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/material/MaterialHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/material/MaterialHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/hexagon/number/NumberCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hexagon/number/NumberCounter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/island/Island.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/island/Island.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/island/IslandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/island/IslandController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/CatMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/CatMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/coordinate/HexagonalCoordinate4PHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/coordinate/HexagonalCoordinate4PHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/engine/MapGeneratorEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/MapGeneratorEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hexagon/BorderHexagon.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/BorderHexagon.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hexagon/CentralHexagon.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/CentralHexagon.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hexagon/HexagonPoint.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/HexagonPoint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hexagon/HexagonalBase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/HexagonalBase.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hexagon/VertexHexagon.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/VertexHexagon.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hexagon/material/MaterialCounter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/material/MaterialCounter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hexagon/material/Materials.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/material/Materials.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/hexagon/number/NumberCounter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/number/NumberCounter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/hexagon/number/Numbers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/number/Numbers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/island/Island.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/island/Island.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/island/IslandController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/island/IslandController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,7 +263,21 @@
       <option name="project" value="LOCAL" />
       <updated>1647351524519</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="feat: completamento popolamento centro delle isole.&#10;&#10;Testato e corretti i primi bug.">
+      <created>1647461255702</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1647461255702</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat: distanziamento minimo fra i centri&#10;&#10;aggiustati alcuni bug">
+      <created>1647464678275</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1647464678275</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
@@ -355,7 +351,9 @@
     <MESSAGE value="fix: generazione esagono IslandCenter&#10;&#10;generato diverso tipo di esagono in base al pointer dimension." />
     <MESSAGE value="fix: generazione esagono IslandCenter" />
     <MESSAGE value="feat gestione del consumo dei numeri e materiali" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat gestione del consumo dei numeri e materiali" />
+    <MESSAGE value="feat: completamento popolamento centro delle isole.&#10;&#10;Testato e corretti i primi bug." />
+    <MESSAGE value="feat: distanziamento minimo fra i centri&#10;&#10;aggiustati alcuni bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: distanziamento minimo fra i centri&#10;&#10;aggiustati alcuni bug" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
