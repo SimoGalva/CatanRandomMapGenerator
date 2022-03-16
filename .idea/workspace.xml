@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef6788e5-260e-42aa-a972-c128a23ff037" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/coordinate/HexagonalCoordinate4PHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/coordinate/HexagonalCoordinate4PHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/engine/MapGeneratorEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/MapGeneratorEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/coordinate/HexagonalCoordinate4PHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/coordinate/HexagonalCoordinate4PHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/engine/MapGeneratorEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/engine/MapGeneratorEngine.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/hexagon/number/NumberCounter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hexagon/number/NumberCounter.class" afterDir="false" />
@@ -277,7 +274,21 @@
       <option name="project" value="LOCAL" />
       <updated>1647464678275</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="feat: distanziamento minimo fra i centri&#10;&#10;aggiustati alcuni bug">
+      <created>1647465094755</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1647465094755</updated>
+    </task>
+    <task id="LOCAL-00026" summary="feat: aggiornato il TODO principale">
+      <created>1647465406013</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1647465406013</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
@@ -353,7 +364,8 @@
     <MESSAGE value="feat gestione del consumo dei numeri e materiali" />
     <MESSAGE value="feat: completamento popolamento centro delle isole.&#10;&#10;Testato e corretti i primi bug." />
     <MESSAGE value="feat: distanziamento minimo fra i centri&#10;&#10;aggiustati alcuni bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: distanziamento minimo fra i centri&#10;&#10;aggiustati alcuni bug" />
+    <MESSAGE value="feat: aggiornato il TODO principale" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: aggiornato il TODO principale" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
