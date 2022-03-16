@@ -39,7 +39,7 @@ public class MapGeneratorEngine {
             }
             isDoneGenerating = coordinateHandler.consumeCoord(point);
         } while (!isDoneGenerating);
-        logger.info("pickRandomPoint: random hexagonal point center of island generated ["+point.getRowHexCoord()+":"+point.getDiagHexCoord()+"]");
+        logger.info("generateIslandHexPointCenter: random hexagonal point center of island generated ["+point.getDiagHexCoord()+":"+point.getRowHexCoord()+"]");
         controller.setIslandHexCenter(point);
     }
 
@@ -50,11 +50,12 @@ public class MapGeneratorEngine {
         Numbers numberCntr = null;
         HexagonalBase cntrHex;
 
+        //POPOLAMENTO DEL CENTRO
         HexagonPoint islandCntr = controller.getIslandHexCenter();
         int pointerCntrDim = coordinateHandler.calculatePointerDimesnsion(islandCntr);
         do {
              if (!isMaterialValid) {
-                materialCntr = materialHandler.pickRandomMaterial("LAND");
+                materialCntr = materialHandler.pickRandomMaterial(MaterialHandler.LAND);
                 isMaterialValid = materialCounter.consumeMaterial(materialCntr);
             }
             if (!isNumberValid) {
@@ -70,9 +71,21 @@ public class MapGeneratorEngine {
              cntrHex = new VertexHexagon(materialCntr, numberCntr, pointerCntrDim, islandCntr);
         }
         controller.populateMap(cntrHex);
+        logger.info("generateIsland: island center hexagon generated correctly.");
 
+        //POPOLAMENTO DELL'ISOLA
+        while (controller.getNumberOfHexagons()>0) {
+        }
+/*
+        todo: riprendi da qui, c'è da implementare la costruizione dell resto dell'isola. L'idea è la seguente:
+         cilca sul pointer del centro e lo riempie;
+         prende un elemento a caso del pointer e quindi cicla sul suo pointer, questo finchè l'isola non è completa.
+         questo con chiave di materiale LANDD.
+         Generate tutte le isole in CatMap faccio il rempimento del mare nei quadrati rimasti.
+         Si potrebbe desiderare che a un certo punto anche il mare sia messo nell'isola, tuttavia ha bisogno di più controlli e una gestione particolare: non è parte dell'isola.
+         Lo implementerei in una seconda tornata.
+*/
 
-        //todo: riprendi da qui, c'è da implementare la costruizione dell resto dell'isola e controllare che sia diminuito il numero di esagoni dell'isola.
     }
 
 

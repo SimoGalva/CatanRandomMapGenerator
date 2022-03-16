@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 public class MaterialHandler {
     private static final Logger logger = Logger.getLogger(Numbers.class.getName());
 
-    private static final String LAND = "LAND";
-    private static final String LAND_WATER = "LAND_WATER";
-    private static final String WATER = "WATER";
-    private static final String LANDD = "LAND_AND_DESERT";
+    public static final String LAND = "LAND";
+    public static final String LAND_WATER = "LAND_WATER";
+    public static final String WATER = "WATER";
+    public static final String LANDD = "LAND_AND_DESERT";
 
     public Materials pickRandomMaterial(String bound) {
         logger.info("pickRandomMaterial: generating random material with bound ["+bound.toUpperCase()+"].");

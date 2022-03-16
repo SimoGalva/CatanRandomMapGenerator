@@ -43,6 +43,10 @@ public class IslandController {
         return isMainIsland;
     }
 
+    public int getNumberOfHexagons() {
+        return numberOfHexagons;
+    }
+
     public IslandController[] getFiniteController() {
         return finiteController;
     }
@@ -54,6 +58,7 @@ public class IslandController {
 
      public void populateMap(HexagonalBase hexagonalBase){
         islandMap.put(hexagonalBase.getHexAsPoint().toString(),hexagonalBase);
+        numberOfHexagons = numberOfHexagons --;
      }
 
     //implementazione singleton instance
@@ -63,24 +68,24 @@ public class IslandController {
         finiteController = new IslandController[islandsNumber];
 
         //gestione dei pesi: lavoro sulla prima main island per correzioni
-        int distributedMainIslWeight = (int) (mainIslandWeight) / mainIslandsNumber;
-        int distributedNonMainIslweight = islandsNumber != mainIslandsNumber ? (int) ((maxWeight - mainIslandWeight) / (islandsNumber-mainIslandsNumber)) : maxWeight;
+        //todo: temporanei system.out
+        double distributedMainIslWeight = (mainIslandWeight) / mainIslandsNumber;
+        double distributedNonMainIslweight = islandsNumber != mainIslandsNumber ? (double) ((maxWeight - mainIslandWeight) / (islandsNumber-mainIslandsNumber)) : maxWeight;
         int[] numberOfPieces = new int[islandsNumber];
         int totalCheck = 0;
         for (int i = 0; i < islandsNumber; i++) {
             if (i < mainIslandsNumber) {
-                numberOfPieces[i] = (int) totalLand*(distributedMainIslWeight / maxWeight);
+                numberOfPieces[i] = (int) (totalLand*(distributedMainIslWeight / maxWeight));
             } else {
-                numberOfPieces[i] = (int) totalLand*(distributedNonMainIslweight / maxWeight);
+                numberOfPieces[i] = (int) (totalLand*(distributedNonMainIslweight / maxWeight));
             }
             totalCheck = totalCheck + numberOfPieces[i];
         }
         if (totalCheck < totalLand) {
             numberOfPieces[0] = numberOfPieces[0] + (totalLand-totalCheck);
         } else if (totalCheck > totalLand) {
-            numberOfPieces[0] = numberOfPieces[0] - (totalLand-totalCheck);
+            numberOfPieces[0] = numberOfPieces[0] + (totalLand-totalCheck);
         }
-
         for (int i = 0; i < islandsNumber; i++) {
             if (i < mainIslandsNumber) {
                 finiteController[i] = new IslandController(true, numberOfPieces[i]);

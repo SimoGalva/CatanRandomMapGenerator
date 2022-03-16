@@ -22,6 +22,7 @@ public class NumberCounter {
     private EnumMap<Numbers, Integer> numbersMap;
 
     private NumberCounter() {
+        numbersMap = new EnumMap<Numbers, Integer>(Numbers.class);
         numbersMap.put(Numbers.TWO, COUNTER_TWO);
         numbersMap.put(Numbers.THREE, COUNTER_THREE);
         numbersMap.put(Numbers.FOUR, COUNTER_FOUR);

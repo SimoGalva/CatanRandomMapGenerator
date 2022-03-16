@@ -8,7 +8,7 @@ public abstract class HexagonalBase {
     private final MaterialCounter materialCounter;
     private HexagonFE hexagonFEToken;
     private final Materials material;
-    private HexagonalBase[] pointer; //TODO: il pointer bisogna capire come costruirlo, serviraà un pointerBuilder a livello di engine;
+    private HexagonPoint[] pointer; //TODO: il pointer bisogna capire come costruirlo, serviraà un pointerBuilder a livello di engine;
     private final Numbers number;
     private HexagonPoint hexAsPoint;
 
@@ -21,13 +21,6 @@ public abstract class HexagonalBase {
     }
     public void setHexagonFEToken(HexagonFE hexagonFEToken) {
         this.hexagonFEToken = hexagonFEToken;
-    }
-
-    public HexagonalBase[] getPointer() {
-        return pointer;
-    }
-    public void setPointer(HexagonalBase[] pointer) {
-        this.pointer = pointer;
     }
 
     public MaterialCounter getMaterialCounter() {
@@ -46,7 +39,17 @@ public abstract class HexagonalBase {
         this.materialCounter = MaterialCounter.getInstance();
         this.material = material;
         this.number = number;
-        this.pointer = new HexagonalBase[pointerDimension];
+        this.pointer = new HexagonPoint[pointerDimension];
         this.hexAsPoint = point;
+        //lascialo sempre come ultima istruzione: servono gli altri parametri settati.
+        buildPointer();
+    }
+
+    private void buildPointer() {
+        String[] currentHexCoordinate = hexAsPoint.toString().split(":");
+        int diagCoord = Integer.parseInt(currentHexCoordinate[0]);
+        int rowCoord = Integer.parseInt(currentHexCoordinate[1]);
+
+
     }
 }

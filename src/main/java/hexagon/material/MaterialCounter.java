@@ -19,6 +19,7 @@ public class MaterialCounter {
     private EnumMap<Materials, Integer> materialMap;
 
     private  MaterialCounter() {
+        materialMap = new EnumMap<Materials, Integer>(Materials.class);
         materialMap.put(Materials.RIVER,COUNTER_RIVER);
         materialMap.put(Materials.STONE,COUNTER_STONE);
         materialMap.put(Materials.WOOD,COUNTER_WOOD);

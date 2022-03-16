@@ -5,9 +5,9 @@ public class HexagonPoint {
     private final int rowHexCoord;
     private final int diagHexCoord;
 
-    public HexagonPoint(int rowHexCoord, int diagHexCoord) {
-        this.rowHexCoord = rowHexCoord;
+    public HexagonPoint(int diagHexCoord, int rowHexCoord ) {
         this.diagHexCoord = diagHexCoord;
+        this.rowHexCoord = rowHexCoord;
     }
 
     public int getRowHexCoord() {
