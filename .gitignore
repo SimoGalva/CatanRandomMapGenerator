@@ -1,0 +1,6 @@
+**/.idea
+**/target
+**/.settings
+/.classpath
+/.project
+/cat-random-map-generator.iml
