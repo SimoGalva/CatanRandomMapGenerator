@@ -13,7 +13,7 @@ public enum Numbers {
     TEN(10),
     ELEVEN(11),
     TWELVE(12),
-    M_ONE(-1);
+    M_ONE(-1); // PER MARE E DESERTO.
 
     private int numberInt;
     private static final Logger logger = Logger.getLogger(Numbers.class.getName());

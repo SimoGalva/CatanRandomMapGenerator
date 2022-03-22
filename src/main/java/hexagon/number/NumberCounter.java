@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 public class NumberCounter {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
-    private final int COUNTER_TWO = 2;
+    private final int COUNTER_TWO = 1;
     private final int COUNTER_THREE = 3;
     private final int COUNTER_FOUR = 3;
     private final int COUNTER_FIVE = 3;

@@ -7,11 +7,11 @@ public class MaterialCounter {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     private final int COUNTER_RIVER = 2;
-    private final int COUNTER_STONE = 6;
-    private final int COUNTER_WOOD = 6;
-    private final int COUNTER_CLAY = 6;
-    private final int COUNTER_WOOL = 6;
-    private final int COUNTER_HAY = 6;
+    private final int COUNTER_STONE = 5;
+    private final int COUNTER_WOOD = 5;
+    private final int COUNTER_CLAY = 5;
+    private final int COUNTER_WOOL = 5;
+    private final int COUNTER_HAY = 5;
     private final int COUNTER_WATER = 19;
     private final int COUNTER_DESERT = 3;
 

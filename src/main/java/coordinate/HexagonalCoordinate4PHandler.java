@@ -39,7 +39,7 @@ public class HexagonalCoordinate4PHandler {
                 } else if (i == 3 && j < 2) {
                     allCoord.add(i + ":" + j);
                     availableCoord.add(i + ":" + j);
-                } else if (i == 4 && j < 1) {
+                } else if (i == 4 && j < 0) {
                     allCoord.add(i + ":" + j);
                     availableCoord.add(i + ":" + j);
                 } else if (i == -2 && j > -3) {
@@ -48,7 +48,7 @@ public class HexagonalCoordinate4PHandler {
                 } else if (i == -3 && j > -2) {
                     allCoord.add(i + ":" + j);
                     availableCoord.add(i + ":" + j);
-                } else if (i == -4 && j > -1) {
+                } else if (i == -4 && j > 0) {
                     allCoord.add(i + ":" + j);
                     availableCoord.add(i + ":" + j);
                 } else if (-1 <= i && i <= 1) {

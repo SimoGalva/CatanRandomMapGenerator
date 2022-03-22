@@ -16,7 +16,7 @@ public class IslandController {
     private int numberOfHexagons;
     private HexagonPoint IslandHexCenter;
     private HashMap<String, HexagonalBase> islandMap = null;
-    private final static int totalLand = 35;
+    private final static int totalLand = 30;
     private final static int maxWeight = 10;
 
 
