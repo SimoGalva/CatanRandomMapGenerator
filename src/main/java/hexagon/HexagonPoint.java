@@ -22,4 +22,7 @@ public class HexagonPoint {
         return this.diagHexCoord + ":" + this.rowHexCoord;
     }
 
+    public HexagonPoint clone() {
+        return new HexagonPoint(this.diagHexCoord, this.diagHexCoord);
+    }
 }

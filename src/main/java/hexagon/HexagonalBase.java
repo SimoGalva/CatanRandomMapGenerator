@@ -43,6 +43,10 @@ public abstract class HexagonalBase {
         return number;
     }
 
+    public HexagonPoint[] getPointer() {
+        return pointer;
+    }
+
     public HexagonalBase(Materials material, Numbers number, int pointerDimension, HexagonPoint point) {
         this.materialCounter = MaterialCounter.getInstance();
         this.material = material;

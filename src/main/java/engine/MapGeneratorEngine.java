@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 public class MapGeneratorEngine {
     private final Logger logger = Logger.getLogger(getClass().getName());
+    private final GenerationHelper generationHelper;
 
     private HexagonalCoordinate4PHandler coordinateHandler;
     private MaterialHandler materialHandler;
@@ -78,9 +79,13 @@ public class MapGeneratorEngine {
         logger.info("generateIsland: island center hexagon generated correctly.");
 
         //POPOLAMENTO DELL'ISOLA
-        while (controller.getNumberOfHexagons()>0) {
+        if (controller.getNumberOfHexagons() > 0) {
+            this.generationHelper.generetionThroughPointers(controller.getNumberOfHexagons(), cntrHex, controller.isMainIsland());
+        } else {
+            logger.severe("generateIsland: fatal error. Current island has [0] hexagons allowed.");
             return;
         }
+
 /*
         todo: riprendi da qui
         1    c'è da implementare la costruizione dell resto dell'isola. L'idea è la seguente:
@@ -91,8 +96,9 @@ public class MapGeneratorEngine {
              Si potrebbe desiderare che a un certo punto anche il mare sia messo nell'isola, tuttavia ha bisogno di più controlli e una gestione particolare: non è parte dell'isola.
              Lo implementerei in una seconda tornata.
 */
-
     }
+
+
 
 
     //implementazione singleton instance
@@ -104,6 +110,7 @@ public class MapGeneratorEngine {
         this.numberHandler = new NumberHandler();
         this.materialCounter = MaterialCounter.getInstance();
         this.numberCounter = NumberCounter.getInstance();
+        this.generationHelper = new GenerationHelper();
     }
 
     public static final MapGeneratorEngine getInstance() {
