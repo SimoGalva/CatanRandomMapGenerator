@@ -19,7 +19,11 @@ public class NumberHandler {
             return Numbers.M_ONE;
         } else {
             Random random = new Random();
-            return Numbers.fromInt(random.nextInt(12)+1);
+            Numbers number = Numbers.fromInt(random.nextInt(12)+1);
+            while(number == null) {
+                number = Numbers.fromInt(random.nextInt(12)+1);
+            }
+            return number;
         }
     }
 }

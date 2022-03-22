@@ -8,7 +8,6 @@ public enum Numbers {
     FOUR(4),
     FIVE(5),
     SIX(6),
-    SEVEN(7),
     EIGHT(8),
     NINE(9),
     TEN(10),
@@ -37,8 +36,6 @@ public enum Numbers {
                 return Numbers.FIVE;
             case 6:
                 return Numbers.SIX;
-            case 7:
-                return Numbers.SEVEN;
             case 8:
                 return Numbers.EIGHT;
             case 9:
@@ -60,6 +57,10 @@ public enum Numbers {
         try {
             ret = Numbers.valueOf(number);
         } catch (Exception e) {
+            if ("SEVEN".equals(number)) {
+                logger.warning("fromString: SEVEN is not an accepted number. Returning null.");
+                return null;
+            }
             logger.warning("fromString: no number with such a name ["+number+"]. Returning null");
         }
         return ret;
