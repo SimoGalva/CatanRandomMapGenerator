@@ -33,8 +33,28 @@ public class HexagonalCoordinate4PHandler {
         this.usedCoord = new ArrayList<>();
         for (int i = -4; i <= 4; i++) {
             for (int j = -3; j <= 3; j++) {
-                allCoord.add(i + ":" + j);
-                availableCoord.add(i + ":" + j);
+                if (i == 2 && j < 3) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == 3 && j < 2) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == 4 && j < 1) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == -2 && j > -3) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == -3 && j > -2) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == -4 && j > -1) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (-1 <= i && i <= 1) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                }
             }
         }
     }
