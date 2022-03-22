@@ -42,7 +42,7 @@ public class MapGeneratorEngine {
             if (isCenterFarEnoughFromOthers) {
                 isDoneGenerating = coordinateHandler.consumeCoord(point);
             }
-        } while (!isCenterFarEnoughFromOthers && !isDoneGenerating);
+        } while (!isCenterFarEnoughFromOthers || !isDoneGenerating);
         logger.info("generateIslandHexPointCenter: random hexagonal point center of island generated ["+point.getDiagHexCoord()+":"+point.getRowHexCoord()+"]");
         controller.setIslandHexCenter(point);
     }
@@ -83,10 +83,7 @@ public class MapGeneratorEngine {
         }
 /*
         todo: riprendi da qui
-        1   SEVERE!! Controlla la generazione delle coordinate e/o la lista delle coordinate disponibili (forse basta la lista, è il consumer a dire che non vanno bene, ma poi ho troppi log? meglio gestirla a monte?)
-            Facendolo girare in test sono state prese coordinate come -4:-1, che non sono ammesse, vedi tabellone main. FATTO
-
-        2    c'è da implementare la costruizione dell resto dell'isola. L'idea è la seguente:
+        1    c'è da implementare la costruizione dell resto dell'isola. L'idea è la seguente:
              cicla sul pointer del centro e lo riempie;
              prende un elemento a caso del pointer e quindi cicla sul suo pointer, questo finchè l'isola non è completa.
              questo con chiave di materiale LANDD.

@@ -27,6 +27,10 @@ public class HexagonalCoordinate4PHandler {
         return usedCoord;
     }
 
+    public boolean existsCoordinate(HexagonPoint point){
+        return allCoord.contains(point.toString());
+    }
+
     public HexagonalCoordinate4PHandler() {
         this.allCoord = new ArrayList<>();
         this.availableCoord = new ArrayList<>();
@@ -51,7 +55,7 @@ public class HexagonalCoordinate4PHandler {
                 } else if (i == -4 && j > 0) {
                     allCoord.add(i + ":" + j);
                     availableCoord.add(i + ":" + j);
-                } else if (-1 <= i && i <= 1) {
+                } else if (i >= -1 && i <= 1) {
                     allCoord.add(i + ":" + j);
                     availableCoord.add(i + ":" + j);
                 }
@@ -67,7 +71,7 @@ public class HexagonalCoordinate4PHandler {
             availableCoord.remove(x + ":" + y);
             availableCoord.trimToSize();
         } else {
-            logger.info("consumeCoord: cannot consume the selected coordinate ["+x + ":" + y+"], it's already used.");
+            logger.info("consumeCoord: cannot consume the selected coordinate ["+x + ":" + y+"].");
             return false;
         }
         logger.info("consumeCoord: selected coordinate ["+x + ":" + y+"] was consumed correctly.");
@@ -118,11 +122,17 @@ public class HexagonalCoordinate4PHandler {
     public int calculatePointerDimesnsion(HexagonPoint point) {
         int x = point.getDiagHexCoord();
         int y = point.getRowHexCoord();
-        if (Math.abs(x) < 4 && Math.abs(y) < 3) {
+        if (Math.abs(x) < 4 && Math.abs(y) < 3 && !(Math.abs(x) == 3 && y == 0)) {
             return 6;
-        } else if (Math.abs(x) == 4 && (y == 0 || Math.abs(y) == 3)) {
-            return 3;
-        } else if ((x == -1 && y == -3) || (x == 1 && y == 3)) {
+        } else if (Math.abs(x) == 3 && y == 0) {
+            return 5;
+        } else if ((Math.abs(x) == 4 && Math.abs(y) == 3)
+                    || (x == -1 && y == -3)
+                    || (x == 1 && y == 3)
+                    || (x == 3 && y == 1)
+                    || (x == 4 && y == -1)
+                    || (x == -3 && y == -1)
+                    || (x == -4 && y == 1)) {
             return 3;
         } else {
             return 4;
