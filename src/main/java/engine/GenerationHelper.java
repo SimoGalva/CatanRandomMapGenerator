@@ -1,7 +1,13 @@
 package engine;
 
-import hexagon.HexagonPoint;
-import hexagon.HexagonalBase;
+import coordinate.HexagonalCoordinate4PHandler;
+import hexagon.*;
+import hexagon.material.MaterialCounter;
+import hexagon.material.MaterialHandler;
+import hexagon.material.Materials;
+import hexagon.number.NumberCounter;
+import hexagon.number.NumberHandler;
+import hexagon.number.Numbers;
 
 public class GenerationHelper {
     private boolean isMainIsland;
@@ -31,4 +37,37 @@ public class GenerationHelper {
         generetionThroughPointers(numberOfHexagonsLeft, hexagonStarter, level);
     }
 
+    public static HexagonalBase generateHexagon(HexagonPoint pointInGeneration) {
+        HexagonalCoordinate4PHandler coordinateHandler = HexagonalCoordinate4PHandler.getInstance();
+        MaterialCounter materialCounter = MaterialCounter.getInstance();
+        NumberCounter numberCounter = NumberCounter.getInstance();
+        MaterialHandler materialHandler = new MaterialHandler();
+        NumberHandler numberHandler = new NumberHandler();
+
+        boolean isNumberValid = false;
+        boolean isMaterialValid = false;
+        Materials materialCntr = null;
+        Numbers numberCntr = null;
+        HexagonalBase ret;
+
+        int pointerCntrDim = coordinateHandler.calculatePointerDimesnsion(pointInGeneration);
+        do {
+            if (!isMaterialValid) {
+                materialCntr = materialHandler.pickRandomMaterial(MaterialHandler.LAND);
+                isMaterialValid = materialCounter.consumeMaterial(materialCntr);
+            }
+            if (!isNumberValid) {
+                numberCntr = numberHandler.pickRandomNumber(materialCntr);
+                isNumberValid = numberCounter.consumeNumber(numberCntr);
+            }
+        } while (!isNumberValid && !isMaterialValid);
+        if (pointerCntrDim == 6) {
+            ret = new CentralHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
+        } else if (pointerCntrDim == 4 || pointerCntrDim == 5) {
+            ret = new BorderHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
+        } else {
+            ret = new VertexHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
+        }
+        return ret;
+    }
 }

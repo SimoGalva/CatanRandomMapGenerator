@@ -19,7 +19,7 @@ public class Island {
         this.islandCoordHexagonMap = new HashMap<>();
         this.controller.syncMap(this.islandCoordHexagonMap);
         //questo generate genera random, è più interessante metterlo da input utente?
-        generatorEngine.generateIslandHexPointCenter(controller);
+        generatorEngine.setIslandHexPointCenter(controller);
         logger.info("Island: instance created with \n " +
                     "-> center in: ["+this.controller.getIslandHexCenter().toString()+"] \n" +
                     "-> is ["+(this.controller.isMainIsland() ? "main" : "not main")+"] \n" +

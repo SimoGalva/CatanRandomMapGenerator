@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public abstract class HexagonalBase {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final MaterialCounter materialCounter;
-    private final HexagonalCoordinate4PHandler coordinate4PHandler = new HexagonalCoordinate4PHandler();
+    private final HexagonalCoordinate4PHandler coordinate4PHandler;
 
 
     private HexagonFE hexagonFEToken;
@@ -48,6 +48,7 @@ public abstract class HexagonalBase {
     }
 
     public HexagonalBase(Materials material, Numbers number, int pointerDimension, HexagonPoint point) {
+        this.coordinate4PHandler = HexagonalCoordinate4PHandler.getInstance();
         this.materialCounter = MaterialCounter.getInstance();
         this.material = material;
         this.number = number;

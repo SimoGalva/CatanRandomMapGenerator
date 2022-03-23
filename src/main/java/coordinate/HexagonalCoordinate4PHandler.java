@@ -31,38 +31,6 @@ public class HexagonalCoordinate4PHandler {
         return allCoord.contains(point.toString());
     }
 
-    public HexagonalCoordinate4PHandler() {
-        this.allCoord = new ArrayList<>();
-        this.availableCoord = new ArrayList<>();
-        this.usedCoord = new ArrayList<>();
-        for (int i = -4; i <= 4; i++) {
-            for (int j = -3; j <= 3; j++) {
-                if (i == 2 && j < 3) {
-                    allCoord.add(i + ":" + j);
-                    availableCoord.add(i + ":" + j);
-                } else if (i == 3 && j < 2) {
-                    allCoord.add(i + ":" + j);
-                    availableCoord.add(i + ":" + j);
-                } else if (i == 4 && j < 0) {
-                    allCoord.add(i + ":" + j);
-                    availableCoord.add(i + ":" + j);
-                } else if (i == -2 && j > -3) {
-                    allCoord.add(i + ":" + j);
-                    availableCoord.add(i + ":" + j);
-                } else if (i == -3 && j > -2) {
-                    allCoord.add(i + ":" + j);
-                    availableCoord.add(i + ":" + j);
-                } else if (i == -4 && j > 0) {
-                    allCoord.add(i + ":" + j);
-                    availableCoord.add(i + ":" + j);
-                } else if (i >= -1 && i <= 1) {
-                    allCoord.add(i + ":" + j);
-                    availableCoord.add(i + ":" + j);
-                }
-            }
-        }
-    }
-
     public boolean consumeCoord(HexagonPoint hexPoint) {
         int x = hexPoint.getDiagHexCoord();
         int y = hexPoint.getRowHexCoord();
@@ -139,4 +107,50 @@ public class HexagonalCoordinate4PHandler {
         }
     }
 
+
+    //implementazione singletonInstance
+    private static HexagonalCoordinate4PHandler singletonInstance = null;
+
+    public static final HexagonalCoordinate4PHandler getInstance() {
+        return singletonInstance != null ? singletonInstance : getInstanceSafely();
+    }
+
+    private static HexagonalCoordinate4PHandler getInstanceSafely() {
+        if (singletonInstance == null) {
+            singletonInstance = new HexagonalCoordinate4PHandler();
+        }
+        return  singletonInstance;
+    }
+
+    private HexagonalCoordinate4PHandler() {
+        this.allCoord = new ArrayList<>();
+        this.availableCoord = new ArrayList<>();
+        this.usedCoord = new ArrayList<>();
+        for (int i = -4; i <= 4; i++) {
+            for (int j = -3; j <= 3; j++) {
+                if (i == 2 && j < 3) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == 3 && j < 2) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == 4 && j < 0) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == -2 && j > -3) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == -3 && j > -2) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i == -4 && j > 0) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                } else if (i >= -1 && i <= 1) {
+                    allCoord.add(i + ":" + j);
+                    availableCoord.add(i + ":" + j);
+                }
+            }
+        }
+    }
 }
