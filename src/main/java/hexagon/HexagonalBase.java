@@ -20,6 +20,7 @@ public abstract class HexagonalBase {
     private final Numbers number;
     private HexagonPoint hexAsPoint;
 
+
     public HexagonPoint getHexAsPoint() {
         return hexAsPoint;
     }
@@ -90,6 +91,16 @@ public abstract class HexagonalBase {
             }
         } else {
             logger.severe("buildPointer: something went wrong in handling coordinates for pointer. Number of points do not equal pointer dimension.");
+        }
+    }
+
+    public static HexagonalBase createInstance(Materials material, Numbers number, int pointerDim, HexagonPoint hexPoint) {
+        if (pointerDim == 6) {
+            return new CentralHexagon(material, number, pointerDim, hexPoint);
+        } else if (pointerDim == 4 || pointerDim == 5) {
+            return new BorderHexagon(material, number, pointerDim, hexPoint);
+        } else {
+            return new VertexHexagon(material, number, pointerDim, hexPoint);
         }
     }
 }

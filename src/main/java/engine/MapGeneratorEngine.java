@@ -47,46 +47,16 @@ public class MapGeneratorEngine {
         controller.setIslandHexCenter(point);
     }
 
-   /* public HexagonalBase generateHexagon(HexagonPoint pointInGeneration) {
-        boolean isNumberValid = false;
-        boolean isMaterialValid = false;
-        Materials materialCntr = null;
-        Numbers numberCntr = null;
-        HexagonalBase ret;
-
-        int pointerCntrDim = coordinateHandler.calculatePointerDimesnsion(pointInGeneration);
-        do {
-            if (!isMaterialValid) {
-                materialCntr = materialHandler.pickRandomMaterial(MaterialHandler.LAND);
-                isMaterialValid = materialCounter.consumeMaterial(materialCntr);
-            }
-            if (!isNumberValid) {
-                numberCntr = numberHandler.pickRandomNumber(materialCntr);
-                isNumberValid = numberCounter.consumeNumber(numberCntr);
-            }
-        } while (!isNumberValid && !isMaterialValid);
-        if (pointerCntrDim == 6) {
-            ret = new CentralHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
-        } else if (pointerCntrDim == 4 || pointerCntrDim == 5) {
-            ret = new BorderHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
-        } else {
-            ret = new VertexHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
-        }
-        return ret;
-    }*/
-
     public void generateIsland (IslandController controller) {
-        HexagonalBase cntrHex;
-
         //POPOLAMENTO DEL CENTRO
         HexagonPoint islandCntr = controller.getIslandHexCenter();
-        cntrHex = GenerationHelper.generateHexagon(islandCntr);
+        HexagonalBase cntrHex = GenerationHelper.generateHexagon(islandCntr, MaterialHandler.LAND);
         controller.populateMap(cntrHex);
         logger.info("generateIsland: island center hexagon generated correctly.");
 
         //POPOLAMENTO DELL'ISOLA
         if (controller.getNumberOfHexagons() > 0) {
-            this.generationHelper.generetionThroughPointers(controller.getNumberOfHexagons(), cntrHex, controller.isMainIsland());
+            this.generationHelper.generationThroughPointers(cntrHex, controller);
         } else {
             logger.severe("generateIsland: fatal error. Current island has [0] hexagons allowed.");
             return;

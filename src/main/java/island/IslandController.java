@@ -58,7 +58,10 @@ public class IslandController {
 
      public void populateMap(HexagonalBase hexagonalBase){
         islandMap.put(hexagonalBase.getHexAsPoint().toString(),hexagonalBase);
-        numberOfHexagons = numberOfHexagons --;
+         numberOfHexagons -= 1;
+     }
+     public HexagonalBase getHexagonFromMap(HexagonPoint point) {
+        return islandMap.get(point.toString());
      }
 
     //implementazione singleton instance

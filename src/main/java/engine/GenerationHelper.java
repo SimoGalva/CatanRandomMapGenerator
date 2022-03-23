@@ -1,44 +1,67 @@
 package engine;
 
 import coordinate.HexagonalCoordinate4PHandler;
-import hexagon.*;
+import hexagon.HexagonPoint;
+import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
 import hexagon.material.MaterialHandler;
 import hexagon.material.Materials;
 import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
+import island.IslandController;
+
+import java.util.Random;
+import java.util.logging.Logger;
 
 public class GenerationHelper {
+    private final Logger logger = Logger.getLogger(getClass().getName());
+
+    private IslandController controller;
     private boolean isMainIsland;
     private boolean seaAllowed;
-    private boolean desertAllowed = true;
+    private final static Random random = new Random();
+    private static final HexagonalCoordinate4PHandler coordinateHandler = HexagonalCoordinate4PHandler.getInstance();
 
-    protected void generetionThroughPointers(int numberOfHexagonsLeft, HexagonalBase hexagonStarter, boolean isMainIsland) {
-        this.isMainIsland = isMainIsland;
+    protected void generationThroughPointers(HexagonalBase hexagonStarter, IslandController controller) {
+        this.controller = controller;
+        this.isMainIsland = controller.isMainIsland();
         int level = 0;
-        generetionThroughPointers(numberOfHexagonsLeft, hexagonStarter, level);
+        generationThroughPointers(hexagonStarter, level);
     }
 
-    private void generetionThroughPointers(int numberOfHexagonsLeft, HexagonalBase hexagonStarter, int level) {
+    private void generationThroughPointers(HexagonalBase hexagonStarter, int level) {
+        logger.info("generationThroughPointers: starting generation al level ["+level+"] from hexagon ["+hexagonStarter.getHexAsPoint().toString()+"].");
+        boolean isDoneGenerating = false;
         if (isMainIsland && level < 2) { //il limite due messo indicativo a caso bisogna ragionarci in base a come escono i risultati
             this.seaAllowed = false;
         } else {
             this.seaAllowed = true;
         }
+        String restrictionOnMaterial = seaAllowed ? MaterialHandler.LANDD : MaterialHandler.LAND_WATER; //il deserto è sempre ammesso tranne nel centro dell'isola
+
         level = level + 1;
         HexagonPoint[] currentPointer = hexagonStarter.getPointer().clone();
-        //TODO: implementare in modo che si chiami ricorsivamente e a ogni giro riempia il pointer del esagono passato.
-        //duque: popolo il pointer intero del punto base, dopodichè sceglie un punto random del pointer e manda il corrispondente esagono nel livello successivo
-        // aggiornando il numero di esagoni rimasti. Ciò finchè il numero di esagoni rimasti è 0. a quel punto esce. (va previsto che in generale il pointer non si riempie tutto).
-        //i livelli si possono utilizzare in coppia con un parametro che dice da che livello è concesso che si metta mare o deserto. L'idea è quella implementata che non va ovviamente.
-        // devo far si che non sia statica, ma non serve la singleton instance.
 
-        generetionThroughPointers(numberOfHexagonsLeft, hexagonStarter, level);
+        for (HexagonPoint currentPoint : currentPointer) {
+            if (controller.getNumberOfHexagons() > 0) {
+                if (coordinateHandler.consumeCoord(currentPoint)) {
+                    controller.populateMap(generateHexagon(currentPoint, restrictionOnMaterial));
+                }
+            } else {
+                isDoneGenerating = true;
+                break;
+            }
+        }
+
+        if (!isDoneGenerating) {
+            generationThroughPointers(controller.getHexagonFromMap(currentPointer[random.nextInt(currentPointer.length)]), level);
+        } else {
+            logger.info("generationThroughPointers: recursive generation complete.");
+        }
     }
 
-    public static HexagonalBase generateHexagon(HexagonPoint pointInGeneration) {
-        HexagonalCoordinate4PHandler coordinateHandler = HexagonalCoordinate4PHandler.getInstance();
+    public static HexagonalBase generateHexagon(HexagonPoint pointInGeneration, String restrictionOnMaterial) {
         MaterialCounter materialCounter = MaterialCounter.getInstance();
         NumberCounter numberCounter = NumberCounter.getInstance();
         MaterialHandler materialHandler = new MaterialHandler();
@@ -48,12 +71,11 @@ public class GenerationHelper {
         boolean isMaterialValid = false;
         Materials materialCntr = null;
         Numbers numberCntr = null;
-        HexagonalBase ret;
 
         int pointerCntrDim = coordinateHandler.calculatePointerDimesnsion(pointInGeneration);
         do {
             if (!isMaterialValid) {
-                materialCntr = materialHandler.pickRandomMaterial(MaterialHandler.LAND);
+                materialCntr = materialHandler.pickRandomMaterial(restrictionOnMaterial);
                 isMaterialValid = materialCounter.consumeMaterial(materialCntr);
             }
             if (!isNumberValid) {
@@ -61,13 +83,7 @@ public class GenerationHelper {
                 isNumberValid = numberCounter.consumeNumber(numberCntr);
             }
         } while (!isNumberValid && !isMaterialValid);
-        if (pointerCntrDim == 6) {
-            ret = new CentralHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
-        } else if (pointerCntrDim == 4 || pointerCntrDim == 5) {
-            ret = new BorderHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
-        } else {
-            ret = new VertexHexagon(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
-        }
-        return ret;
+
+        return HexagonalBase.createInstance(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
     }
 }
