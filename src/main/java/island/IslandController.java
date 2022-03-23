@@ -61,6 +61,10 @@ public class IslandController {
          numberOfHexagons --;
      }
      public HexagonalBase getHexagonFromMap(HexagonPoint point) {
+        //TODO: il problema delle eccezzioni nasce qui:
+        // se l'isola j ha popolato una certa casella 3:0, questa risulta per il consume coord occupata perchè si basa sul sigletonInstance del coordinate handler.
+        // d'altra parte nella lista locale della isola i diverso da j questo punto 3:0 non ha un esagono associato. Naturalmente questo metodo restituisce null.
+        // per correggere basta pensare di avere un'unica mappa comune che viene popolata a livello globale. NON BANALE MA DA FARE
         return islandMap.get(point.toString());
      }
 
