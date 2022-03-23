@@ -87,7 +87,7 @@ public abstract class HexagonalBase {
             int i = 0;
             for (HexagonPoint pointToSet : pointerBuilder) {
                 this.pointer[i] = pointToSet;
-                i = i++;
+                i ++;
             }
         } else {
             logger.severe("buildPointer: something went wrong in handling coordinates for pointer. Number of points do not equal pointer dimension.");

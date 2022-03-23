@@ -28,8 +28,11 @@ public class CatMap {
 
     public void generateMapIslands() {
         for (int i = 0; i < this.islandsNumber; i++) {
-            logger.info("CatMap.generateMapIsland: starting "+ (this.islandController.getFiniteController()[i].isMainIsland() ? "main" : "") +" island number ["+(i+1)+"] (of ["+islandsNumber+"]) generation process.");
+            logger.info("CatMap.generateMapIsland: setting center for "+ (this.islandController.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]).");
             this.islands[i] = new Island(this.islandController.getFiniteController()[i]);
+        }
+        for (int i = 0; i < this.islandsNumber; i++) {
+            logger.info("CatMap.generateMapIsland: starting "+ (this.islandController.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]) generation process.");
             islands[i].generateIsland();
         }
         logger.info("CatMap.generateMapIsland: generation process ended.");
