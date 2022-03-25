@@ -45,16 +45,15 @@ public class MapGeneratorEngine {
         } while (!isCenterFarEnoughFromOthers || !isDoneGenerating);
         logger.info("generateIslandHexPointCenter: random hexagonal point center of island generated ["+point.getDiagHexCoord()+":"+point.getRowHexCoord()+"]");
         controller.setIslandHexCenter(point);
+
+        //POPOLAMENTO DEL CENTRO
+        HexagonalBase cntrHex = GenerationHelper.generateHexagon(point, MaterialHandler.LAND);
+        controller.populateMap(cntrHex);
+        logger.info("generateIsland: island center hexagon generated correctly.");
     }
 
     public void generateIsland (IslandController controller) {
-        //POPOLAMENTO DEL CENTRO
-        HexagonPoint islandCntr = controller.getIslandHexCenter();
-        HexagonalBase cntrHex = GenerationHelper.generateHexagon(islandCntr, MaterialHandler.LAND);
-        controller.populateMap(cntrHex);
-        logger.info("generateIsland: island center hexagon generated correctly.");
-
-        //POPOLAMENTO DELL'ISOLA
+        HexagonalBase cntrHex = controller.getHexagonFromMap(controller.getIslandHexCenter());
         if (controller.getNumberOfHexagons() > 0) {
             this.generationHelper.generationThroughPointers(cntrHex, controller);
         } else {
@@ -68,9 +67,11 @@ public class MapGeneratorEngine {
              cicla sul pointer del centro e lo riempie;
              prende un elemento a caso del pointer e quindi cicla sul suo pointer, questo finchè l'isola non è completa.
              questo con chiave di materiale LANDD.
-             Generate tutte le isole in CatMap faccio il rempimento del mare nei quadrati rimasti.
+             Generate tutte le isole in globalMap.CatMap faccio il rempimento del mare nei quadrati rimasti.
              Si potrebbe desiderare che a un certo punto anche il mare sia messo nell'isola, tuttavia ha bisogno di più controlli e una gestione particolare: non è parte dell'isola.
              Lo implementerei in una seconda tornata.
+        2    prevedi nel generationHelper una via di uscita a un livello medio tipo 7, cioè al livello 8 non continuare la rincorsa sui pointer che sto usando ma torna indietro di qualche livello, preni il pointer corrispondente e riparti da quel pointer
+             cioè è equivalente a cambiare direzione di generazione qualora sia già troppo pieno nella direzione corrente direzione.
 */
     }
 

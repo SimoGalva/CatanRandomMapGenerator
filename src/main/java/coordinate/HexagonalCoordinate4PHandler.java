@@ -38,12 +38,12 @@ public class HexagonalCoordinate4PHandler {
             usedCoord.add(x + ":" + y);
             availableCoord.remove(x + ":" + y);
             availableCoord.trimToSize();
+            logger.info("consumeCoord: selected coordinate ["+x + ":" + y+"] was consumed correctly.");
+            return true;
         } else {
             logger.info("consumeCoord: cannot consume the selected coordinate ["+x + ":" + y+"].");
             return false;
         }
-        logger.info("consumeCoord: selected coordinate ["+x + ":" + y+"] was consumed correctly.");
-        return true;
     }
 
     public boolean checkCenterDisance(HexagonPoint point) {
@@ -90,7 +90,8 @@ public class HexagonalCoordinate4PHandler {
     public int calculatePointerDimesnsion(HexagonPoint point) {
         int x = point.getDiagHexCoord();
         int y = point.getRowHexCoord();
-        if (Math.abs(x) < 4 && Math.abs(y) < 3 && !(Math.abs(x) == 3 && y == 0)) {
+
+        if (Math.abs(x) < 4 && Math.abs(y) < 3 && !(Math.abs(x) == 3 && y == 0) && !(x+y == 4 || x+y == -4)) {
             return 6;
         } else if (Math.abs(x) == 3 && y == 0) {
             return 5;

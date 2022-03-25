@@ -40,15 +40,14 @@ public class GenerationHelper {
         }
         String restrictionOnMaterial = seaAllowed ? MaterialHandler.LANDD : MaterialHandler.LAND_WATER; //il deserto è sempre ammesso tranne nel centro dell'isola
 
-        level = level + 1;
         HexagonPoint[] currentPointer = hexagonStarter.getPointer().clone();
-
         for (HexagonPoint currentPoint : currentPointer) {
             if (controller.getNumberOfHexagons() > 0) {
                 if (coordinateHandler.consumeCoord(currentPoint)) {
                     controller.populateMap(generateHexagon(currentPoint, restrictionOnMaterial));
                 }
             } else {
+                logger.info("generationThroughPointer: all hexagon for the island are populated, isDoneGenerating = ["+true+"].");
                 isDoneGenerating = true;
                 break;
             }

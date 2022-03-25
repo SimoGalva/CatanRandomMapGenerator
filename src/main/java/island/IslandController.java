@@ -1,5 +1,6 @@
 package island;
 
+import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 
@@ -58,14 +59,20 @@ public class IslandController {
 
      public void populateMap(HexagonalBase hexagonalBase){
         islandMap.put(hexagonalBase.getHexAsPoint().toString(),hexagonalBase);
-         numberOfHexagons --;
+        numberOfHexagons --;
+        GlobalMapHandler.populateMap(hexagonalBase);
      }
      public HexagonalBase getHexagonFromMap(HexagonPoint point) {
-        //TODO: il problema delle eccezzioni nasce qui:
-        // se l'isola j ha popolato una certa casella 3:0, questa risulta per il consume coord occupata perchè si basa sul sigletonInstance del coordinate handler.
-        // d'altra parte nella lista locale della isola i diverso da j questo punto 3:0 non ha un esagono associato. Naturalmente questo metodo restituisce null.
-        // per correggere basta pensare di avere un'unica mappa comune che viene popolata a livello globale. NON BANALE MA DA FARE
-        return islandMap.get(point.toString());
+         HexagonalBase ret;
+         if (islandMap.get(point.toString()) != null) {
+             ret = islandMap.get(point.toString());
+         } else if (GlobalMapHandler.getGlobalMap().get(point.toString()) != null){
+             ret = GlobalMapHandler.getGlobalMap().get(point.toString());
+         } else {
+             logger.severe("getHexagonFromMap: the selected point ["+point.toString()+"] is not populated. Returning null");
+             ret = null;
+         }
+         return ret;
      }
 
     //implementazione singleton instance
@@ -75,7 +82,6 @@ public class IslandController {
         finiteController = new IslandController[islandsNumber];
 
         //gestione dei pesi: lavoro sulla prima main island per correzioni
-        //todo: temporanei system.out
         double distributedMainIslWeight = (mainIslandWeight) / mainIslandsNumber;
         double distributedNonMainIslweight = islandsNumber != mainIslandsNumber ? (double) ((maxWeight - mainIslandWeight) / (islandsNumber-mainIslandsNumber)) : maxWeight;
         int[] numberOfPieces = new int[islandsNumber];
