@@ -1,6 +1,7 @@
 package hexagon.material;
 
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class MaterialCounter {
@@ -12,8 +13,8 @@ public class MaterialCounter {
     private final int COUNTER_CLAY = 5;
     private final int COUNTER_WOOL = 5;
     private final int COUNTER_HAY = 5;
-    private final int COUNTER_WATER = 19;
     private final int COUNTER_DESERT = 3;
+    private final int COUNTER_WATER = 19;
 
     //todo: implementare in modo simile una classe di gestione dei porti;
     private EnumMap<Materials, Integer> materialMap;
@@ -28,24 +29,31 @@ public class MaterialCounter {
         materialMap.put(Materials.HAY,COUNTER_HAY);
         materialMap.put(Materials.WATER,COUNTER_WATER);
         materialMap.put(Materials.DESERT,COUNTER_DESERT);
-
     }
 
     public boolean consumeMaterial(Materials material) {
         if (material == null) {
             logger.warning("consumeMaterial: material is null. Returning false.");
             return false;
-        }
-        if (materialMap.get(material)-1 >= 0) {
-            materialMap.put(material,materialMap.get(material)-1);
-            logger.info("consumeMaterial: ["+material.toString()+"] has ["+ materialMap.get(material)+"] pieces left.");
-            return true;
         } else {
-            logger.info("consumeMaterial: ["+material.toString()+"] is over.");
-            return false;
+            if (materialMap.get(material) - 1 >= 0) {
+                materialMap.put(material, materialMap.get(material) - 1);
+                logger.info("consumeMaterial: [" + material.toString() + "] has [" + materialMap.get(material) + "] pieces left.");
+                return true;
+            } else {
+                logger.info("consumeMaterial: [" + material.toString() + "] is over.");
+                return false;
+            }
         }
     }
 
+    public void printRemains() {
+        StringBuilder byteString = new StringBuilder("getRemains: \n");
+        for (Map.Entry<Materials, Integer> entry : this.materialMap.entrySet()) {
+            byteString.append("- material ["+entry.getKey()+"] has ["+entry.getValue()+"] pieces left; \n");
+        }
+        logger.info(byteString.toString());
+    }
 
 
 

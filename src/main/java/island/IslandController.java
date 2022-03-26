@@ -3,6 +3,7 @@ package island;
 import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
+import hexagon.material.Materials;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -59,7 +60,9 @@ public class IslandController {
 
      public void populateMap(HexagonalBase hexagonalBase){
         islandMap.put(hexagonalBase.getHexAsPoint().toString(),hexagonalBase);
-        numberOfHexagons --;
+        if (Materials.WATER != hexagonalBase.getMaterial()) {
+            numberOfHexagons--;
+        }
         GlobalMapHandler.populateMap(hexagonalBase);
      }
      public HexagonalBase getHexagonFromMap(HexagonPoint point) {

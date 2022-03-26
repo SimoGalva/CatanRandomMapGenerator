@@ -63,15 +63,9 @@ public class MapGeneratorEngine {
 
 /*
         todo: riprendi da qui
-        1    c'è da implementare la costruizione dell resto dell'isola. L'idea è la seguente:
-             cicla sul pointer del centro e lo riempie;
-             prende un elemento a caso del pointer e quindi cicla sul suo pointer, questo finchè l'isola non è completa.
-             questo con chiave di materiale LANDD.
-             Generate tutte le isole in globalMap.CatMap faccio il rempimento del mare nei quadrati rimasti.
-             Si potrebbe desiderare che a un certo punto anche il mare sia messo nell'isola, tuttavia ha bisogno di più controlli e una gestione particolare: non è parte dell'isola.
-             Lo implementerei in una seconda tornata.
         2    prevedi nel generationHelper una via di uscita a un livello medio tipo 7, cioè al livello 8 non continuare la rincorsa sui pointer che sto usando ma torna indietro di qualche livello, preni il pointer corrispondente e riparti da quel pointer
              cioè è equivalente a cambiare direzione di generazione qualora sia già troppo pieno nella direzione corrente direzione.
+        3    da implementare il metodo di post mapping delle isole, dovrà consumare la terra rimanente e  il mare rimanente.
 */
     }
 

@@ -2,6 +2,7 @@ package globalMap;
 
 import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
+import hexagon.number.NumberCounter;
 import island.Island;
 import island.IslandController;
 
@@ -13,6 +14,7 @@ public class CatMap {
 
     private Island[] islands;
     private MaterialCounter materialCounter;
+    private NumberCounter numberCounter;
     private int islandsNumber;
     private int mainIslandsNumber;
     private IslandController islandController;
@@ -25,6 +27,7 @@ public class CatMap {
     public CatMap(int islandsNumber, int mainIslandsNumber, int mainIslandWeight) {
         this.islands = new Island[islandsNumber];
         this.materialCounter = MaterialCounter.getInstance();
+        this.numberCounter = NumberCounter.getInstance();
         this.islandsNumber = islandsNumber;
         this.mainIslandsNumber = mainIslandsNumber;
         //ritorna un islandController che contiere un array di IslandController (i cui sotto array saranno nulli)
@@ -43,5 +46,7 @@ public class CatMap {
             islands[i].generateIsland();
         }
         logger.info("globalMap.CatMap.generateMapIsland: generation process ended.");
+        materialCounter.printRemains();
+        numberCounter.printRemains();
     }
 }

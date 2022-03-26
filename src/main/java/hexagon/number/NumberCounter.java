@@ -1,6 +1,7 @@
 package hexagon.number;
 
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class NumberCounter {
@@ -48,6 +49,14 @@ public class NumberCounter {
             logger.info("consumeNumber: ["+number.toString()+"] is over.");
             return false;
         }
+    }
+
+    public void printRemains() {
+        StringBuilder byteString = new StringBuilder("getRemains: \n");
+        for (Map.Entry<Numbers, Integer> entry : this.numbersMap.entrySet()) {
+            byteString.append("- material ["+entry.getKey()+"] has ["+entry.getValue()+"] pieces left; \n");
+        }
+        logger.info(byteString.toString());
     }
 
     //implementazione singleton instance

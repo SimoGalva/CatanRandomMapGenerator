@@ -76,12 +76,18 @@ public class GenerationHelper {
             if (!isMaterialValid) {
                 materialCntr = materialHandler.pickRandomMaterial(restrictionOnMaterial);
                 isMaterialValid = materialCounter.consumeMaterial(materialCntr);
+                if (!isMaterialValid) {
+                    materialCntr = null;
+                }
             }
             if (!isNumberValid) {
                 numberCntr = numberHandler.pickRandomNumber(materialCntr);
                 isNumberValid = numberCounter.consumeNumber(numberCntr);
+                if (!isNumberValid) {
+                    numberCntr = null;
+                }
             }
-        } while (!isNumberValid && !isMaterialValid);
+        } while ((!isNumberValid && !isMaterialValid) || numberCntr == null || materialCntr == null);
 
         return HexagonalBase.createInstance(materialCntr, numberCntr, pointerCntrDim, pointInGeneration);
     }
