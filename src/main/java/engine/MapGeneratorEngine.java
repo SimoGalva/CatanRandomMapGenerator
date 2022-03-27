@@ -1,12 +1,15 @@
 package engine;
 
 import coordinate.HexagonalCoordinate4PHandler;
+import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
 import hexagon.material.MaterialHandler;
+import hexagon.material.Materials;
 import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
+import hexagon.number.Numbers;
 import island.IslandController;
 
 import java.util.logging.Logger;
@@ -60,16 +63,23 @@ public class MapGeneratorEngine {
             logger.severe("generateIsland: fatal error. Current island has [0] hexagons allowed.");
             return;
         }
-
 /*
-        todo: riprendi da qui
-        2    prevedi nel generationHelper una via di uscita a un livello medio tipo 7, cioè al livello 8 non continuare la rincorsa sui pointer che sto usando ma torna indietro di qualche livello, preni il pointer corrispondente e riparti da quel pointer
+        todo: prevedi nel generationHelper una via di uscita a un livello medio tipo 7, cioè al livello 8 non continuare la rincorsa sui pointer che sto usando ma torna indietro di qualche livello, preni il pointer corrispondente e riparti da quel pointer
              cioè è equivalente a cambiare direzione di generazione qualora sia già troppo pieno nella direzione corrente direzione.
-        3    da implementare il metodo di post mapping delle isole, dovrà consumare la terra rimanente e  il mare rimanente.
 */
     }
 
-
+    public void fillOcenan() {
+        for (String availableCoord : coordinateHandler.getAvailableCoord()) {
+            materialCounter.consumeMaterial(Materials.WATER);
+            Numbers mOne= numberHandler.pickRandomNumber(Materials.WATER);
+            numberCounter.consumeNumber(mOne);
+            String[] pointBuilder = availableCoord.split(":");
+            HexagonPoint currentPoint = new HexagonPoint(Integer.parseInt(pointBuilder[0]), Integer.parseInt(pointBuilder[1]));
+            HexagonalBase oceanBase = HexagonalBase.createInstance(Materials.WATER, mOne, currentPoint);
+            GlobalMapHandler.populateMap(oceanBase);
+        }
+    }
 
 
     //implementazione singleton instance

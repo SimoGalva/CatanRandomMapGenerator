@@ -1,5 +1,6 @@
 package globalMap;
 
+import engine.MapGeneratorEngine;
 import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
 import hexagon.number.NumberCounter;
@@ -18,6 +19,7 @@ public class CatMap {
     private int islandsNumber;
     private int mainIslandsNumber;
     private IslandController islandController;
+    private MapGeneratorEngine generatorEngine;
     private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap(); //sincronzza la mappa sempre e comunque
 
     public Island[] getIslands() {
@@ -28,18 +30,17 @@ public class CatMap {
         this.islands = new Island[islandsNumber];
         this.materialCounter = MaterialCounter.getInstance();
         this.numberCounter = NumberCounter.getInstance();
+        this.generatorEngine = MapGeneratorEngine.getInstance();
         this.islandsNumber = islandsNumber;
         this.mainIslandsNumber = mainIslandsNumber;
         //ritorna un islandController che contiere un array di IslandController (i cui sotto array saranno nulli)
         this.islandController = IslandController.getInstance(islandsNumber,mainIslandsNumber, mainIslandWeight);
     }
 
-    public void generateMapIslands() {
+    public void generateIslands() {
         for (int i = 0; i < this.islandsNumber; i++) {
             logger.info("globalMap.CatMap.generateMapIsland: setting center for "+ (this.islandController.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]).");
             this.islands[i] = new Island(this.islandController.getFiniteController()[i]);
-            //todo: l'ultimo bug è più raro ed è qui:
-            // genero le isole in odrine e quindi il centro di un isola successiva è consumato a livello di coordinate possibili non è ancora stato generato, quindi quanto lo si cerca di prelevare dalle mappe è nullo.
         }
         for (int i = 0; i < this.islandsNumber; i++) {
             logger.info("globalMap.CatMap.generateMapIsland: starting "+ (this.islandController.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]) generation process.");
@@ -48,5 +49,9 @@ public class CatMap {
         logger.info("globalMap.CatMap.generateMapIsland: generation process ended.");
         materialCounter.printRemains();
         numberCounter.printRemains();
+    }
+
+    public void fillOcean() {
+        generatorEngine.fillOcenan();
     }
 }

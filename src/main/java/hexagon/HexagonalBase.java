@@ -56,7 +56,9 @@ public abstract class HexagonalBase {
         this.pointer = new HexagonPoint[pointerDimension];
         this.hexAsPoint = point;
         //lascialo sempre come ultima istruzione: servono gli altri parametri settati.
-        buildPointer();
+        if (pointerDimension != 0) {
+            buildPointer();
+        }
     }
 
     private void buildPointer() {
@@ -92,6 +94,10 @@ public abstract class HexagonalBase {
         } else {
             logger.severe("buildPointer: something went wrong in handling coordinates for pointer. Number of points do not equal pointer dimension.");
         }
+    }
+
+    public static HexagonalBase createInstance(Materials material, Numbers number, HexagonPoint hexPoint) {
+        return new OceanFillingHexagon(material, number, 0,hexPoint);
     }
 
     public static HexagonalBase createInstance(Materials material, Numbers number, int pointerDim, HexagonPoint hexPoint) {
