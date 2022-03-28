@@ -65,4 +65,8 @@ public enum Numbers {
         }
         return ret;
     }
+
+    public String toIntStr() {
+        return new String(String.valueOf(this.numberInt));
+    }
 }

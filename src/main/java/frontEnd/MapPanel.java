@@ -1,17 +1,27 @@
+package frontEnd;
+
+import globalMap.GlobalMapHandler;
 import hexagon.HexagonFE;
+import hexagon.HexagonPoint;
+import hexagon.HexagonalBase;
+import hexagon.material.Materials;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.HashMap;
 
-    public class Main extends JPanel {
+public class MapPanel extends JPanel {
         private static final long serialVersionUID = 1L;
         private final int WIDTH = 1200;
         private final int HEIGHT = 800;
 
+        private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap();
+
         private Font font = new Font("Arial", Font.BOLD, 18);
         FontMetrics metrics;
 
-        public Main() {
+        public MapPanel() {
             setPreferredSize(new Dimension(WIDTH, HEIGHT));
         }
 
@@ -51,16 +61,21 @@ import java.awt.*;
         private void drawHex(Graphics g, int posX, int posY, int x, int y, int r) {
             Graphics2D g2d = (Graphics2D) g;
 
-            HexagonFE hex = new HexagonFE(x, y, r);
-            String text = String.format("%s : %s", coord(posX), coord(posY));
-            int w = metrics.stringWidth(text);
-            int h = metrics.getHeight();
+            //TODO: qui non devo fargliene creare uno, devo capire come posso ripescare hexagonalBase e istanziarlo da lì, ci sarà un metodo che crea HEXAGONFE a dovere
+            // HexagonFE hex = new HexagonFE(x, y, r);
+            HexagonalBase currentHexagon = globalMap.get( new HexagonPoint(posX, posY).toString());
+            HexagonFE hex = currentHexagon.defineHexagonFE(x, y, r);
 
-            hex.draw(g2d, x, y, 0, 0x008844, true);
-            hex.draw(g2d, x, y, 4, 0xFFDD88, false);
+            hex.draw(g2d, x, y, 0, true);
+            hex.draw(g2d, x, y, 1, new Color(0xFFFFFF), false);
 
-            g.setColor(new Color(0xFFFFFF));
-            g.drawString(text, x - w/2, y + h/2);
+            if (!Arrays.asList(Materials.DESERT, Materials.WATER).contains(currentHexagon.getMaterial())) {
+                g.setColor(new Color(0xFFFFFF));
+                g.setFont(new Font("TimesRoman", Font.BOLD, 28));
+                int w = metrics.stringWidth(currentHexagon.getNumber().toIntStr());
+                int h = metrics.getHeight();
+                g.drawString(currentHexagon.getNumber().toIntStr(), x - w / 2, y + h / 2);
+            }
         }
 
         private String coord(int value) {
@@ -90,17 +105,6 @@ import java.awt.*;
             // Set values to previous when done.
             g.setColor(tmpC);
             g.setStroke(tmpS);
-        }
-
-        public static void main(String[] args) {
-            JFrame f = new JFrame();
-            Main p = new Main();
-
-            f.setContentPane(p);
-            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.pack();
-            f.setLocationRelativeTo(null);
-            f.setVisible(true);
         }
     }
 

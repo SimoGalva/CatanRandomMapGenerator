@@ -1,6 +1,9 @@
 package globalMap;
 
+import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
+import hexagon.material.Materials;
+import hexagon.number.Numbers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,5 +27,12 @@ public class GlobalMapHandler {
             i++;
         }
         System.out.println(byteString);
+    }
+
+    public static void doPostGeneratingFixing(int numberOfPlayer) {
+        if (numberOfPlayer == 4) {
+            populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(-4,0)));
+            populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(4,0)));
+        }
     }
 }

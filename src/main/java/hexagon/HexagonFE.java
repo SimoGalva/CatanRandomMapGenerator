@@ -13,19 +13,22 @@ public class HexagonFE extends Polygon {
     private int radius;
     private int rotation = 90;
 
-    public HexagonFE(Point center, int radius) {
+    private Color color;
+
+    public HexagonFE(Point center, int radius, Color color) {
         npoints = SIDES;
         xpoints = new int[SIDES];
         ypoints = new int[SIDES];
 
         this.center = center;
         this.radius = radius;
+        this.color = color;
 
         updatePoints();
     }
 
-    public HexagonFE(int x, int y, int radius) {
-        this(new Point(x, y), radius);
+    public HexagonFE(int x, int y, int radius, Color color) {
+        this(new Point(x, y), radius, color);
     }
 
     public int getRadius() {
@@ -79,12 +82,16 @@ public class HexagonFE extends Polygon {
         }
     }
 
-    public void draw(Graphics2D g, int x, int y, int lineThickness, int colorValue, boolean filled) {
+    public void draw(Graphics2D g, int x, int y, int lineThickness, boolean filled) {
+        draw(g, x, y, lineThickness, this.color, filled);
+    }
+
+    public void draw(Graphics2D g, int x, int y, int lineThickness, Color colorValue, boolean filled) {
         // Store before changing.
         Stroke tmpS = g.getStroke();
         Color tmpC = g.getColor();
 
-        g.setColor(new Color(colorValue));
+        g.setColor(colorValue);
         g.setStroke(new BasicStroke(lineThickness, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER));
 
         if (filled)

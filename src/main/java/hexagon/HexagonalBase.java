@@ -57,7 +57,7 @@ public abstract class HexagonalBase {
         this.hexAsPoint = point;
         //lascialo sempre come ultima istruzione: servono gli altri parametri settati.
         if (pointerDimension != 0) {
-            buildPointer();
+            this.buildPointer();
         }
     }
 
@@ -108,5 +108,9 @@ public abstract class HexagonalBase {
         } else {
             return new VertexHexagon(material, number, pointerDim, hexPoint);
         }
+    }
+
+    public HexagonFE defineHexagonFE(int x, int y, int r) {
+        return new HexagonFE(x, y, r, material.getColorValue());
     }
 }

@@ -18,6 +18,7 @@ public class CatMap {
     private NumberCounter numberCounter;
     private int islandsNumber;
     private int mainIslandsNumber;
+    private final int numberOfPlayer = 4;
     private IslandController islandController;
     private MapGeneratorEngine generatorEngine;
     private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap(); //sincronzza la mappa sempre e comunque
@@ -52,6 +53,16 @@ public class CatMap {
     }
 
     public void fillOcean() {
+        logger.info("fillOcean: starting to fill with the remaining oceans.");
         generatorEngine.fillOcenan();
+    }
+
+    public void postGeneratingFixing() {
+        logger.info("postGeneratingFixing: starting post generating fixes");
+        switch (this.numberOfPlayer) {
+            case 4:
+                GlobalMapHandler.doPostGeneratingFixing(4);
+                break;
+        }
     }
 }
