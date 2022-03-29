@@ -13,8 +13,8 @@ import java.util.HashMap;
 
 public class MapPanel extends JPanel {
         private static final long serialVersionUID = 1L;
-        private final int WIDTH = 1200;
-        private final int HEIGHT = 800;
+        private final int WIDTH = 920;
+        private final int HEIGHT = 820;
 
         private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap();
 
