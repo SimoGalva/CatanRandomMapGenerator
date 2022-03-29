@@ -61,8 +61,6 @@ public class MapPanel extends JPanel {
         private void drawHex(Graphics g, int posX, int posY, int x, int y, int r) {
             Graphics2D g2d = (Graphics2D) g;
 
-            //TODO: qui non devo fargliene creare uno, devo capire come posso ripescare hexagonalBase e istanziarlo da lì, ci sarà un metodo che crea HEXAGONFE a dovere
-            // HexagonFE hex = new HexagonFE(x, y, r);
             HexagonalBase currentHexagon = globalMap.get( new HexagonPoint(posX, posY).toString());
             HexagonFE hex = currentHexagon.defineHexagonFE(x, y, r);
 

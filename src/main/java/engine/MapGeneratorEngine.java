@@ -10,8 +10,12 @@ import hexagon.material.Materials;
 import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
+import hexagon.pojo.SwitchingHexagons;
 import island.IslandController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class MapGeneratorEngine {
@@ -23,6 +27,8 @@ public class MapGeneratorEngine {
     private NumberHandler numberHandler;
     private MaterialCounter materialCounter;
     private NumberCounter numberCounter;
+    private int deepingCountPostMapping = 0;
+    private static final int maxPostGeneratingFixing = 50;
 
     private static final String LAND = "LAND";
     private static final String LAND_NO_RIVER = "LAND_NO_R";
@@ -80,6 +86,57 @@ public class MapGeneratorEngine {
             GlobalMapHandler.populateMap(oceanBase);
         }
     }
+
+    public void doPostGeneratingFixing(IslandController controllerWrapper) {
+        ArrayList<HashMap<String, HexagonalBase>> islandMapsList = new ArrayList<>();
+        ArrayList<SwitchingHexagons> coordinateSwitchedList = new ArrayList<>();
+        for (IslandController tempController : controllerWrapper.getFiniteController()) {
+            //c'è corrispondenza tra il numero dell'isola, il numero dell'isola nel finiteController e il numero dell'isola nella lista
+            islandMapsList.add(tempController.getIslandMap());
+        }
+        for (int i = 0; i < islandMapsList.size(); i++ ) {
+            for (Map.Entry<String, HexagonalBase> mapEntry : islandMapsList.get(i).entrySet()) {
+                for (int j = 0; j < islandMapsList.size() && j != i ; j++) {
+                    if (this.generationHelper.isNearIsland(mapEntry.getValue(), islandMapsList.get(j))
+                        && !Materials.WATER.equals(mapEntry.getValue().getMaterial())) {
+
+                        SwitchingHexagons tempCoordinateSwitched = this.generationHelper.switchWithRandomNearbyIslandSea(mapEntry.getValue(), islandMapsList.get(i));
+                        coordinateSwitchedList.add(tempCoordinateSwitched);
+                    }
+                }
+            }
+        }
+        for (SwitchingHexagons coordinateSwitched : coordinateSwitchedList) {
+            if (coordinateSwitched != null) {
+                controllerWrapper.updateAfterSwitch(coordinateSwitched);
+            }
+        }
+
+        //eventuali iterazioni del metodo sono gestite da qui
+        boolean areStillNeededFixing = false;
+        for (int i = 0; i < islandMapsList.size(); i++ ) {
+            for (Map.Entry<String, HexagonalBase> mapEntry : islandMapsList.get(i).entrySet()) {
+                for (int j = 0; j < islandMapsList.size() && j != i ; j++) {
+                    if (this.generationHelper.isNearIsland(mapEntry.getValue(), islandMapsList.get(j))
+                        && !Materials.WATER.equals(mapEntry.getValue().getMaterial())) {
+
+                        areStillNeededFixing = true;
+                        deepingCountPostMapping ++;
+                        break;
+                    }
+                }
+                if (areStillNeededFixing) break;
+            }
+            if (areStillNeededFixing) break;
+        }
+
+        if (areStillNeededFixing && deepingCountPostMapping < maxPostGeneratingFixing) {
+            doPostGeneratingFixing(controllerWrapper);
+        }
+        deepingCountPostMapping = 0;
+    }
+
+
 
 
     //implementazione singleton instance

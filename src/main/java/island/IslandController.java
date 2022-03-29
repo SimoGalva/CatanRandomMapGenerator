@@ -4,8 +4,10 @@ import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.Materials;
+import hexagon.pojo.SwitchingHexagons;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class IslandController {
@@ -78,6 +80,48 @@ public class IslandController {
          return ret;
      }
 
+    public void updateAfterSwitch(SwitchingHexagons coordinateSwitched) {
+        String coordToSwitch1 = coordinateSwitched.getCoordSwitchedHex1();
+        String coordToSwitch2 = coordinateSwitched.getCoordSwitchedHex2();
+        Map.Entry<String,HexagonalBase> entryToSwitch1 = null;
+        Map.Entry<String,HexagonalBase> entryToSwitch2 = null;
+        HexagonalBase hexagonalBaseToSwitch1 = null;
+        HexagonalBase hexagonalBaseToSwitch2 = null;
+        int indexIslandToSwitch1 = -1;
+        int indexIslandToSwitch2 = -1;
+
+        for (int i = 0; i < finiteController.length; i++) {
+            for (Map.Entry<String,HexagonalBase> mapEntry : finiteController[i].getIslandMap().entrySet()) {
+                if (mapEntry.getKey().equals(coordToSwitch1)) {
+                    entryToSwitch1 = mapEntry;
+                    hexagonalBaseToSwitch1 = mapEntry.getValue();
+                    indexIslandToSwitch1 = i;
+                }
+                if (mapEntry.getKey().equals(coordToSwitch2)) {
+                    entryToSwitch2 = mapEntry;
+                    hexagonalBaseToSwitch2 = mapEntry.getValue();
+                    indexIslandToSwitch2 = i;
+                }
+            }
+        }
+        if (entryToSwitch1 != null && hexagonalBaseToSwitch1 != null
+            && entryToSwitch2 != null && hexagonalBaseToSwitch2 != null) {
+            logger.info("updateAfterSwitch: updating island maps after switching.");
+            entryToSwitch1.setValue(hexagonalBaseToSwitch2);
+            entryToSwitch2.setValue(hexagonalBaseToSwitch1);
+        } else if (entryToSwitch1 != null && hexagonalBaseToSwitch1 != null) {
+            logger.info("updateAfterSwitch: updating island maps after switching.");
+            finiteController[indexIslandToSwitch1].getIslandMap().put(coordToSwitch2, hexagonalBaseToSwitch1);
+            finiteController[indexIslandToSwitch1].getIslandMap().remove(coordToSwitch1);
+        } else if (entryToSwitch2 != null && hexagonalBaseToSwitch2 != null) {
+            logger.info("updateAfterSwitch: updating island maps after switching.");
+            finiteController[indexIslandToSwitch2].getIslandMap().put(coordToSwitch1, hexagonalBaseToSwitch2);
+            finiteController[indexIslandToSwitch2].getIslandMap().remove(coordToSwitch2);
+        } else {
+            logger.warning("updateAfterSwitch: failed updating island maps after switching.");
+        }
+    }
+
     //implementazione singleton instance
     private static IslandController singletonInstance = null;
     //TODO: serviranno controlli sugli input di islandsNumber e mainIslandsNumber: islandNumber>=mainIslandsNumber. E sul peso: vedi commit collegato (numero di pezzi isola).
@@ -127,5 +171,4 @@ public class IslandController {
         }
         return singletonInstance;
     }
-
 }

@@ -16,7 +16,7 @@ public abstract class HexagonalBase {
 
     private HexagonFE hexagonFEToken;
     private final Materials material;
-    private HexagonPoint[] pointer; //TODO: il pointer bisogna capire come costruirlo, serviraà un pointerBuilder a livello di engine;
+    private HexagonPoint[] pointer;
     private final Numbers number;
     private HexagonPoint hexAsPoint;
 
@@ -46,6 +46,10 @@ public abstract class HexagonalBase {
 
     public HexagonPoint[] getPointer() {
         return pointer;
+    }
+
+    public void setHexAsPoint(String coordinateStr) {
+        this.hexAsPoint = new HexagonPoint(coordinateStr);
     }
 
     public HexagonalBase(Materials material, Numbers number, int pointerDimension, HexagonPoint point) {

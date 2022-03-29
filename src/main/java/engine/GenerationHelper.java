@@ -1,6 +1,7 @@
 package engine;
 
 import coordinate.HexagonalCoordinate4PHandler;
+import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
@@ -9,8 +10,12 @@ import hexagon.material.Materials;
 import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
+import hexagon.pojo.SwitchingHexagons;
 import island.IslandController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -90,5 +95,41 @@ public class GenerationHelper {
         } while ((!isNumberValid && !isMaterialValid) || number == null || material == null);
 
         return HexagonalBase.createInstance(material, number, pointerDim, pointInGeneration);
+    }
+
+    public boolean isNearIsland(HexagonalBase hexagonalBaseToTest, HashMap<String, HexagonalBase> islandMap) {
+        boolean ret = false;
+        for (Map.Entry<String, HexagonalBase> mapEntry : islandMap.entrySet()) {
+            HexagonPoint[] pointerToTest = mapEntry.getValue().getPointer();
+            for (HexagonPoint pointInTest : pointerToTest) {
+                if (pointInTest.toString().equals(hexagonalBaseToTest.getHexAsPoint().toString())) {
+                    return true;
+                }
+            }
+        }
+        return ret;
+    }
+
+    public SwitchingHexagons switchWithRandomNearbyIslandSea(HexagonalBase hexagonToSwitch, HashMap<String, HexagonalBase> islandMapOfTestingHexagon) {
+        logger.info("switchWithRandomNearbyIslandSea: starting selecting sea hexagon to switch.");
+        Random random = new Random();
+        SwitchingHexagons ret;
+        ArrayList<HexagonalBase> seaList = GlobalMapHandler.getSeaHexagons();
+        ArrayList<HexagonalBase> nearIslandSeaList = new ArrayList<>();
+        for (HexagonalBase seaEntry : seaList) {
+            if(this.isNearIsland(seaEntry, islandMapOfTestingHexagon)) {
+                nearIslandSeaList.add(seaEntry);
+            }
+        }
+        if (nearIslandSeaList.isEmpty()) {
+            logger.info("switchWithRandomNearbyIslandSea: not switching any hexagon. Returning null.");
+            return null;
+        } else {
+            HexagonalBase seaHexagonToSwitch = nearIslandSeaList.get(random.nextInt(nearIslandSeaList.size()));
+            ret = new SwitchingHexagons(hexagonToSwitch.getHexAsPoint().toString(), seaHexagonToSwitch.getHexAsPoint().toString());
+            logger.info("switchWithRandomNearbyIslandSea: switched hexagon ["+hexagonToSwitch.getHexAsPoint().toString()+"] with WATER hexagon ["+seaHexagonToSwitch.getHexAsPoint().toString()+"]");
+            GlobalMapHandler.switchHexagons(hexagonToSwitch, seaHexagonToSwitch);
+            return ret;
+        }
     }
 }

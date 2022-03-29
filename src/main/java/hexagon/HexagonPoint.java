@@ -1,5 +1,7 @@
 package hexagon;
 
+import static java.lang.Integer.parseInt;
+
 public class HexagonPoint {
     //classe POJO per contenere le coordinate esagonali si un esagono qualsiasi; (per coordinate si intende quellle a vista lancaindo il main)
     private final int rowHexCoord;
@@ -8,6 +10,10 @@ public class HexagonPoint {
     public HexagonPoint(int diagHexCoord, int rowHexCoord ) {
         this.diagHexCoord = diagHexCoord;
         this.rowHexCoord = rowHexCoord;
+    }
+
+    public HexagonPoint(String coordinateStr) {
+        this(parseInt(coordinateStr.split(":")[0]), parseInt(coordinateStr.split(":")[1]));
     }
 
     public int getRowHexCoord() {
