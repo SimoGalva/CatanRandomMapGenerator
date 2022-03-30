@@ -8,7 +8,7 @@ import hexagon.number.Numbers;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public abstract class HexagonalBase {
+public class HexagonalBase {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final MaterialCounter materialCounter;
     private final HexagonalCoordinate4PHandler coordinate4PHandler;
@@ -101,17 +101,11 @@ public abstract class HexagonalBase {
     }
 
     public static HexagonalBase createInstance(Materials material, Numbers number, HexagonPoint hexPoint) {
-        return new OceanFillingHexagon(material, number, 0,hexPoint);
+        return createInstance(material, number, 0,hexPoint);
     }
 
     public static HexagonalBase createInstance(Materials material, Numbers number, int pointerDim, HexagonPoint hexPoint) {
-        if (pointerDim == 6) {
-            return new CentralHexagon(material, number, pointerDim, hexPoint);
-        } else if (pointerDim == 4 || pointerDim == 5) {
-            return new BorderHexagon(material, number, pointerDim, hexPoint);
-        } else {
-            return new VertexHexagon(material, number, pointerDim, hexPoint);
-        }
+        return new HexagonalBase(material, number, pointerDim, hexPoint);
     }
 
     public HexagonFE defineHexagonFE(int x, int y, int r) {
