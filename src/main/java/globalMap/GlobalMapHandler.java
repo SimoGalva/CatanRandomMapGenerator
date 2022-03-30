@@ -20,7 +20,7 @@ public class GlobalMapHandler {
         return globalMap;
     }
 
-    public static void printMap() {
+    public static String printMap() {
         StringBuilder byteString = new StringBuilder("printMap: \n");
         int i = 1;
         for (Map.Entry<String, HexagonalBase> entry : globalMap.entrySet()) {
@@ -28,6 +28,7 @@ public class GlobalMapHandler {
             i++;
         }
         System.out.println(byteString);
+        return byteString.toString();
     }
 
     //questo metodo popola gli esagono estremanti con WATER (-4,0), (4,0) nel caso di 4Player
@@ -56,5 +57,9 @@ public class GlobalMapHandler {
 
         globalMap.put(tempHexagonToSwitch, seaHexagonToSwitch);
         globalMap.put(tempSeaHexagonToSwitch, hexagonToSwitch);
+    }
+
+    public static void clear() {
+        globalMap.clear();
     }
 }

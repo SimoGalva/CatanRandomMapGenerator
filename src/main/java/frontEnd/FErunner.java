@@ -1,40 +1,37 @@
 package frontEnd;
 
-import frontEnd.buttons.ModifyButton;
-import frontEnd.buttons.RefreshButton;
-import frontEnd.buttons.SaveButton;
+import engine.MainEngine;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class FErunner implements Runnable{
+public class FErunner implements Runnable, ActionListener {
+    private JFrame frame;
+    private MainEngine.MainEngineCaller mainEngineCaller;
+
+    public FErunner(MainEngine.MainEngineCaller mainEngineCaller) {
+        this.mainEngineCaller = mainEngineCaller;
+    }
+
     @Override
-    public void run() {        JFrame frame = new JFrame();
-
-        MapPanel mapPanel = new MapPanel();
-        JPanel refreshButtonPanel = new JPanel();
-        JPanel otherButtonsPanel = new JPanel();
-        JButton refreshButton = new RefreshButton();
-        JButton printButton = new ModifyButton();
-        JButton saveButton = new SaveButton();
-
-        refreshButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING,5, 0));
-        refreshButtonPanel.add(refreshButton);
-
-        otherButtonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT,5, 5));
-        otherButtonsPanel.add(printButton);
-        otherButtonsPanel.add(saveButton);
-
-        LayoutManager layout = new BorderLayout(-110,0);
-        frame.setLayout(layout);
-
-        frame.add(mapPanel, BorderLayout.CENTER);
-        frame.add(refreshButtonPanel,BorderLayout.WEST);
-        frame.add(otherButtonsPanel, BorderLayout.NORTH);
+    public void run() {
+        frame = new MapFrame(this);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //todo: implementa la lettura del ActionEvent entrante () magari altri tasti faranno riferiemtno a questo ActionListener
+        mainEngineCaller.runRefreshing();
+        //TODO: implementa un metodo di refersh nella classe MapFrame, può essere dato da:
+        // setvisible(false) del solo JPanel map
+        // instanziare un nuovo Jpanel map (così si riprinta da solo e quindi settarloa a visible).
+        // in teoria dovrebbe funzioanre purchè il nuovo panel venga sostituito come attibuto della classe al posto del pane corrente.
+        // non ne sono sicuro, bisogna provare.
     }
 }

@@ -1,0 +1,43 @@
+package engine;
+
+import engine.pojo.Params;
+import frontEnd.FErunner;
+import globalMap.CatMap;
+
+
+public class MainEngine implements Runnable {
+    private FErunner frontRunner;
+    private CatMap map;
+    public Params params;
+
+    //TODO: non riesco a far rispettare i parametri esattamente diciamo che sono dei max corrisponedenti acconsentiti?
+    // tienine conto quanto implementi l'input utente. Il paras conterrà tutti gli input utente quindi andrà adattato volta per volta.
+    public MainEngine() {
+        params = new Params(4,1,2);
+
+        this.frontRunner = new FErunner(new MainEngineCaller());
+        this.map = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(),params.getMainIslandWeight());;
+    }
+
+    @Override
+    public void run() {
+        this.map.generateIslands();
+        this.map.fillOcean();
+        this.map.postGeneratingFixing();
+
+        frontRunner.run();
+    }
+
+    public void refresh() {
+        RefreshEngine refreshEngine = new RefreshEngine(params);
+        refreshEngine.run();
+    }
+
+
+    public class MainEngineCaller {
+        //todo: classe che può essere istanziata da altre classi per chiamare metodi del Main engine
+        public void runRefreshing() {
+            refresh();
+        }
+    }
+}
