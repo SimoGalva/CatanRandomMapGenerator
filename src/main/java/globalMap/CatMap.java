@@ -42,10 +42,9 @@ public class CatMap {
         for (int i = 0; i < this.islandsNumber; i++) {
             logger.info("globalMap.CatMap.generateMapIsland: setting center for "+ (this.islandControllerWrapper.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]).");
             this.islands[i] = new Island(this.islandControllerWrapper.getFiniteController()[i]);
-        }
-        for (int i = 0; i < this.islandsNumber; i++) {
             logger.info("globalMap.CatMap.generateMapIsland: starting "+ (this.islandControllerWrapper.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]) generation process.");
             islands[i].generateIsland();
+            generatorEngine.fillIslandBorderSea(this.islandControllerWrapper.getFiniteController()[i]);
         }
         logger.info("globalMap.CatMap.generateMapIsland: generation process ended.");
         materialCounter.printRemains();
@@ -62,7 +61,7 @@ public class CatMap {
         switch (this.numberOfPlayer) {
             case 4:
                 GlobalMapHandler.populateLimitWaterHexagons(numberOfPlayer);
-                this.generatorEngine.doPostGeneratingFixing(this.islandControllerWrapper);
+                fillOcean();
                 break;
         }
         logger.info("postGeneratingFixing: process ended.");

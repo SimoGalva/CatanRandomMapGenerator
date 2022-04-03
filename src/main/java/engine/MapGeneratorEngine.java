@@ -10,12 +10,10 @@ import hexagon.material.Materials;
 import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
-import hexagon.pojo.SwitchingHexagons;
 import island.IslandController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 public class MapGeneratorEngine {
@@ -38,8 +36,11 @@ public class MapGeneratorEngine {
     public void setIslandHexPointCenter(IslandController controller) {
         HexagonPoint point;
         boolean isDoneGenerating = false;
-        boolean isCenterFarEnoughFromOthers = false;
+        boolean isNearAlreadyGenerated = false;
+        boolean isNearAlreadyGeneratedOverride = false;
+        int nIter = 0;
         do {
+            nIter ++;
             if (controller.isMainIsland()) {
                 //pickRandomPoint è giustificato all'interno della classe HexagonalCoordinate4PHandler perchè la generazione random dipende strettamente dalla dimensione del tabellone,
                 // ergo dal numero di giocatori, così posso eventualmente ricilcare più codice per 6 giocatori;
@@ -47,11 +48,16 @@ public class MapGeneratorEngine {
             } else {
                 point = coordinateHandler.pickRandomPoint(true);
             }
-            isCenterFarEnoughFromOthers = coordinateHandler.checkCenterDisance(point);
-            if (isCenterFarEnoughFromOthers) {
+            if (this.generationHelper.isNearIsland(point, GlobalMapHandler.getGlobalMap())) {
+                isNearAlreadyGenerated = true;
+            }
+            else if (nIter > 100) {
+                isNearAlreadyGeneratedOverride = true;
+            }
+            if (isNearAlreadyGenerated || isNearAlreadyGeneratedOverride) {
                 isDoneGenerating = coordinateHandler.consumeCoord(point);
             }
-        } while (!isCenterFarEnoughFromOthers || !isDoneGenerating);
+        } while ((!isNearAlreadyGenerated && !isNearAlreadyGeneratedOverride) || !isDoneGenerating);
         logger.info("generateIslandHexPointCenter: random hexagonal point center of island generated ["+point.getDiagHexCoord()+":"+point.getRowHexCoord()+"]");
         controller.setIslandHexCenter(point);
 
@@ -69,73 +75,38 @@ public class MapGeneratorEngine {
             logger.severe("generateIsland: fatal error. Current island has [0] hexagons allowed.");
             return;
         }
-/*
-        todo: prevedi nel generationHelper una via di uscita a un livello medio tipo 7, cioè al livello 8 non continuare la rincorsa sui pointer che sto usando ma torna indietro di qualche livello, preni il pointer corrispondente e riparti da quel pointer
-             cioè è equivalente a cambiare direzione di generazione qualora sia già troppo pieno nella direzione corrente direzione.
-*/
+    }
+
+    public void fillIslandBorderSea(IslandController controller) {
+        ArrayList<String> avialableCoord = (ArrayList<String>) coordinateHandler.getAvailableCoord().clone();
+        HashMap<String, HexagonalBase> currentIslandMap = controller.getIslandMap();
+
+        for (String coordEntry : avialableCoord) {
+            HexagonPoint pointEntry = new HexagonPoint(coordEntry);
+            if (generationHelper.isNearIsland(pointEntry, currentIslandMap)
+                && materialCounter.consumeMaterial(Materials.WATER)
+                && numberCounter.consumeNumber(Numbers.M_ONE)
+                && coordinateHandler.consumeCoord(pointEntry)) {
+
+                    HexagonalBase oceanBase = HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, coordinateHandler.calculatePointerDimesnsion(pointEntry), pointEntry);
+                    GlobalMapHandler.populateMap(oceanBase);
+            }
+        }
     }
 
     public void fillOcenan() {
-        for (String availableCoord : coordinateHandler.getAvailableCoord()) {
-            materialCounter.consumeMaterial(Materials.WATER);
-            Numbers mOne= numberHandler.pickRandomNumber(Materials.WATER);
-            numberCounter.consumeNumber(mOne);
-            String[] pointBuilder = availableCoord.split(":");
-            HexagonPoint currentPoint = new HexagonPoint(Integer.parseInt(pointBuilder[0]), Integer.parseInt(pointBuilder[1]));
-            HexagonalBase oceanBase = HexagonalBase.createInstance(Materials.WATER, mOne, currentPoint);
-            GlobalMapHandler.populateMap(oceanBase);
+        ArrayList<String> avialableCoord = (ArrayList<String>) coordinateHandler.getAvailableCoord().clone();
+        for (String availableCoord : avialableCoord) {
+            HexagonPoint currentPoint = new HexagonPoint(availableCoord);
+            if (materialCounter.consumeMaterial(Materials.WATER)
+                && numberCounter.consumeNumber(Numbers.M_ONE)
+                && coordinateHandler.consumeCoord(currentPoint)) {
+
+                HexagonalBase oceanBase = HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, currentPoint);
+                GlobalMapHandler.populateMap(oceanBase);
+            }
         }
     }
-
-    public void doPostGeneratingFixing(IslandController controllerWrapper) {
-        ArrayList<HashMap<String, HexagonalBase>> islandMapsList = new ArrayList<>();
-        ArrayList<SwitchingHexagons> coordinateSwitchedList = new ArrayList<>();
-        for (IslandController tempController : controllerWrapper.getFiniteController()) {
-            //c'è corrispondenza tra il numero dell'isola, il numero dell'isola nel finiteController e il numero dell'isola nella lista
-            islandMapsList.add(tempController.getIslandMap());
-        }
-        for (int i = 0; i < islandMapsList.size(); i++ ) {
-            for (Map.Entry<String, HexagonalBase> mapEntry : islandMapsList.get(i).entrySet()) {
-                for (int j = 0; j < islandMapsList.size() && j != i ; j++) {
-                    if (this.generationHelper.isNearIsland(mapEntry.getValue(), islandMapsList.get(j))
-                        && !Materials.WATER.equals(mapEntry.getValue().getMaterial())) {
-
-                        SwitchingHexagons tempCoordinateSwitched = this.generationHelper.switchWithRandomNearbyIslandSea(mapEntry.getValue(), islandMapsList.get(i));
-                        coordinateSwitchedList.add(tempCoordinateSwitched);
-                    }
-                }
-            }
-        }
-        for (SwitchingHexagons coordinateSwitched : coordinateSwitchedList) {
-            if (coordinateSwitched != null) {
-                controllerWrapper.updateAfterSwitch(coordinateSwitched);
-            }
-        }
-
-        //eventuali iterazioni del metodo sono gestite da qui
-        boolean areStillNeededFixing = false;
-        for (int i = 0; i < islandMapsList.size(); i++ ) {
-            for (Map.Entry<String, HexagonalBase> mapEntry : islandMapsList.get(i).entrySet()) {
-                for (int j = 0; j < islandMapsList.size() && j != i ; j++) {
-                    if (this.generationHelper.isNearIsland(mapEntry.getValue(), islandMapsList.get(j))
-                        && !Materials.WATER.equals(mapEntry.getValue().getMaterial())) {
-
-                        areStillNeededFixing = true;
-                        deepingCountPostMapping ++;
-                        break;
-                    }
-                }
-                if (areStillNeededFixing) break;
-            }
-            if (areStillNeededFixing) break;
-        }
-
-        if (areStillNeededFixing && deepingCountPostMapping < maxPostGeneratingFixing) {
-            doPostGeneratingFixing(controllerWrapper);
-        }
-        deepingCountPostMapping = 0;
-    }
-
 
 
 

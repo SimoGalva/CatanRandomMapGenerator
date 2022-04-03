@@ -22,7 +22,6 @@ public class MainEngine implements Runnable {
     @Override
     public void run() {
         this.map.generateIslands();
-        this.map.fillOcean();
         this.map.postGeneratingFixing();
 
         frontRunner.run();

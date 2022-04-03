@@ -97,17 +97,20 @@ public class GenerationHelper {
         return HexagonalBase.createInstance(material, number, pointerDim, pointInGeneration);
     }
 
-    public boolean isNearIsland(HexagonalBase hexagonalBaseToTest, HashMap<String, HexagonalBase> islandMap) {
+    public boolean isNearIsland(HexagonPoint hexagonalBaseToTest, HashMap<String, HexagonalBase> islandMap) {
         boolean ret = false;
         for (Map.Entry<String, HexagonalBase> mapEntry : islandMap.entrySet()) {
             HexagonPoint[] pointerToTest = mapEntry.getValue().getPointer();
             for (HexagonPoint pointInTest : pointerToTest) {
-                if (pointInTest.toString().equals(hexagonalBaseToTest.getHexAsPoint().toString())) {
+                if (pointInTest.toString().equals(hexagonalBaseToTest.toString())) {
                     return true;
                 }
             }
         }
         return ret;
+    }
+    public boolean isNearIsland(HexagonalBase hexagonalBaseToTest, HashMap<String, HexagonalBase> islandMap) {
+        return isNearIsland(hexagonalBaseToTest.getHexAsPoint(),islandMap);
     }
 
     public SwitchingHexagons switchWithRandomNearbyIslandSea(HexagonalBase hexagonToSwitch, HashMap<String, HexagonalBase> islandMapOfTestingHexagon) {
