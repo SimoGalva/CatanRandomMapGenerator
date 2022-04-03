@@ -23,7 +23,7 @@ public class MainEngine implements Runnable {
     public void run() {
         this.map.generateIslands();
         this.map.postGeneratingFixing();
-
+        //todo: implementare un postMappingChecking che controlla la conformità della mappa ai parametri e in caso negativo lanci un referesh automatico.
         frontRunner.run();
     }
 
