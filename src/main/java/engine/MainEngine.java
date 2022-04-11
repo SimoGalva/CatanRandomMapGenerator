@@ -16,7 +16,7 @@ public class MainEngine implements Runnable {
         params = new Params(4,1,2);
 
         this.frontRunner = new FErunner(new MainEngineCaller());
-        this.map = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(),params.getMainIslandWeight());;
+        this.map = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(),params.getMainIslandWeight());
     }
 
     @Override
@@ -30,11 +30,12 @@ public class MainEngine implements Runnable {
     public void refresh() {
         RefreshEngine refreshEngine = new RefreshEngine(params);
         refreshEngine.run();
+        this.map = refreshEngine.getNewMapToRebuild();
     }
 
 
     public class MainEngineCaller {
-        //todo: classe che può essere istanziata da altre classi per chiamare metodi del Main engine
+        //classe che può essere istanziata da altre classi per chiamare metodi del Main engine
         public void runRefreshing() {
             refresh();
         }

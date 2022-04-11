@@ -1,11 +1,20 @@
 package engine;
 
+import coordinate.HexagonalCoordinate4PHandler;
 import engine.pojo.Params;
 import globalMap.CatMap;
+import globalMap.GlobalMapHandler;
+import hexagon.material.MaterialCounter;
+import hexagon.number.NumberCounter;
+import island.IslandController;
 
 public class RefreshEngine implements Runnable {
     private Params params;
     private CatMap newMapToRebuild;
+
+    public CatMap getNewMapToRebuild() {
+        return newMapToRebuild;
+    }
 
     public RefreshEngine(Params params) {
         this.params = params;
@@ -14,13 +23,18 @@ public class RefreshEngine implements Runnable {
     @Override
     public void run() {
         clearSingleInstances();
-        newMapToRebuild = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(), params.getMainIslandWeight());
-        //TODO: riprendi da qui a implementare
+        this.newMapToRebuild = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(), params.getMainIslandWeight());
+        this.newMapToRebuild.generateIslands();
+        this.newMapToRebuild.postGeneratingFixing();
     }
 
     private void clearSingleInstances() {
-        //TODO: riportare a null le signleton Instances e ripulire globalMapHandler e capire come refreshare la jFrame
+        GlobalMapHandler.clear();
+        IslandController.clearSingletonInstance();
+        HexagonalCoordinate4PHandler.clearSingletonInstance();
+        MapGeneratorEngine.clearSingletonInstance();
+        NumberCounter.clearSingletonInstance();
+        MaterialCounter.clearSingletonInstance();
     }
-
 
 }

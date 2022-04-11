@@ -60,6 +60,6 @@ public class GlobalMapHandler {
     }
 
     public static void clear() {
-        globalMap.clear();
+        globalMap = new HashMap<>();
     }
 }

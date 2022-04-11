@@ -24,7 +24,6 @@ public class IslandController {
     private final static int maxWeight = 10;
 
 
-
     public HashMap<String, HexagonalBase> getIslandMap() {
         return islandMap;
     }
@@ -170,5 +169,9 @@ public class IslandController {
             singletonInstance = new IslandController(islandsNumber, mainIslandsNumber, mainIslandWeight);
         }
         return singletonInstance;
+    }
+
+    public static void clearSingletonInstance() {
+        singletonInstance = null;
     }
 }

@@ -26,7 +26,11 @@ public class GenerationHelper {
     private boolean isMainIsland;
     private boolean seaAllowed;
     private final static Random random = new Random();
-    private static final HexagonalCoordinate4PHandler coordinateHandler = HexagonalCoordinate4PHandler.getInstance();
+    private HexagonalCoordinate4PHandler coordinateHandler;
+
+    public GenerationHelper() {
+        coordinateHandler = HexagonalCoordinate4PHandler.getInstance();
+    }
 
     protected void generationThroughPointers(HexagonalBase hexagonStarter, IslandController controller) {
         this.controller = controller;
@@ -65,7 +69,7 @@ public class GenerationHelper {
         }
     }
 
-    public static HexagonalBase generateHexagon(HexagonPoint pointInGeneration, String restrictionOnMaterial) {
+    public HexagonalBase generateHexagon(HexagonPoint pointInGeneration, String restrictionOnMaterial) {
         MaterialCounter materialCounter = MaterialCounter.getInstance();
         NumberCounter numberCounter = NumberCounter.getInstance();
         MaterialHandler materialHandler = new MaterialHandler();

@@ -39,5 +39,4 @@ public class MapFrame extends JFrame {
         this.add(refreshButtonPanel,BorderLayout.WEST);
         this.add(otherButtonsPanel, BorderLayout.NORTH);
     }
-
 }

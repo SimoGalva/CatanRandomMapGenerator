@@ -15,6 +15,7 @@ public class HexagonalCoordinate4PHandler {
     private final ArrayList<String> availableCoord;
     private final ArrayList<String> usedCoord;
 
+
     public ArrayList<String> getAllCoord() {
         return allCoord;
     }
@@ -153,5 +154,9 @@ public class HexagonalCoordinate4PHandler {
                 }
             }
         }
+    }
+
+    public static void clearSingletonInstance() {
+        singletonInstance = null;
     }
 }

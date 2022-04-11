@@ -70,4 +70,8 @@ public class MaterialCounter {
         }
         return singletonInstance;
     }
+
+    public static void clearSingletonInstance() {
+        singletonInstance = null;
+    }
 }

@@ -48,7 +48,7 @@ public class MapGeneratorEngine {
             } else {
                 point = coordinateHandler.pickRandomPoint(true);
             }
-            if (this.generationHelper.isNearIsland(point, GlobalMapHandler.getGlobalMap())) {
+            if (GlobalMapHandler.getGlobalMap().isEmpty() || this.generationHelper.isNearIsland(point, GlobalMapHandler.getGlobalMap())) {
                 isNearAlreadyGenerated = true;
             }
             else if (nIter > 100) {
@@ -62,7 +62,7 @@ public class MapGeneratorEngine {
         controller.setIslandHexCenter(point);
 
         //POPOLAMENTO DEL CENTRO
-        HexagonalBase cntrHex = GenerationHelper.generateHexagon(point, MaterialHandler.LAND);
+        HexagonalBase cntrHex = this.generationHelper.generateHexagon(point, MaterialHandler.LAND);
         controller.populateMap(cntrHex);
         logger.info("generateIsland: island center hexagon generated correctly.");
     }
@@ -131,5 +131,9 @@ public class MapGeneratorEngine {
             singletonInstance = new MapGeneratorEngine();
         }
         return  singletonInstance;
+    }
+
+    public static void clearSingletonInstance() {
+        singletonInstance = null;
     }
 }

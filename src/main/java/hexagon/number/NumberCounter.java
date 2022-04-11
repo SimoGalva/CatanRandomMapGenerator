@@ -72,4 +72,8 @@ public class NumberCounter {
         }
         return singletonInstance;
     }
+
+    public static void clearSingletonInstance() {
+        singletonInstance = null;
+    }
 }
