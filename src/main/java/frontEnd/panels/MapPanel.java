@@ -1,4 +1,4 @@
-package frontEnd;
+package frontEnd.panels;
 
 import globalMap.GlobalMapHandler;
 import hexagon.HexagonFE;

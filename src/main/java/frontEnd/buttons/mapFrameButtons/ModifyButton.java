@@ -1,4 +1,4 @@
-package frontEnd.buttons;
+package frontEnd.buttons.mapFrameButtons;
 
 import javax.swing.*;
 import java.awt.*;

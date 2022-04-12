@@ -1,13 +1,16 @@
-package frontEnd;
+package frontEnd.frames;
 
-import frontEnd.buttons.ModifyButton;
-import frontEnd.buttons.RefreshButton;
-import frontEnd.buttons.SaveButton;
-import frontEnd.buttons.SettingsButton;
+import frontEnd.buttons.mapFrameButtons.ModifyButton;
+import frontEnd.buttons.mapFrameButtons.RefreshButton;
+import frontEnd.buttons.mapFrameButtons.SaveButton;
+import frontEnd.buttons.mapFrameButtons.SettingsButton;
+import frontEnd.panels.MapPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+
+import static utils.ConstantsFrontEnd.BACKGROUND_COLOR;
 
 public class MapFrame extends JFrame {
     private MapPanel mapPanel;
@@ -18,8 +21,6 @@ public class MapFrame extends JFrame {
     private JButton saveButton;
     private JButton settingsButton;
 
-    private final Color backgroundColor = new Color(0x6E6E72);
-
     public MapFrame(ActionListener listenerFErunner) {
         super();
         mapPanel = new MapPanel();
@@ -28,7 +29,7 @@ public class MapFrame extends JFrame {
         refreshButton = new RefreshButton(listenerFErunner);
         printButton = new ModifyButton();
         saveButton = new SaveButton();
-        settingsButton = new SettingsButton();
+        settingsButton = new SettingsButton(listenerFErunner);
 
         refreshButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING,5, 0));
         refreshButtonPanel.add(refreshButton);
@@ -45,9 +46,11 @@ public class MapFrame extends JFrame {
         this.add(refreshButtonPanel,BorderLayout.WEST);
         this.add(otherButtonsPanel, BorderLayout.NORTH);
 
-        refreshButtonPanel.setBackground(backgroundColor);
-        otherButtonsPanel.setBackground(backgroundColor);
-        this.getContentPane().setBackground(backgroundColor);
+        refreshButtonPanel.setBackground(BACKGROUND_COLOR);
+        otherButtonsPanel.setBackground(BACKGROUND_COLOR);
+        this.getContentPane().setBackground(BACKGROUND_COLOR);
+        this.setTitle("Catan Map");
+        this.setResizable(false);
     }
 
     public void refreshMap() {

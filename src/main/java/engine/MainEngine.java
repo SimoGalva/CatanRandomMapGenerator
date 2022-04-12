@@ -44,5 +44,13 @@ public class MainEngine implements Runnable {
         public void runRefreshing() {
             refresh();
         }
+
+        public Params getParams() {
+            return params;
+        }
+
+        public void setParams(Params paramsNew) {
+            params = paramsNew;
+        }
     }
 }
