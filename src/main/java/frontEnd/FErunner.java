@@ -37,14 +37,8 @@ public class FErunner implements Runnable, ActionListener {
             case Constants.REFRESH_BUTTON_CLASS:
                 logger.info("FErunner.actionPeformed: refresh button pressed.");
                 mainEngineCaller.runRefreshing();
-                //todo: riprendi implementazione da qui, bisogna refreshare la MapFrame.
-                //MapFrame.refreshMap();
+                frame.refreshMap();
                 break;
         }
-        //TODO: implementa un metodo di refersh nella classe MapFrame, può essere dato da:
-        // setvisible(false) del solo JPanel map
-        // instanziare un nuovo Jpanel map (così si riprinta da solo e quindi settarloa a visible).
-        // in teoria dovrebbe funzioanre purchè il nuovo panel venga sostituito come attibuto della classe al posto del pane corrente.
-        // non ne sono sicuro, bisogna provare.
     }
 }

@@ -4,8 +4,12 @@ import engine.pojo.Params;
 import frontEnd.FErunner;
 import globalMap.CatMap;
 
+import java.util.logging.Logger;
+
 
 public class MainEngine implements Runnable {
+    private final Logger logger = Logger.getLogger(getClass().getName());
+
     private FErunner frontRunner;
     private CatMap map;
     public Params params;
@@ -31,6 +35,7 @@ public class MainEngine implements Runnable {
         RefreshEngine refreshEngine = new RefreshEngine(params);
         refreshEngine.run();
         this.map = refreshEngine.getNewMapToRebuild();
+        logger.info("refresh: refreshing process ended");
     }
 
 
