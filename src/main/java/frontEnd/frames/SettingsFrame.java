@@ -1,6 +1,7 @@
 package frontEnd.frames;
 
-import engine.pojo.Params;
+import engine.engineParams.Params;
+import engine.engineParams.ParamsValidator;
 import frontEnd.buttons.settingsFrameButtons.ConfirmButton;
 import frontEnd.inputLines.NumberLine;
 
@@ -8,11 +9,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import static utils.ConstantsFrontEnd.BACKGROUND_COLOR;
 import static utils.ConstantsFrontEnd.ConstantsTextLines.*;
 
 public class SettingsFrame extends JFrame implements ActionListener {
+    private final Logger logger = Logger.getLogger(getClass().getName());
+
     private final JPanel paramsPanel;
     private final JPanel buttonPanel;
     private final JButton confirmButton;
@@ -47,12 +51,16 @@ public class SettingsFrame extends JFrame implements ActionListener {
                 constraints.gridy = j;
                 if (i == 1) {
                     if (j == 0) {
+                        islandNumberLine.setText(String.valueOf(params.getIslandNumber()));
                         paramsPanel.add(islandNumberLine, constraints);
                     } else if (j == 1) {
+                        mainIslandNumberLine.setText(String.valueOf(params.getMainIslandNumber()));
                         paramsPanel.add(mainIslandNumberLine, constraints);
                     } else if (j == 2) {
+                        mainIslandWeightLine.setText(String.valueOf(params.getMainIslandWeight()));
                         paramsPanel.add(mainIslandWeightLine, constraints);
                     } else {
+                        playerNumberLine.setText(String.valueOf(params.getNumberOfPlayer()));
                         paramsPanel.add(playerNumberLine, constraints);
                     }
                 } else {
@@ -102,8 +110,59 @@ public class SettingsFrame extends JFrame implements ActionListener {
         this.setTitle("Settings");
     }
 
+    private boolean isThereNewContents() {
+        Integer islandNumberMayBe = 0;
+        boolean isThereNewIslandNumber = false;
+        Integer mainIslandNumberMayBe = 0;
+        boolean isThereNewMainIslandNumber = false;
+        Integer mainIslandWeightMayBe = 0;
+        boolean isThereNewMainIslandWeight = false;
+        Integer playerNumberMayBe = 0;
+        boolean isThereNewPlayerNumber = false;
+
+        islandNumberMayBe = this.islandNumberLine.getIntValue();
+        if (islandNumberMayBe != null) {
+            isThereNewIslandNumber = true;
+        }
+        mainIslandNumberMayBe = this.mainIslandNumberLine.getIntValue();
+        if (mainIslandNumberMayBe != null) {
+            isThereNewMainIslandNumber = true;
+        }
+        mainIslandWeightMayBe = this.mainIslandWeightLine.getIntValue();
+        if (mainIslandWeightMayBe != null) {
+            isThereNewMainIslandWeight = true;
+        }
+        playerNumberMayBe = this.playerNumberLine.getIntValue();
+        if (playerNumberMayBe != null) {
+            isThereNewPlayerNumber = true;
+        }
+        if ((islandNumberMayBe == 0 && mainIslandNumberMayBe == 0 && mainIslandWeightMayBe == 0 && playerNumberMayBe == 0)
+            || startingParams.equals(new Params(islandNumberMayBe, mainIslandNumberMayBe, mainIslandWeightMayBe, playerNumberMayBe))) {
+            isThereNewIslandNumber = false;
+            isThereNewMainIslandNumber = false;
+            isThereNewMainIslandWeight = false;
+            isThereNewPlayerNumber = false;
+        }
+        if (isThereNewIslandNumber || isThereNewMainIslandNumber || isThereNewMainIslandWeight || isThereNewPlayerNumber) {
+            this.newParams = new Params(islandNumberMayBe, mainIslandNumberMayBe, mainIslandWeightMayBe, playerNumberMayBe);
+        }
+        return (isThereNewIslandNumber || isThereNewMainIslandNumber || isThereNewMainIslandWeight || isThereNewPlayerNumber);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        logger.info("SettingsFrame.actionPerformed: confirmation button pressed.");
+        if (this.isThereNewContents()) {
+            ParamsValidator validator = new ParamsValidator();
+            if (!validator.validate(this.newParams)) {
+                logger.info("SettingsFrame.actionPerformed: validation process returned [false]. Settings new params to null.");
+                newParams = null;
+            } else {
+             logger.info("SettingsFrame.actionPerformed: new params setted: " + newParams.toString());
+            }
+        } else {
+            logger.info("SettingsFrame.actionPerformed: there aren't any new params. Nothing to do.");
+        }
         //todo: gestire il popolamento del newParams
     }
 

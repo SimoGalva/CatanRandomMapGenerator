@@ -1,7 +1,7 @@
 package frontEnd;
 
 import engine.MainEngine;
-import engine.pojo.Params;
+import engine.engineParams.Params;
 import frontEnd.frames.MapFrame;
 import frontEnd.frames.SettingsFrame;
 

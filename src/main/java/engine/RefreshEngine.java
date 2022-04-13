@@ -1,7 +1,7 @@
 package engine;
 
 import coordinate.HexagonalCoordinate4PHandler;
-import engine.pojo.Params;
+import engine.engineParams.Params;
 import globalMap.CatMap;
 import globalMap.GlobalMapHandler;
 import hexagon.material.MaterialCounter;
