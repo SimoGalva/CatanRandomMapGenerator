@@ -17,14 +17,13 @@ public class MainEngine implements Runnable {
     //TODO: non riesco a far rispettare i parametri esattamente diciamo che sono dei max corrisponedenti acconsentiti?
     // tienine conto quanto implementi l'input utente. Il paras conterrà tutti gli input utente quindi andrà adattato volta per volta.
     public MainEngine() {
-        params = new Params(4,1,2,4);
-
         this.frontRunner = new FErunner(new MainEngineCaller());
-        this.map = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(),params.getMainIslandWeight());
+        frontRunner.runBeforeLaunch();
     }
 
     @Override
     public void run() {
+        this.map = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(),params.getMainIslandWeight());
         this.map.generateIslands();
         this.map.postGeneratingFixing();
         //todo: implementare un postMappingChecking che controlla la conformità della mappa ai parametri e in caso negativo lanci un referesh automatico.
@@ -51,6 +50,10 @@ public class MainEngine implements Runnable {
 
         public void setParams(Params paramsNew) {
             params = paramsNew;
+        }
+
+        public void run() {
+            MainEngine.this.run();
         }
     }
 }

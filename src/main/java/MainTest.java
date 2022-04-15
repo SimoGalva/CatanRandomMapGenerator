@@ -4,7 +4,6 @@ public class MainTest {
 
     public static void main(String[] args){
         MainEngine engine = new MainEngine();
-        engine.run();
     }
 
 }

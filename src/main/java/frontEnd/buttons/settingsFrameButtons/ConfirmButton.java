@@ -11,7 +11,8 @@ public class ConfirmButton extends JButton {
         this.setBackground(new Color(0xC40303));
         this.setForeground(new Color(0xFFFFFFF));
         this.setFocusPainted(false);
-        this.addActionListener(listener[0]);
-        this.addActionListener(listener[1]);
+        for (int i = 0; i < listener.length; i++) {
+            this.addActionListener(listener[i]);
+        }
     }
 }

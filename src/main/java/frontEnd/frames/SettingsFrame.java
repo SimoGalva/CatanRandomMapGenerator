@@ -7,14 +7,13 @@ import frontEnd.inputLines.NumberLine;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
 import static utils.ConstantsFrontEnd.BACKGROUND_COLOR;
 import static utils.ConstantsFrontEnd.ConstantsTextLines.*;
 
-public class SettingsFrame extends JFrame implements ActionListener {
+public class SettingsFrame extends JFrame {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     private final JPanel paramsPanel;
@@ -25,16 +24,19 @@ public class SettingsFrame extends JFrame implements ActionListener {
     private final NumberLine mainIslandWeightLine;
     private final NumberLine playerNumberLine;
 
+    private boolean isBeforeRun;
+
     private Params startingParams;
     private Params newParams;
 
-    public SettingsFrame(Params params, ActionListener listenerFeRunner) {
+    public SettingsFrame(Params params, ActionListener listenerFeRunner, boolean isBeforeRun) {
         super();
         this.startingParams = params;
+        this.isBeforeRun = isBeforeRun;
 
         paramsPanel = new JPanel();
         buttonPanel = new JPanel();
-        confirmButton = new ConfirmButton(this, listenerFeRunner);
+        confirmButton = new ConfirmButton(listenerFeRunner);
         islandNumberLine = new NumberLine(ISLAND_NUMBER);
         mainIslandNumberLine = new NumberLine(MAIN_ISLAND_NUMBER);
         mainIslandWeightLine = new NumberLine(MAIN_ISLAND_WEIGHT);
@@ -149,8 +151,8 @@ public class SettingsFrame extends JFrame implements ActionListener {
         return (isThereNewIslandNumber || isThereNewMainIslandNumber || isThereNewMainIslandWeight || isThereNewPlayerNumber);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+
+    public void handleNewParams() {
         logger.info("SettingsFrame.actionPerformed: confirmation button pressed.");
         if (this.isThereNewContents()) {
             ParamsValidator validator = new ParamsValidator();
@@ -163,10 +165,13 @@ public class SettingsFrame extends JFrame implements ActionListener {
         } else {
             logger.info("SettingsFrame.actionPerformed: there aren't any new params. Nothing to do.");
         }
-        //todo: gestire il popolamento del newParams
     }
 
     public Params getNewParams() {
         return newParams;
+    }
+
+    public boolean isBeforeRun() {
+        return isBeforeRun;
     }
 }

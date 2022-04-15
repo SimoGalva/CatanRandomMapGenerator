@@ -23,6 +23,10 @@ public class FErunner implements Runnable, ActionListener {
         this.mainEngineCaller = mainEngineCaller;
     }
 
+    public void runBeforeLaunch(){
+        runSettingsFrame(new Params(0,0,0,0), true);
+    }
+
     @Override
     public void run() {
         frame = new MapFrame(this);
@@ -33,8 +37,8 @@ public class FErunner implements Runnable, ActionListener {
         frame.setVisible(true);
     }
 
-    private void runSettingsFrame(Params params) {
-        settingsFrame = new SettingsFrame(params, this);
+    private void runSettingsFrame(Params params, boolean isBeforeLaunch) {
+        settingsFrame = new SettingsFrame(params, this, isBeforeLaunch);
 
         settingsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         settingsFrame.pack();
@@ -55,17 +59,25 @@ public class FErunner implements Runnable, ActionListener {
                 break;
             case SETTINGS_BUTTON:
                 logger.info("FErunner.actionPeformed: settings button pressed.");
-                this.runSettingsFrame(mainEngineCaller.getParams());
+                this.runSettingsFrame(mainEngineCaller.getParams(), false);
                 break;
             case CONFIRM_BUTTON:
                 logger.info("FErunner.actionPeformed: confirm button pressed.");
+                settingsFrame.handleNewParams();
                 Params newParams = settingsFrame.getNewParams();
-                if (newParams != null && !mainEngineCaller.getParams().equals(newParams)) {
+                if (newParams != null && (mainEngineCaller.getParams() == null || !mainEngineCaller.getParams().equals(newParams))) {
                     mainEngineCaller.setParams(newParams);
-                    mainEngineCaller.runRefreshing();
-                    frame.refreshMap();
+                    if (frame != null) {
+                        mainEngineCaller.runRefreshing();
+                        frame.refreshMap();
+                    } else {
+                        mainEngineCaller.run();
+                        settingsFrame.dispose();
+                    }
                 }
-                settingsFrame.dispose();
+                if (!settingsFrame.isBeforeRun()) {
+                    settingsFrame.dispose();
+                } //todo: implementare una seplice warning frame?
                 break;
         }
     }
