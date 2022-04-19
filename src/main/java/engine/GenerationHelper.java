@@ -1,6 +1,6 @@
 package engine;
 
-import coordinate.HexagonalCoordinate4PHandler;
+import coordinate.AbstractCoordinateHandler;
 import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
@@ -26,10 +26,10 @@ public class GenerationHelper {
     private boolean isMainIsland;
     private boolean seaAllowed;
     private final static Random random = new Random();
-    private HexagonalCoordinate4PHandler coordinateHandler;
+    private AbstractCoordinateHandler coordinateHandler;
 
     public GenerationHelper() {
-        coordinateHandler = HexagonalCoordinate4PHandler.getInstance();
+        coordinateHandler = AbstractCoordinateHandler.getInstance(4);
     }
 
     protected void generationThroughPointers(HexagonalBase hexagonStarter, IslandController controller) {

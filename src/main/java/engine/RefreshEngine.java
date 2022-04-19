@@ -1,6 +1,6 @@
 package engine;
 
-import coordinate.HexagonalCoordinate4PHandler;
+import coordinate.AbstractCoordinateHandler;
 import engine.engineParams.Params;
 import globalMap.CatMap;
 import globalMap.GlobalMapHandler;
@@ -31,7 +31,7 @@ public class RefreshEngine implements Runnable {
     private void clearSingleInstances() {
         GlobalMapHandler.clear();
         IslandController.clearSingletonInstance();
-        HexagonalCoordinate4PHandler.clearSingletonInstance();
+        AbstractCoordinateHandler.clearSingletonInstance();
         MapGeneratorEngine.clearSingletonInstance();
         NumberCounter.clearSingletonInstance();
         MaterialCounter.clearSingletonInstance();

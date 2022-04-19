@@ -1,6 +1,6 @@
 package engine;
 
-import coordinate.HexagonalCoordinate4PHandler;
+import coordinate.AbstractCoordinateHandler;
 import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
@@ -20,7 +20,7 @@ public class MapGeneratorEngine {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final GenerationHelper generationHelper;
 
-    private HexagonalCoordinate4PHandler coordinateHandler;
+    private AbstractCoordinateHandler coordinateHandler;
     private MaterialHandler materialHandler;
     private NumberHandler numberHandler;
     private MaterialCounter materialCounter;
@@ -42,7 +42,7 @@ public class MapGeneratorEngine {
         do {
             nIter ++;
             if (controller.isMainIsland()) {
-                //pickRandomPoint è giustificato all'interno della classe HexagonalCoordinate4PHandler perchè la generazione random dipende strettamente dalla dimensione del tabellone,
+                //pickRandomPoint è giustificato all'interno della classe AbstractCoordinateHandler perchè la generazione random dipende strettamente dalla dimensione del tabellone,
                 // ergo dal numero di giocatori, così posso eventualmente ricilcare più codice per 6 giocatori;
                 point = coordinateHandler.pickRandomPoint(false);
             } else {
@@ -114,7 +114,7 @@ public class MapGeneratorEngine {
     private static MapGeneratorEngine singletonInstance = null;
 
     private MapGeneratorEngine() {
-        this.coordinateHandler = HexagonalCoordinate4PHandler.getInstance();
+        this.coordinateHandler = AbstractCoordinateHandler.getInstance(4);
         this.materialHandler = new MaterialHandler();
         this.numberHandler = new NumberHandler();
         this.materialCounter = MaterialCounter.getInstance();
