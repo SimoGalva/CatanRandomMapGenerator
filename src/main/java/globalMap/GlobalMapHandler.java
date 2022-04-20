@@ -59,6 +59,22 @@ public class GlobalMapHandler {
         globalMap.put(tempSeaHexagonToSwitch, hexagonToSwitch);
     }
 
+    public static int calculateSize() {
+        //todo: sostituire i -1 con i valori corretti
+        switch (globalMap.size()) {
+            case 44: // 3 giocatori
+                return -1;
+            case 51: // 4 giocatori
+                return 9;
+            case 58: // 5 giocatori
+                return -1;
+            case 65: // 6 giocatori
+                return -1;
+            default: // errore da qualche parte
+                return 0;
+        }
+    }
+
     public static void clear() {
         globalMap.clear();
     }

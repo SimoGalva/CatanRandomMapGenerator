@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 public class MapPanel extends JPanel {
         private static final long serialVersionUID = 1L;
+        //todo: da ridimensionare per i tabelloni più grandi
         private final int WIDTH = 920;
         private final int HEIGHT = 820;
 
@@ -35,13 +36,14 @@ public class MapPanel extends JPanel {
             metrics = g.getFontMetrics();
 
             drawCircle(g2d, origin, 450, true, true, 0x4488FF, 0);
-            drawHexGridLoop(g2d, origin, 9, 50, 8);
+            drawHexGridLoop(g2d, origin, 50, 8);
         }
 
-        private void drawHexGridLoop(Graphics g, Point origin, int size, int radius, int padding) {
+        private void drawHexGridLoop(Graphics g, Point origin, int radius, int padding) {
             double ang30 = Math.toRadians(30);
             double xOff = Math.cos(ang30) * (radius + padding);
             double yOff = Math.sin(ang30) * (radius + padding);
+            int size = GlobalMapHandler.calculateSize();
             int half = size / 2;
 
             for (int row = 1; row < size-1; row++) {
