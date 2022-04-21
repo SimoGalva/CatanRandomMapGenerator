@@ -1,4 +1,4 @@
-package hexagon.pojo;
+package utils.pojo;
 
 public class SwitchingHexagons {
     private String coordSwitchedHex1;

@@ -10,8 +10,8 @@ import hexagon.material.Materials;
 import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
-import hexagon.pojo.SwitchingHexagons;
 import island.IslandController;
+import utils.pojo.SwitchingHexagons;
 
 import java.util.ArrayList;
 import java.util.HashMap;

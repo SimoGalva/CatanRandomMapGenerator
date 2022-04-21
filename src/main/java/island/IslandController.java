@@ -4,7 +4,7 @@ import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.Materials;
-import hexagon.pojo.SwitchingHexagons;
+import utils.pojo.SwitchingHexagons;
 
 import java.util.HashMap;
 import java.util.Map;

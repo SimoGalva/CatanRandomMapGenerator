@@ -4,6 +4,7 @@ import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.Materials;
 import hexagon.number.Numbers;
+import utils.pojo.DiagSettingsHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,19 +60,19 @@ public class GlobalMapHandler {
         globalMap.put(tempSeaHexagonToSwitch, hexagonToSwitch);
     }
 
-    public static int calculateSize() {
+    public static DiagSettingsHolder calculateDiagSettings() {
         //todo: sostituire i -1 con i valori corretti
         switch (globalMap.size()) {
             case 44: // 3 giocatori
-                return -1;
+                return new DiagSettingsHolder(1,0);
             case 51: // 4 giocatori
-                return 9;
+                return new DiagSettingsHolder(0,0);
             case 58: // 5 giocatori
-                return -1;
+                return new DiagSettingsHolder(0,1);
             case 65: // 6 giocatori
-                return -1;
+                return new DiagSettingsHolder(-1,1);
             default: // errore da qualche parte
-                return 0;
+                return null;
         }
     }
 

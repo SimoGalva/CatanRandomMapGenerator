@@ -5,6 +5,7 @@ import hexagon.HexagonFE;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.Materials;
+import utils.pojo.DiagSettingsHolder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class MapPanel extends JPanel {
         //todo: da ridimensionare per i tabelloni più grandi
         private final int WIDTH = 920;
         private final int HEIGHT = 820;
+        private final int size = 9; // valore iviolabile, definisce il giusto numero di righe e la forma della mappa
 
         private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap();
 
@@ -43,16 +45,16 @@ public class MapPanel extends JPanel {
             double ang30 = Math.toRadians(30);
             double xOff = Math.cos(ang30) * (radius + padding);
             double yOff = Math.sin(ang30) * (radius + padding);
-            int size = GlobalMapHandler.calculateSize();
             int half = size / 2;
+            DiagSettingsHolder diagSettings = GlobalMapHandler.calculateDiagSettings();
 
             for (int row = 1; row < size-1; row++) {
-                int cols = size - java.lang.Math.abs(row - half);
+                int colsLimit = size - java.lang.Math.abs(row - half);
 
-                for (int col = 0; col < cols; col++) {
+                for (int col = diagSettings.getDiagStart(); col < colsLimit + diagSettings.getDiagColsAdding(); col++) {
                     int xLbl = row < half ? col - row : col - half;
                     int yLbl = row - half;
-                    int x = (int) (origin.x + xOff * (col * 2 + 1 - cols));
+                    int x = (int) (origin.x + xOff * (col * 2 + 1 - colsLimit));
                     int y = (int) (origin.y + yOff * (row - half) * 3);
 
                     drawHex(g, xLbl, yLbl, x, y, radius);
