@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 public class CoordinateHandler4P extends AbstractCoordinateHandler{
     private final Logger logger = Logger.getLogger(getClass().getName());
 
+    @Override
     public HexagonPoint pickRandomPoint(boolean onBorderAllowed) {
         Random random = new Random();
         int rowCoord;
