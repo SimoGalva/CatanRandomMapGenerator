@@ -18,7 +18,7 @@ public class CatMap {
     private NumberCounter numberCounter;
     private int islandsNumber;
     private int mainIslandsNumber;
-    private final int numberOfPlayer = 4;
+    private final int numberOfPlayer;
     private IslandController islandControllerWrapper;
     private MapGeneratorEngine generatorEngine;
     private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap(); //sincronzza la mappa sempre e comunque
@@ -27,13 +27,14 @@ public class CatMap {
         return islands;
     }
 
-    public CatMap(int islandsNumber, int mainIslandsNumber, int mainIslandWeight) {
+    public CatMap(int islandsNumber, int mainIslandsNumber, int mainIslandWeight, int numberOfPlayer) {
         this.islands = new Island[islandsNumber];
         this.materialCounter = MaterialCounter.getInstance();
         this.numberCounter = NumberCounter.getInstance();
         this.generatorEngine = MapGeneratorEngine.getInstance();
         this.islandsNumber = islandsNumber;
         this.mainIslandsNumber = mainIslandsNumber;
+        this.numberOfPlayer = numberOfPlayer;
         //ritorna un islandController che contiere un array di IslandController (i cui sotto array saranno nulli)
         this.islandControllerWrapper = IslandController.getInstance(islandsNumber,mainIslandsNumber, mainIslandWeight);
     }

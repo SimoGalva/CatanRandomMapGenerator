@@ -23,7 +23,7 @@ public class RefreshEngine implements Runnable {
     @Override
     public void run() {
         clearSingleInstances();
-        this.newMapToRebuild = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(), params.getMainIslandWeight());
+        this.newMapToRebuild = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(), params.getMainIslandWeight(), params.getNumberOfPlayer());
         this.newMapToRebuild.generateIslands();
         this.newMapToRebuild.postGeneratingFixing();
     }

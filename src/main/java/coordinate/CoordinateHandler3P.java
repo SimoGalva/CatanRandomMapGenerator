@@ -15,10 +15,10 @@ public class CoordinateHandler3P extends AbstractCoordinateHandler{
         int rowCoord;
         int diagCoord;
         if (onBorderAllowed){
-            diagCoord = random.nextInt(8) - 4;
+            diagCoord = random.nextInt(8) - 3;
             rowCoord = random.nextInt(7) - 3;
         } else {
-            diagCoord = random.nextInt(6) - 3;
+            diagCoord = random.nextInt(6) - 2;
             rowCoord = random.nextInt(5) - 2;
         }
         logger.info("pickRandomPoint: random hexagonal point generated ["+diagCoord+":"+rowCoord+"] and isOnBorder["+onBorderAllowed+"]");
@@ -37,7 +37,7 @@ public class CoordinateHandler3P extends AbstractCoordinateHandler{
     }
 
     private CoordinateHandler3P() {
-        //important: [3:0], [-4:0] non devono essere nelle liste
+        //important: [4:0], [-3:0] non devono essere nelle liste
         this.allCoord = new ArrayList<>();
         this.availableCoord = new ArrayList<>();
         this.usedCoord = new ArrayList<>();

@@ -37,7 +37,7 @@ public class CoordinateHandler6P extends AbstractCoordinateHandler{
     }
 
     private CoordinateHandler6P() {
-        //important: [4:0], [-4:0] non devono essere nelle liste
+        //important: [5:0], [-5:0] non devono essere nelle liste
         this.allCoord = new ArrayList<>();
         this.availableCoord = new ArrayList<>();
         this.usedCoord = new ArrayList<>();

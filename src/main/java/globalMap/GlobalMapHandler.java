@@ -34,9 +34,23 @@ public class GlobalMapHandler {
 
     //questo metodo popola gli esagono estremanti con WATER (-4,0), (4,0) nel caso di 4Player
     public static void populateLimitWaterHexagons(int numberOfPlayer) {
-        if (numberOfPlayer == 4) {
-            populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(-4,0)));
-            populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(4,0)));
+        switch (numberOfPlayer ) {
+            case 3:
+                populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(-3,0)));
+                populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(4,0)));
+                break;
+            case 4:
+                populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(-4,0)));
+                populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(4,0)));
+                break;
+            case 5:
+                populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(-4,0)));
+                populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(5,0)));
+                break;
+            case 6:
+                populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(-5,0)));
+                populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(5,0)));
+                break;
         }
     }
 
@@ -61,7 +75,6 @@ public class GlobalMapHandler {
     }
 
     public static DiagSettingsHolder calculateDiagSettings() {
-        //todo: sostituire i -1 con i valori corretti
         switch (globalMap.size()) {
             case 44: // 3 giocatori
                 return new DiagSettingsHolder(1,0);

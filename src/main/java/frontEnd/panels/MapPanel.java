@@ -17,7 +17,7 @@ public class MapPanel extends JPanel {
         //todo: da ridimensionare per i tabelloni più grandi
         private final int WIDTH = 920;
         private final int HEIGHT = 820;
-        private final int size = 9; // valore iviolabile, definisce il giusto numero di righe e la forma della mappa
+        private final int SIZE = 9; // valore iviolabile, definisce il giusto numero di righe e la forma della mappa
 
         private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap();
 
@@ -45,11 +45,11 @@ public class MapPanel extends JPanel {
             double ang30 = Math.toRadians(30);
             double xOff = Math.cos(ang30) * (radius + padding);
             double yOff = Math.sin(ang30) * (radius + padding);
-            int half = size / 2;
+            int half = SIZE / 2;
             DiagSettingsHolder diagSettings = GlobalMapHandler.calculateDiagSettings();
 
-            for (int row = 1; row < size-1; row++) {
-                int colsLimit = size - java.lang.Math.abs(row - half);
+            for (int row = 1; row < SIZE -1; row++) {
+                int colsLimit = SIZE - java.lang.Math.abs(row - half);
 
                 for (int col = diagSettings.getDiagStart(); col < colsLimit + diagSettings.getDiagColsAdding(); col++) {
                     int xLbl = row < half ? col - row : col - half;

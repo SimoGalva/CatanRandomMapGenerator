@@ -11,6 +11,7 @@ public class CoordinateHandler4P extends AbstractCoordinateHandler{
 
     @Override
     public HexagonPoint pickRandomPoint(boolean onBorderAllowed) {
+        //todo: implementa la stella logica nell'else anche per gli altri player (bisogna solo sistemare la definizone di isOnBorder)
         Random random = new Random();
         int rowCoord;
         int diagCoord;
@@ -18,8 +19,13 @@ public class CoordinateHandler4P extends AbstractCoordinateHandler{
             diagCoord = random.nextInt(9) - 4;
             rowCoord = random.nextInt(7) - 3;
         } else {
-            diagCoord = random.nextInt(7) - 3;
-            rowCoord = random.nextInt(5) - 2;
+            boolean isOnBorder;
+             do {
+                diagCoord = random.nextInt(7) - 3;
+                rowCoord = random.nextInt(5) - 2;
+
+                isOnBorder = (diagCoord == rowCoord && (diagCoord == 2 || diagCoord ==-2)) || (diagCoord == -3 && rowCoord == -1) || (diagCoord == 3 && rowCoord == 1);
+             } while (isOnBorder);
         }
         logger.info("pickRandomPoint: random hexagonal point generated ["+diagCoord+":"+rowCoord+"] and isOnBorder["+onBorderAllowed+"]");
         return new HexagonPoint(diagCoord,rowCoord);
