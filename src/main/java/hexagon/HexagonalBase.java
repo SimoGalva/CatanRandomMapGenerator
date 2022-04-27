@@ -53,8 +53,15 @@ public class HexagonalBase {
     }
 
     public HexagonalBase(Materials material, Numbers number, int pointerDimension, HexagonPoint point) {
+        MaterialCounter tempMaterialCounter;
         this.coordinate4PHandler = AbstractCoordinateHandler.getInstance(4);
-        this.materialCounter = MaterialCounter.getInstance();
+        try {
+            tempMaterialCounter = MaterialCounter.getInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            tempMaterialCounter = null;
+        }
+        this.materialCounter = tempMaterialCounter;
         this.material = material;
         this.number = number;
         this.pointer = new HexagonPoint[pointerDimension];

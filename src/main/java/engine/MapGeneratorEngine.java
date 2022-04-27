@@ -117,9 +117,15 @@ public class MapGeneratorEngine {
         this.coordinateHandler = AbstractCoordinateHandler.getInstance(4);
         this.materialHandler = new MaterialHandler();
         this.numberHandler = new NumberHandler();
-        this.materialCounter = MaterialCounter.getInstance();
-        this.numberCounter = NumberCounter.getInstance();
         this.generationHelper = new GenerationHelper();
+        try {
+            this.materialCounter = MaterialCounter.getInstance();
+            this.numberCounter = NumberCounter.getInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.materialCounter = null;
+            this.numberCounter = null;
+        }
     }
 
     public static final MapGeneratorEngine getInstance() {

@@ -3,6 +3,7 @@ package island;
 import globalMap.GlobalMapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
+import hexagon.material.MaterialCounter;
 import hexagon.material.Materials;
 import utils.pojo.SwitchingHexagons;
 
@@ -20,7 +21,6 @@ public class IslandController {
     private int numberOfHexagons;
     private HexagonPoint IslandHexCenter;
     private HashMap<String, HexagonalBase> islandMap = null;
-    private final static int totalLand = 30;
     private final static int maxWeight = 10;
 
 
@@ -126,7 +126,14 @@ public class IslandController {
     //TODO: serviranno controlli sugli input di islandsNumber e mainIslandsNumber: islandNumber>=mainIslandsNumber. E sul peso: vedi commit collegato (numero di pezzi isola).
     private IslandController(int islandsNumber, int mainIslandsNumber,int mainIslandWeight) {
         finiteController = new IslandController[islandsNumber];
-
+        int totalLand = 0;
+        try {
+            MaterialCounter materialCounter = MaterialCounter.getInstance();
+            totalLand = materialCounter.getTotalLand();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
         //gestione dei pesi: lavoro sulla prima main island per correzioni
         double distributedMainIslWeight = (mainIslandWeight) / mainIslandsNumber;
         double distributedNonMainIslweight = islandsNumber != mainIslandsNumber ? (double) ((maxWeight - mainIslandWeight) / (islandsNumber-mainIslandsNumber)) : maxWeight;

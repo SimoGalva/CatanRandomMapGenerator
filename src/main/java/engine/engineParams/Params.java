@@ -10,7 +10,7 @@ public class Params {
         this.islandNumber = islandNumber;
         this.mainIslandNumber = mainIslandNumber;
         this.mainIslandWeight = mainIslandWeight;
-        this.numberOfPlayer = numberOfPlayer; //todo: temp 4 player di default finchè non si introduce la possibilità di averne di più o meno.
+        this.numberOfPlayer = numberOfPlayer;
     }
 
     public int getNumberOfPlayer() {

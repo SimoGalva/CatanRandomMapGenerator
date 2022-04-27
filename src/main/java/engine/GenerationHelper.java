@@ -70,8 +70,15 @@ public class GenerationHelper {
     }
 
     public HexagonalBase generateHexagon(HexagonPoint pointInGeneration, String restrictionOnMaterial) {
-        MaterialCounter materialCounter = MaterialCounter.getInstance();
-        NumberCounter numberCounter = NumberCounter.getInstance();
+        MaterialCounter materialCounter;
+        NumberCounter numberCounter;
+        try {
+            materialCounter = MaterialCounter.getInstance();
+            numberCounter = NumberCounter.getInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
         MaterialHandler materialHandler = new MaterialHandler();
         NumberHandler numberHandler = new NumberHandler();
 

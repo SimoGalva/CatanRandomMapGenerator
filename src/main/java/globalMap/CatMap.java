@@ -9,7 +9,7 @@ import island.IslandController;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
-
+ //todo: logica del sizeCode delle mappe: la mappa da n player può essere più o meno grande di un blochetto orizzonatale. Dare scelta. (attenzione è una modifica profonda, backend e frontend)
 public class CatMap {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
@@ -29,7 +29,7 @@ public class CatMap {
 
     public CatMap(int islandsNumber, int mainIslandsNumber, int mainIslandWeight, int numberOfPlayer) {
         this.islands = new Island[islandsNumber];
-        this.materialCounter = MaterialCounter.getInstance();
+        this.materialCounter = MaterialCounter.createInstance(numberOfPlayer);
         this.numberCounter = NumberCounter.getInstance();
         this.generatorEngine = MapGeneratorEngine.getInstance();
         this.islandsNumber = islandsNumber;
@@ -39,7 +39,7 @@ public class CatMap {
         this.islandControllerWrapper = IslandController.getInstance(islandsNumber,mainIslandsNumber, mainIslandWeight);
     }
 
-    public void generateIslands() {
+     public void generateIslands() {
         for (int i = 0; i < this.islandsNumber; i++) {
             logger.info("globalMap.CatMap.generateMapIsland: setting center for "+ (this.islandControllerWrapper.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]).");
             this.islands[i] = new Island(this.islandControllerWrapper.getFiniteController()[i]);
