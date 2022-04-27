@@ -37,6 +37,15 @@ public class MaterialCounter {
         if (numberOfPlayer == 3 || numberOfPlayer == 5) {
             this.adaptMaterialNumber(numberOfPlayer);
         }
+        int tempTotalLand = 0;
+        for (Map.Entry<Materials, Integer> currEntry : this.materialMap.entrySet()) {
+            if (Materials.WATER.equals(currEntry.getKey())) {
+                continue;
+            }
+            tempTotalLand = tempTotalLand + currEntry.getValue();
+        }
+        this.totalLand = tempTotalLand;
+        logger.info("MaterialCounter: total land ["+this.totalLand+"]");
     }
 
     private void setConfig(int numberOfPlayer) {
@@ -87,15 +96,7 @@ public class MaterialCounter {
                 this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND_WATER));
             }
         }
-        int tempTotalLand = 0;
-        for (Map.Entry<Materials, Integer> currEntry : this.materialMap.entrySet()) {
-            if (Materials.DESERT.equals(currEntry.getKey()) || Materials.WATER.equals(currEntry.getKey())) {
-                continue;
-            }
-            tempTotalLand = tempTotalLand + currEntry.getValue();
-        }
-        this.totalLand = tempTotalLand;
-        logger.info("adaptMaterialNumber: ["+numberOfPlayer+"] players, ["+this.materialMap.size()+"] materials available, and total land = ["+this.totalLand+"]");
+        logger.info("adaptMaterialNumber: ["+numberOfPlayer+"] players, ["+this.materialMap.size()+"] materials available.");
     }
 
     public boolean consumeMaterial(Materials material) {
