@@ -29,7 +29,7 @@ public class GenerationHelper {
     private AbstractCoordinateHandler coordinateHandler;
 
     public GenerationHelper() {
-        coordinateHandler = AbstractCoordinateHandler.getInstance(4);
+        coordinateHandler = AbstractCoordinateHandler.getInstance();
     }
 
     protected void generationThroughPointers(HexagonalBase hexagonStarter, IslandController controller) {

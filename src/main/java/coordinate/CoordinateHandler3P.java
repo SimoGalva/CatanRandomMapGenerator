@@ -67,5 +67,8 @@ public class CoordinateHandler3P extends AbstractCoordinateHandler{
                 }
             }
         }
+        for (String s : allCoord) {
+            System.out.println(s);
+        }
     }
 }

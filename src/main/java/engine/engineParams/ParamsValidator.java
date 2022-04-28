@@ -1,5 +1,6 @@
 package engine.engineParams;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class ParamsValidator {
@@ -13,7 +14,7 @@ public class ParamsValidator {
         if (params.getIslandNumber() >= 1 && params.getIslandNumber() <= 5
             && params.getMainIslandNumber() >= 1 && params.getMainIslandNumber() <= params.getIslandNumber()
             && params.getMainIslandWeight() >=1 && params.getMainIslandWeight() <= 10
-            && params.getNumberOfPlayer() == 4) {
+            && Arrays.asList(3,4,5,6).contains(params.getNumberOfPlayer())) {
             logger.info("validate: new params are valid.");
             isValidParams = true;
         }

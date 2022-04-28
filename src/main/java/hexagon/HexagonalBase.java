@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class HexagonalBase {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final MaterialCounter materialCounter;
-    private final AbstractCoordinateHandler coordinate4PHandler;
+    private final AbstractCoordinateHandler coordinateHandler;
 
 
     private HexagonFE hexagonFEToken;
@@ -54,7 +54,7 @@ public class HexagonalBase {
 
     public HexagonalBase(Materials material, Numbers number, int pointerDimension, HexagonPoint point) {
         MaterialCounter tempMaterialCounter;
-        this.coordinate4PHandler = AbstractCoordinateHandler.getInstance(4);
+        this.coordinateHandler = AbstractCoordinateHandler.getInstance();
         try {
             tempMaterialCounter = MaterialCounter.getInstance();
         } catch (Exception e) {
@@ -91,7 +91,7 @@ public class HexagonalBase {
         pointerBuilderTemp[5] = new HexagonPoint(diagCoord + 1, rowCoord - 1);
 
         for (HexagonPoint pointToTest : pointerBuilderTemp) {
-            if (coordinate4PHandler.existsCoordinate(pointToTest)) {
+            if (coordinateHandler.existsCoordinate(pointToTest)) {
                 pointerBuilder.add(pointToTest);
             }
         }

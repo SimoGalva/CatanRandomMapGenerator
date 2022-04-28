@@ -52,6 +52,7 @@ public class GlobalMapHandler {
                 populateMap(HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, new HexagonPoint(5,0)));
                 break;
         }
+        printMap();
     }
 
     public static ArrayList<HexagonalBase> getSeaHexagons() {

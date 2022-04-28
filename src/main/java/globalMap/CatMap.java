@@ -1,5 +1,6 @@
 package globalMap;
 
+import coordinate.AbstractCoordinateHandler;
 import engine.MapGeneratorEngine;
 import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
@@ -20,6 +21,7 @@ public class CatMap {
     private int mainIslandsNumber;
     private final int numberOfPlayer;
     private IslandController islandControllerWrapper;
+    private AbstractCoordinateHandler coordinateHandler;
     private MapGeneratorEngine generatorEngine;
     private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap(); //sincronzza la mappa sempre e comunque
 
@@ -28,6 +30,7 @@ public class CatMap {
     }
 
     public CatMap(int islandsNumber, int mainIslandsNumber, int mainIslandWeight, int numberOfPlayer) {
+        this.coordinateHandler = AbstractCoordinateHandler.getInstance(numberOfPlayer);
         this.islands = new Island[islandsNumber];
         this.materialCounter = MaterialCounter.createInstance(numberOfPlayer);
         this.numberCounter = NumberCounter.getInstance();
@@ -59,12 +62,8 @@ public class CatMap {
 
     public void postGeneratingFixing() {
         logger.info("postGeneratingFixing: starting post generating fixes");
-        switch (this.numberOfPlayer) {
-            case 4:
-                GlobalMapHandler.populateLimitWaterHexagons(numberOfPlayer);
-                fillOcean();
-                break;
-        }
+        GlobalMapHandler.populateLimitWaterHexagons(numberOfPlayer);
+        fillOcean();
         logger.info("postGeneratingFixing: process ended.");
     }
 }

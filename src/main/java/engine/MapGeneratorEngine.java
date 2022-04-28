@@ -114,7 +114,7 @@ public class MapGeneratorEngine {
     private static MapGeneratorEngine singletonInstance = null;
 
     private MapGeneratorEngine() {
-        this.coordinateHandler = AbstractCoordinateHandler.getInstance(4);
+        this.coordinateHandler = AbstractCoordinateHandler.getInstance();
         this.materialHandler = new MaterialHandler();
         this.numberHandler = new NumberHandler();
         this.generationHelper = new GenerationHelper();

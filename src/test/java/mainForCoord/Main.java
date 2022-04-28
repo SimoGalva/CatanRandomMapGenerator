@@ -43,7 +43,7 @@ public class Main extends JPanel {
         for (int row = 1; row < 8; row++) {
             int cols = sizeRow - java.lang.Math.abs(row - half);
 
-            for (int col = 0; col < cols+1; col++) {
+            for (int col = 1; col < cols; col++) {
                 int xLbl = row < half ? col - row : col - half;
                 int yLbl = row - half;
                 int x = (int) (origin.x + xOff * (col * 2 + 1 - cols));

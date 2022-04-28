@@ -91,15 +91,20 @@ public abstract class AbstractCoordinateHandler {
         return ret;
     }
 
-
-
     public abstract HexagonPoint pickRandomPoint(boolean onBorderAllowed);
-
 
     //implementazione singletonInstance
     protected static AbstractCoordinateHandler singletonInstance = null;
+    protected static int numberOfPlayer = 0;
+
+    public static AbstractCoordinateHandler getInstance(){
+       return singletonInstance; //getInstance(numberOfPlayer);
+    }
 
     public static AbstractCoordinateHandler getInstance(int numberOfPlayer) {
+        if (numberOfPlayer == 0) {
+            AbstractCoordinateHandler.numberOfPlayer = numberOfPlayer;
+        }
         switch(numberOfPlayer) {
             case 3:
                 return CoordinateHandler3P.getInstance();
@@ -110,6 +115,7 @@ public abstract class AbstractCoordinateHandler {
             case 6:
                 return CoordinateHandler6P.getInstance();
             default:
+                AbstractCoordinateHandler.numberOfPlayer = 0;
                 logger.info("getInstance: invalid number of player. Returning null.");
                 return null;
         }
@@ -117,5 +123,6 @@ public abstract class AbstractCoordinateHandler {
 
     public static void clearSingletonInstance() {
         singletonInstance = null;
+        AbstractCoordinateHandler.numberOfPlayer = 0;
     }
 }
