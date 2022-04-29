@@ -33,7 +33,7 @@ public class CatMap {
         this.coordinateHandler = AbstractCoordinateHandler.getInstance(numberOfPlayer);
         this.islands = new Island[islandsNumber];
         this.materialCounter = MaterialCounter.createInstance(numberOfPlayer);
-        this.numberCounter = NumberCounter.getInstance();
+        this.numberCounter = NumberCounter.createInstance(numberOfPlayer);
         this.generatorEngine = MapGeneratorEngine.getInstance();
         this.islandsNumber = islandsNumber;
         this.mainIslandsNumber = mainIslandsNumber;

@@ -41,7 +41,7 @@ public class CoordinateHandler6P extends AbstractCoordinateHandler{
         this.allCoord = new ArrayList<>();
         this.availableCoord = new ArrayList<>();
         this.usedCoord = new ArrayList<>();
-        for (int i = -4; i <= 4; i++) {
+        for (int i = -5; i <= 5; i++) {
             for (int j = -3; j <= 3; j++) {
                 if (i == 3 && j < 3) {
                     allCoord.add(i + ":" + j);

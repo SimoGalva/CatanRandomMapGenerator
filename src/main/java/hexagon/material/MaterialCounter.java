@@ -34,7 +34,8 @@ public class MaterialCounter {
         materialMap.put(Materials.HAY,COUNTER_HAY);
         materialMap.put(Materials.WATER,COUNTER_WATER);
         materialMap.put(Materials.DESERT,COUNTER_DESERT);
-        if (numberOfPlayer == 3 || numberOfPlayer == 5) {
+        //todo: si potrebbe mettere in input una selezione della verione del catan così da creare scenari da 4 con i pezzi da 6 nel caso si disponga della ver 6 giocatori del gioco.
+        if (numberOfPlayer == 3 || numberOfPlayer == 5 || numberOfPlayer == 6) {
             this.adaptMaterialNumber(numberOfPlayer);
         }
         int tempTotalLand = 0;
@@ -92,11 +93,23 @@ public class MaterialCounter {
                 this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND_WATER));
             }
         } else if (numberOfPlayer == 5) {
-            for (int i = 63; i > 56; i--) {
+            //è necessario togliere sempre almeno una casella non -1 pechè da gico ci sono 39 terreni produttivi e 38 numeri utili, essendo
+            //molti i pezzi da togliere è improbabile che non venga tolto nemmeno un terreno produttivo.
+            for (int i = 69; i > 56; i--) {
                 this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND_WATER));
             }
+        } else if (numberOfPlayer == 6) {
+            for (int i = 69; i > 63; i--) {
+                //è necessario togliere sempre almeno una casella non -1 pechè da gico ci sono 39 terreni produttivi e 38 numeri utili.
+                if (i == 69) this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND));
+                else this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND_WATER));
+            }
         }
-        logger.info("adaptMaterialNumber: ["+numberOfPlayer+"] players, ["+this.materialMap.size()+"] materials available.");
+        int countMaterial = 0;
+        for (Map.Entry<Materials,Integer> curEntry : this.materialMap.entrySet()) {
+            countMaterial ++;
+        }
+        logger.info("adaptMaterialNumber: ["+numberOfPlayer+"] players, ["+countMaterial+"] materials available.");
     }
 
     public boolean consumeMaterial(Materials material) {
@@ -130,7 +143,7 @@ public class MaterialCounter {
 
     public static MaterialCounter getInstance() throws NoInstanceException {
         if (singletonInstance == null) {
-            NoInstanceException exception = new NoInstanceException("MaterialCounter.getInstance: "+NoInstanceException.MESSAGE);
+            NoInstanceException exception = new NoInstanceException("MaterialCounter.getInstance: " + NoInstanceException.MESSAGE);
             throw exception;
         }
         return singletonInstance;
