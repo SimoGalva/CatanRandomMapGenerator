@@ -15,17 +15,22 @@ import java.util.HashMap;
 public class MapPanel extends JPanel {
         private static final long serialVersionUID = 1L;
         //todo: da ridimensionare per i tabelloni più grandi
-        private final int WIDTH = 920;
-        private final int HEIGHT = 820;
+        private int WIDTH = 920;
+        private int HEIGHT = 820;
         private final int SIZE = 9; // valore iviolabile, definisce il giusto numero di righe e la forma della mappa
 
         private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap();
 
         private Font font = new Font("Arial", Font.BOLD, 18);
         FontMetrics metrics;
-
         public MapPanel() {
+            setFrameSize(GlobalMapHandler.calculateFrameSize());
             setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        }
+
+        private void setFrameSize(Dimension dimension) {
+            this.HEIGHT = (int) dimension.getHeight();
+            this.HEIGHT = (int) dimension.getWidth();
         }
 
         @Override
@@ -36,8 +41,8 @@ public class MapPanel extends JPanel {
             g2d.setStroke(new BasicStroke(4.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER));
             g2d.setFont(font);
             metrics = g.getFontMetrics();
-
-            drawCircle(g2d, origin, 450, true, true, 0x4488FF, 0);
+            int radious = GlobalMapHandler.calculateRadiuos();
+            drawCircle(g2d, origin, radious, true, true, 0x4488FF, 0);
             drawHexGridLoop(g2d, origin, 50, 8);
         }
 
