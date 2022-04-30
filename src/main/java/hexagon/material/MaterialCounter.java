@@ -2,6 +2,7 @@ package hexagon.material;
 
 import utils.NoInstanceException;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -88,21 +89,55 @@ public class MaterialCounter {
 
     private void adaptMaterialNumber(int numberOfPlayer) {
         MaterialHandler handler = new MaterialHandler();
+        ArrayList<Materials> endedMaterialsToSkip = new ArrayList<>();
         if (numberOfPlayer == 3) {
             for (int i = 49; i > 42; i--) {
-                this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND_WATER));
+                for (Map.Entry<Materials,Integer> currEntry : this.materialMap.entrySet()) {
+                    if (currEntry.getValue() == 0) {
+                        endedMaterialsToSkip.add(currEntry.getKey());
+                    }
+                }
+                Materials matirialToConsume = handler.pickRandomMaterial(MaterialHandler.LAND_WATER);
+                if (!endedMaterialsToSkip.contains(matirialToConsume)) {
+                    this.consumeMaterial(matirialToConsume);
+                } else {
+                    i++;
+                }
             }
         } else if (numberOfPlayer == 5) {
             //è necessario togliere sempre almeno una casella non -1 pechè da gico ci sono 39 terreni produttivi e 38 numeri utili, essendo
             //molti i pezzi da togliere è improbabile che non venga tolto nemmeno un terreno produttivo.
             for (int i = 69; i > 56; i--) {
-                this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND_WATER));
+                for (Map.Entry<Materials,Integer> currEntry : this.materialMap.entrySet()) {
+                    if (currEntry.getValue() == 0) {
+                        endedMaterialsToSkip.add(currEntry.getKey());
+                    }
+                }
+                Materials matirialToConsume = handler.pickRandomMaterial(MaterialHandler.LAND_WATER);
+                if (!endedMaterialsToSkip.contains(matirialToConsume)) {
+                    this.consumeMaterial(matirialToConsume);
+                } else {
+                    i++;
+                }
             }
         } else if (numberOfPlayer == 6) {
             for (int i = 69; i > 63; i--) {
+                for (Map.Entry<Materials,Integer> currEntry : this.materialMap.entrySet()) {
+                    if (currEntry.getValue() == 0) {
+                        endedMaterialsToSkip.add(currEntry.getKey());
+                    }
+                }
                 //è necessario togliere sempre almeno una casella non -1 pechè da gico ci sono 39 terreni produttivi e 38 numeri utili.
-                if (i == 69) this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND));
-                else this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND_WATER));
+                if (i == 69) {
+                    this.consumeMaterial(handler.pickRandomMaterial(MaterialHandler.LAND));
+                } else {
+                    Materials matirialToConsume = handler.pickRandomMaterial(MaterialHandler.LAND_WATER);
+                    if (!endedMaterialsToSkip.contains(matirialToConsume)) {
+                        this.consumeMaterial(matirialToConsume);
+                    } else {
+                        i++;
+                    }
+                }
             }
         }
         int countMaterial = 0;
