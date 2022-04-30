@@ -11,6 +11,7 @@ import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
 import island.IslandController;
+import utils.GenerationException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class MapGeneratorEngine {
         logger.info("generateIsland: island center hexagon generated correctly.");
     }
 
-    public void generateIsland (IslandController controller) {
+    public void generateIsland (IslandController controller) throws GenerationException {
         HexagonalBase cntrHex = controller.getHexagonFromMap(controller.getIslandHexCenter());
         if (controller.getNumberOfHexagons() > 0) {
             this.generationHelper.generationThroughPointers(cntrHex, controller);

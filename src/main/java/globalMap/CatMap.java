@@ -7,6 +7,7 @@ import hexagon.material.MaterialCounter;
 import hexagon.number.NumberCounter;
 import island.Island;
 import island.IslandController;
+import utils.GenerationException;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -42,7 +43,7 @@ public class CatMap {
         this.islandControllerWrapper = IslandController.getInstance(islandsNumber,mainIslandsNumber, mainIslandWeight);
     }
 
-     public void generateIslands() {
+     public void generateIslands() throws GenerationException {
         for (int i = 0; i < this.islandsNumber; i++) {
             logger.info("globalMap.CatMap.generateMapIsland: setting center for "+ (this.islandControllerWrapper.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]).");
             this.islands[i] = new Island(this.islandControllerWrapper.getFiniteController()[i]);

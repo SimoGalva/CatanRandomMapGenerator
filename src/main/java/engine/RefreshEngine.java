@@ -7,8 +7,12 @@ import globalMap.GlobalMapHandler;
 import hexagon.material.MaterialCounter;
 import hexagon.number.NumberCounter;
 import island.IslandController;
+import utils.GenerationException;
+
+import java.util.logging.Logger;
 
 public class RefreshEngine implements Runnable {
+    private final Logger logger = Logger.getLogger(getClass().getName());
     private Params params;
     private CatMap newMapToRebuild;
 
@@ -24,8 +28,13 @@ public class RefreshEngine implements Runnable {
     public void run() {
         clearSingleInstances();
         this.newMapToRebuild = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(), params.getMainIslandWeight(), params.getNumberOfPlayer());
-        this.newMapToRebuild.generateIslands();
-        this.newMapToRebuild.postGeneratingFixing();
+        try {
+            this.newMapToRebuild.generateIslands();
+            this.newMapToRebuild.postGeneratingFixing();
+        } catch (GenerationException e) {
+            logger.severe("Retrying generation after failure. " + e.getMessage());
+            run();
+        }
     }
 
     private void clearSingleInstances() {

@@ -11,6 +11,7 @@ import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
 import island.IslandController;
+import utils.GenerationException;
 import utils.pojo.SwitchingHexagons;
 
 import java.util.ArrayList;
@@ -32,14 +33,14 @@ public class GenerationHelper {
         coordinateHandler = AbstractCoordinateHandler.getInstance();
     }
 
-    protected void generationThroughPointers(HexagonalBase hexagonStarter, IslandController controller) {
+    protected void generationThroughPointers(HexagonalBase hexagonStarter, IslandController controller) throws GenerationException {
         this.controller = controller;
         this.isMainIsland = controller.isMainIsland();
         int level = 0;
         generationThroughPointers(hexagonStarter, level);
     }
 
-    private void generationThroughPointers(HexagonalBase hexagonStarter, int level) {
+    private void generationThroughPointers(HexagonalBase hexagonStarter, int level) throws GenerationException {
         logger.info("generationThroughPointers: starting generation al level ["+level+"] from hexagon ["+hexagonStarter.getHexAsPoint().toString()+"].");
         boolean isDoneGenerating = false;
         if (isMainIsland && level < 2) { //il limite due messo indicativo a caso bisogna ragionarci in base a come escono i risultati
@@ -63,6 +64,10 @@ public class GenerationHelper {
         }
 
         if (!isDoneGenerating) {
+            level++;
+            if (level > 3500) {
+                throw new GenerationException("generationThrughPointers: " + GenerationException.MESSAGE);
+            }
             generationThroughPointers(controller.getHexagonFromMap(currentPointer[random.nextInt(currentPointer.length)]), level);
         } else {
             logger.info("generationThroughPointers: recursive generation complete.");

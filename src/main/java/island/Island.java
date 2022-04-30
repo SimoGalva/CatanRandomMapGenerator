@@ -2,6 +2,7 @@ package island;
 
 import engine.MapGeneratorEngine;
 import hexagon.HexagonalBase;
+import utils.GenerationException;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ public class Island {
                     "-> number of hexagon: ["+this.controller.getNumberOfHexagons()+"]");
     }
 
-    public void generateIsland() {
+    public void generateIsland() throws GenerationException {
         if (!controller.isGenerated()) {
             logger.info("Island.generateIsland: starting generating the island.");
             generatorEngine.generateIsland(controller);
