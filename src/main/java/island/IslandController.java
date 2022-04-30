@@ -5,8 +5,10 @@ import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
 import hexagon.material.Materials;
+import utils.Utils;
 import utils.pojo.SwitchingHexagons;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -152,6 +154,17 @@ public class IslandController {
         } else if (totalCheck > totalLand) {
             numberOfPieces[0] = numberOfPieces[0] + (totalLand-totalCheck);
         }
+        //impedisco che il numerro di pezzi di un'isola sia 0;
+        int[] newNumberOfPieces = null;
+        for (int checkZero : numberOfPieces) {
+            if (checkZero == 0) {
+                newNumberOfPieces = this.rescalePieces(numberOfPieces);
+                break;
+            }
+        }
+        if (newNumberOfPieces != null) {
+            numberOfPieces = newNumberOfPieces;
+        }
         for (int i = 0; i < islandsNumber; i++) {
             if (i < mainIslandsNumber) {
                 finiteController[i] = new IslandController(true, numberOfPieces[i]);
@@ -159,6 +172,31 @@ public class IslandController {
                 finiteController[i] = new IslandController(false, numberOfPieces[i]);
             }
         }
+    }
+
+    private int[] rescalePieces(int[] numberOfPieces) {
+        ArrayList<Integer> nonZerosEntries = new ArrayList<>();
+        ArrayList<Integer> zerosEntries = new ArrayList<>();
+        ArrayList<Integer> numberOfPiecesList = new ArrayList<>();
+        int[] newNumberOfPieces = new int[numberOfPieces.length];
+        for (int i = 0; i < numberOfPieces.length; i++) {
+            numberOfPiecesList.add(numberOfPieces[i]);
+            newNumberOfPieces[i] = numberOfPieces[i];
+            if (numberOfPieces[i] == 0) {
+                zerosEntries.add(i);
+            } else {
+                nonZerosEntries.add(i);
+            }
+        }
+        //prendo il più grande dei non nulli, se sono uguali prendo il primo
+        int maxIndex = Utils.getMaxIndex(numberOfPiecesList);
+        if (nonZerosEntries.contains(maxIndex)) {
+            for (int currZeroEntry : zerosEntries) {
+                newNumberOfPieces[currZeroEntry] ++;
+                newNumberOfPieces[maxIndex] --;
+            }
+        }
+        return newNumberOfPieces;
     }
 
     private IslandController(boolean isMainIsland, int numberOfPieces) {

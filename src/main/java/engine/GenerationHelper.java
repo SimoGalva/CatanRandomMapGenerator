@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 public class GenerationHelper {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
+    private final int LIMIT_ITER_AND_LEVEL = 3500;
+
     private IslandController controller;
     private boolean isMainIsland;
     private boolean seaAllowed;
@@ -65,7 +67,7 @@ public class GenerationHelper {
 
         if (!isDoneGenerating) {
             level++;
-            if (level > 3500) {
+            if (level > LIMIT_ITER_AND_LEVEL) {
                 throw new GenerationException("generationThrughPointers: " + GenerationException.MESSAGE);
             }
             generationThroughPointers(controller.getHexagonFromMap(currentPointer[random.nextInt(currentPointer.length)]), level);
@@ -74,7 +76,7 @@ public class GenerationHelper {
         }
     }
 
-    public HexagonalBase generateHexagon(HexagonPoint pointInGeneration, String restrictionOnMaterial) {
+    public HexagonalBase generateHexagon(HexagonPoint pointInGeneration, String restrictionOnMaterial) throws GenerationException {
         MaterialCounter materialCounter;
         NumberCounter numberCounter;
         try {
@@ -87,6 +89,7 @@ public class GenerationHelper {
         MaterialHandler materialHandler = new MaterialHandler();
         NumberHandler numberHandler = new NumberHandler();
 
+        int nIter = 0;
         boolean isNumberValid = false;
         boolean isMaterialValid = false;
         Materials material = null;
@@ -94,6 +97,7 @@ public class GenerationHelper {
 
         int pointerDim = coordinateHandler.calculatePointerDimesnsion(pointInGeneration);
         do {
+            nIter++;
             if (!isMaterialValid) {
                 material = materialHandler.pickRandomMaterial(restrictionOnMaterial);
                 isMaterialValid = materialCounter.consumeMaterial(material);
@@ -107,6 +111,9 @@ public class GenerationHelper {
                 if (!isNumberValid) {
                     number = null;
                 }
+            }
+            if (nIter > LIMIT_ITER_AND_LEVEL) {
+                throw new GenerationException("generateHexagon: " + GenerationException.MESSAGE);
             }
         } while ((!isNumberValid && !isMaterialValid) || number == null || material == null);
 

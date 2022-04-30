@@ -71,19 +71,19 @@ public class SettingsFrame extends JFrame {
                         constraints.gridx += 2;
                         paramsPanel.add(new JLabel(""), constraints);
                         constraints.gridx += 1;
-                        paramsPanel.add(new JLabel("(max 5)"), constraints);
+                        paramsPanel.add(new JLabel("(max 5 for 3,4 P, max 6 for 5,6 P)"), constraints);
                     } else if (j == 1) {
                         paramsPanel.add(new JLabel("Main Island Number"), constraints);
                         constraints.gridx += 2;
                         paramsPanel.add(new JLabel(""), constraints);
                         constraints.gridx += 1;
-                        paramsPanel.add(new JLabel("(max Number of Island)"), constraints);
+                        paramsPanel.add(new JLabel("(1, Number of Island)"), constraints);
                     } else if (j == 2) {
                         paramsPanel.add(new JLabel("Main Island Weight"), constraints);
                         constraints.gridx += 2;
                         paramsPanel.add(new JLabel(""), constraints);
                         constraints.gridx += 1;
-                        paramsPanel.add(new JLabel("(0, 10)"), constraints);
+                        paramsPanel.add(new JLabel("(1, 10)"), constraints);
                     } else {
                         paramsPanel.add(new JLabel("Number of Players"), constraints);
                         constraints.gridx += 2;

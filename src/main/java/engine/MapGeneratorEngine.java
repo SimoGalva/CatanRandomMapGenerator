@@ -34,15 +34,16 @@ public class MapGeneratorEngine {
     private static final String LAND_SEA = "LAND_SEA";
     private static final String SEA = "SEA";
 
-    public void setIslandHexPointCenter(IslandController controller) {
+    public void setIslandHexPointCenter(IslandController controller) throws GenerationException {
         HexagonPoint point;
         boolean isDoneGenerating = false;
-        boolean isNearAlreadyGenerated = false;
-        boolean isNearAlreadyGeneratedOverride = false;
+        boolean isNearAlreadyGenerated = true;
+        boolean isNearAlreadyGeneratedOverride = true;
+        boolean isOnBorderAllowedOverride = false; //quando ho troppe isole principali rispetto al numero di isole permette a un certo punto di prendere anche centri sul bordo, altrimenti si blocca
         int nIter = 0;
         do {
             nIter ++;
-            if (controller.isMainIsland()) {
+            if (controller.isMainIsland() && isOnBorderAllowedOverride) {
                 //pickRandomPoint è giustificato all'interno della classe AbstractCoordinateHandler perchè la generazione random dipende strettamente dalla dimensione del tabellone,
                 // ergo dal numero di giocatori, così posso eventualmente ricilcare più codice per 6 giocatori;
                 point = coordinateHandler.pickRandomPoint(false);
@@ -50,20 +51,32 @@ public class MapGeneratorEngine {
                 point = coordinateHandler.pickRandomPoint(true);
             }
             if (GlobalMapHandler.getGlobalMap().isEmpty() || this.generationHelper.isNearIsland(point, GlobalMapHandler.getGlobalMap())) {
-                isNearAlreadyGenerated = true;
+                isNearAlreadyGenerated = false;
             }
-            else if (nIter > 100) {
-                isNearAlreadyGeneratedOverride = true;
+            else if (nIter > 3500) {
+                isOnBorderAllowedOverride = true;
+                isNearAlreadyGeneratedOverride = false;
             }
-            if (isNearAlreadyGenerated || isNearAlreadyGeneratedOverride) {
+            if (!isNearAlreadyGenerated || !isNearAlreadyGeneratedOverride) {
                 isDoneGenerating = coordinateHandler.consumeCoord(point);
             }
-        } while ((!isNearAlreadyGenerated && !isNearAlreadyGeneratedOverride) || !isDoneGenerating);
+        } while (!isDoneGenerating);
         logger.info("generateIslandHexPointCenter: random hexagonal point center of island generated ["+point.getDiagHexCoord()+":"+point.getRowHexCoord()+"]");
         controller.setIslandHexCenter(point);
 
         //POPOLAMENTO DEL CENTRO
-        HexagonalBase cntrHex = this.generationHelper.generateHexagon(point, MaterialHandler.LAND);
+        HexagonalBase cntrHex;
+        try {
+             cntrHex = this.generationHelper.generateHexagon(point, MaterialHandler.LAND);
+        } catch (GenerationException e) {
+            logger.info("setIslandHexPointCenter: unable to generate center with bound ["+MaterialHandler.LAND+"]. " + e.getMessage() + " Tring with LANDD.");
+            try {
+                cntrHex = this.generationHelper.generateHexagon(point, MaterialHandler.LANDD);
+            } catch (GenerationException ex) {
+                logger.info("setIslandHexPointCenter: unable to generate center with bound ["+MaterialHandler.LANDD+"]. " + ex.getMessage() + " Tring with LAND_WATER.");
+                cntrHex = this.generationHelper.generateHexagon(point, MaterialHandler.LAND_WATER);
+            }
+        }
         controller.populateMap(cntrHex);
         logger.info("generateIsland: island center hexagon generated correctly.");
     }
