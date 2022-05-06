@@ -2,7 +2,7 @@ package island;
 
 import engine.MapGeneratorEngine;
 import hexagon.HexagonalBase;
-import utils.GenerationException;
+import utils.exceptions.GenerationException;
 
 import java.util.HashMap;
 import java.util.logging.Logger;

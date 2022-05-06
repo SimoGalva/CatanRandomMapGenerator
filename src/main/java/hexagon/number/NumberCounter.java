@@ -1,6 +1,6 @@
 package hexagon.number;
 
-import utils.NoInstanceException;
+import utils.exceptions.NoInstanceException;
 
 import java.util.EnumMap;
 import java.util.Map;

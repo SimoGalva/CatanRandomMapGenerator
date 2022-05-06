@@ -1,6 +1,8 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Utils {
     public static int getMaxIndex(ArrayList<Integer> list) {
@@ -17,5 +19,15 @@ public class Utils {
             }
         }
         return ret;
+    }
+
+    public static <K,T> HashMap<K,T> duplicateMap(HashMap<K, T> mapToDuplicate) {
+        HashMap<K, T> cloneMap = new HashMap<>();
+        if (!mapToDuplicate.isEmpty()) {
+           for (Map.Entry<K,T> currEntry : mapToDuplicate.entrySet()) {
+               cloneMap.put(currEntry.getKey(), currEntry.getValue());
+           }
+        }
+        return cloneMap;
     }
 }

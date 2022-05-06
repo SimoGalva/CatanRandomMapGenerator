@@ -7,7 +7,7 @@ import globalMap.GlobalMapHandler;
 import hexagon.material.MaterialCounter;
 import hexagon.number.NumberCounter;
 import island.IslandController;
-import utils.GenerationException;
+import utils.exceptions.GenerationException;
 
 import java.util.logging.Logger;
 

@@ -11,7 +11,7 @@ import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
 import island.IslandController;
-import utils.GenerationException;
+import utils.exceptions.GenerationException;
 import utils.pojo.SwitchingHexagons;
 
 import java.util.ArrayList;

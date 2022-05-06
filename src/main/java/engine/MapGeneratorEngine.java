@@ -11,7 +11,8 @@ import hexagon.number.NumberCounter;
 import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
 import island.IslandController;
-import utils.GenerationException;
+import utils.Utils;
+import utils.exceptions.GenerationException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,6 +124,10 @@ public class MapGeneratorEngine {
     }
 
 
+    public void numberRuleChecking() {
+        HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
+        //TODO: implementa la logica, la copia della mappa permette di muoversi liberamente
+    }
 
     //implementazione singleton instance
     private static MapGeneratorEngine singletonInstance = null;

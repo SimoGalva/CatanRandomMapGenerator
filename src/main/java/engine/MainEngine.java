@@ -3,7 +3,7 @@ package engine;
 import engine.engineParams.Params;
 import frontEnd.FErunner;
 import globalMap.CatMap;
-import utils.GenerationException;
+import utils.exceptions.GenerationException;
 
 import java.util.logging.Logger;
 

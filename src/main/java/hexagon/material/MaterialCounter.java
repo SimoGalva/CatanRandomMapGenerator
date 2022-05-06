@@ -1,6 +1,6 @@
 package hexagon.material;
 
-import utils.NoInstanceException;
+import utils.exceptions.NoInstanceException;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
