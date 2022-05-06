@@ -6,7 +6,6 @@ import hexagon.material.Materials;
 import hexagon.number.Numbers;
 import utils.pojo.DiagSettingsHolder;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,19 +90,19 @@ public class GlobalMapHandler {
         }
     }
 
-    public static Dimension calculateFrameSize() {
+    public static int calculateNumberOfPlayerForFront() {
         //todo: frame size da sistemare
         switch (globalMap.size()) {
             case 44: // 3 giocatori
-                return new Dimension(920,820);
+                return 3;
             case 51: // 4 giocatori
-                return new Dimension(920,820);
+                return 4;
             case 58: // 5 giocatori
-                return new Dimension(920,820);
+                return 5;
             case 65: // 6 giocatori
-                return new Dimension(1120,820);
+                return 6;
             default: // errore da qualche parte
-                return null;
+                return 0;
         }
     }
 

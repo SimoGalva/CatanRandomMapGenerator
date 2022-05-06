@@ -24,7 +24,8 @@ public class FErunner implements Runnable, ActionListener {
     }
 
     public void runBeforeLaunch(){
-        runSettingsFrame(new Params(0,0,0,0), true);
+        //todo: riporta a 0,0,0,0 finito di sistemare il front end
+        runSettingsFrame(new Params(4,4,4,5), true);
     }
 
     @Override
@@ -66,10 +67,20 @@ public class FErunner implements Runnable, ActionListener {
                 settingsFrame.handleNewParams();
                 Params newParams = settingsFrame.getNewParams();
                 if (newParams != null && (mainEngineCaller.getParams() == null || !mainEngineCaller.getParams().equals(newParams))) {
+                    boolean isChangedNumberOfPlayer = true;
+                    if (mainEngineCaller.getParams() != null) {
+                        isChangedNumberOfPlayer = mainEngineCaller.getParams().getNumberOfPlayer() != newParams.getNumberOfPlayer();
+                    }
                     mainEngineCaller.setParams(newParams);
                     if (frame != null) {
-                        mainEngineCaller.runRefreshing();
-                        frame.refreshMap();
+                        if (!isChangedNumberOfPlayer) {
+                            mainEngineCaller.runRefreshing();
+                            frame.refreshMap();
+                        } else {
+                            mainEngineCaller.runRefreshing();
+                            frame.dispose();
+                            this.run();
+                        }
                     } else {
                         mainEngineCaller.run();
                         settingsFrame.dispose();

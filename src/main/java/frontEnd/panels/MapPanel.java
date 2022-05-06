@@ -15,8 +15,9 @@ import java.util.HashMap;
 public class MapPanel extends JPanel {
         private static final long serialVersionUID = 1L;
         //todo: da ridimensionare per i tabelloni più grandi
-        private int WIDTH = 920;
-        private int HEIGHT = 820;
+        private int numberOfPlayer;
+        private int WIDTH = 1120;
+        private int HEIGHT = 860;
         private final int SIZE = 9; // valore iviolabile, definisce il giusto numero di righe e la forma della mappa
 
         private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap();
@@ -24,13 +25,8 @@ public class MapPanel extends JPanel {
         private Font font = new Font("Arial", Font.BOLD, 18);
         FontMetrics metrics;
         public MapPanel() {
-            setFrameSize(GlobalMapHandler.calculateFrameSize());
+            this.numberOfPlayer = GlobalMapHandler.calculateNumberOfPlayerForFront();
             setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        }
-
-        private void setFrameSize(Dimension dimension) {
-            this.HEIGHT = (int) dimension.getHeight();
-            this.HEIGHT = (int) dimension.getWidth();
         }
 
         @Override
@@ -42,7 +38,7 @@ public class MapPanel extends JPanel {
             g2d.setFont(font);
             metrics = g.getFontMetrics();
             int radious = GlobalMapHandler.calculateRadiuos();
-            drawCircle(g2d, origin, radious, true, true, 0x4488FF, 0);
+            drawCircle(g2d, radious, true, true, 0x4488FF, 0);
             drawHexGridLoop(g2d, origin, 50, 8);
         }
 
@@ -89,18 +85,20 @@ public class MapPanel extends JPanel {
             return (value > 0 ? "+" : "") + Integer.toString(value);
         }
 
-        public void drawCircle(Graphics2D g, Point origin, int radius,
+        public void drawCircle(Graphics2D g, int radius,
                                boolean centered, boolean filled, int colorValue, int lineThickness) {
             // Store before changing.
             Stroke tmpS = g.getStroke();
             Color tmpC = g.getColor();
 
+            Point origin = setCircleOrigin();
+
             g.setColor(new Color(colorValue));
             g.setStroke(new BasicStroke(lineThickness, BasicStroke.CAP_ROUND,
                     BasicStroke.JOIN_ROUND));
 
-            int diameterX = radius * 2;
-            int diameterY = 800; //non ho cercato una forma di calcolo esplicito, l'ho settato in modo che pagasse l'occhio
+            int diameterX = radius * 2 + getHorizontalExpansion();
+            int diameterY = 800 + getVerticalExpansion(); //non ho cercato una forma di calcolo esplicito, l'ho settato in modo che pagasse l'occhio
             int x2 = centered ? origin.x - radius : origin.x;
             int y2 = centered ? origin.y - radius + 50 : origin.y; // anche a traslazione di +50 è per motivi estetici, la deformazione del cerchio crea casini
 
@@ -112,6 +110,39 @@ public class MapPanel extends JPanel {
             // Set values to previous when done.
             g.setColor(tmpC);
             g.setStroke(tmpS);
+        }
+
+    private int getHorizontalExpansion() {
+        switch (this.numberOfPlayer){
+            case 4: //4 Player
+                return 0;
+            case 6: //6 Player
+                return 5;
+            default:
+                return 0;
+        }
+    }
+
+    private int getVerticalExpansion() {
+        switch (this.numberOfPlayer){
+            case 4: //4 Player
+                return 0;
+            case 6: //6 Player
+                return 40;
+            default:
+                return 0;
+        }
+    }
+
+    private Point setCircleOrigin() {
+            switch (this.numberOfPlayer){
+                case 4: //4 Player
+                    return new Point(WIDTH / 2, HEIGHT / 2);
+                case 6:
+                    return new Point((WIDTH-7) / 2, (HEIGHT + 158) / 2);
+                default:
+                    return null;
+            }
         }
     }
 
