@@ -130,9 +130,9 @@ public class MapPanel extends JPanel {
     private int getVerticalExpansion() {
         switch (this.numberOfPlayer){
             case 3: //4 Player
-                return 0;
+                return -55;
             case 4: //4 Player
-                return 0;
+                return -23;
             case 5: //4 Player
                 return 0;
             case 6: //6 Player
@@ -145,9 +145,9 @@ public class MapPanel extends JPanel {
     private Point setCircleOrigin() {
             switch (this.numberOfPlayer){
                 case 3:
-                    return new Point((WIDTH + 200) / 2, HEIGHT / 2);
+                    return new Point((WIDTH + 200) / 2, (HEIGHT + 54) / 2);
                 case 4: //4 Player
-                    return new Point(WIDTH / 2, HEIGHT / 2);
+                    return new Point(WIDTH / 2, (HEIGHT + 21) / 2);
                 case 5:
                     return new Point(WIDTH / 2, HEIGHT / 2);
                 case 6:
