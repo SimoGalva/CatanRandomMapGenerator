@@ -125,7 +125,7 @@ public class IslandController {
 
     //implementazione singleton instance
     private static IslandController singletonInstance = null;
-    //TODO: serviranno controlli sugli input di islandsNumber e mainIslandsNumber: islandNumber>=mainIslandsNumber. E sul peso: vedi commit collegato (numero di pezzi isola).
+
     private IslandController(int islandsNumber, int mainIslandsNumber,int mainIslandWeight) {
         finiteController = new IslandController[islandsNumber];
         int totalLand = 0;

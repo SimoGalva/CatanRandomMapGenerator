@@ -11,7 +11,6 @@ public class CoordinateHandler4P extends AbstractCoordinateHandler{
 
     @Override
     public HexagonPoint pickRandomPoint(boolean onBorderAllowed) {
-        //todo: implementa la stella logica nell'else anche per gli altri player (bisogna solo sistemare la definizone di isOnBorder)
         Random random = new Random();
         int rowCoord;
         int diagCoord;

@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class MapPanel extends JPanel {
         private static final long serialVersionUID = 1L;
-        //todo: da ridimensionare per i tabelloni più grandi
+
         private int numberOfPlayer;
         private int WIDTH = 1120;
         private int HEIGHT = 860;

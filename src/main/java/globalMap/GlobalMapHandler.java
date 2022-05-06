@@ -91,7 +91,6 @@ public class GlobalMapHandler {
     }
 
     public static int calculateNumberOfPlayerForFront() {
-        //todo: frame size da sistemare
         switch (globalMap.size()) {
             case 44: // 3 giocatori
                 return 3;
@@ -107,7 +106,6 @@ public class GlobalMapHandler {
     }
 
     public static int calculateRadiuos() {
-        //todo: radious da sistemare
         switch (globalMap.size()) {
             case 44: // 3 giocatori
                 return 450;

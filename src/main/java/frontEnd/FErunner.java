@@ -24,8 +24,7 @@ public class FErunner implements Runnable, ActionListener {
     }
 
     public void runBeforeLaunch(){
-        //todo: riporta a 0,0,0,0 finito di sistemare il front end
-        runSettingsFrame(new Params(4,4,4,5), true);
+        runSettingsFrame(new Params(0,0,0,0), true);
     }
 
     @Override

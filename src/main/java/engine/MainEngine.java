@@ -15,8 +15,6 @@ public class MainEngine implements Runnable {
     private CatMap map;
     public Params params;
 
-    //TODO: non riesco a far rispettare i parametri esattamente diciamo che sono dei max corrisponedenti acconsentiti?
-    // tienine conto quanto implementi l'input utente. Il paras conterrà tutti gli input utente quindi andrà adattato volta per volta.
     public MainEngine() {
         this.frontRunner = new FErunner(new MainEngineCaller());
         frontRunner.runBeforeLaunch();
