@@ -15,12 +15,15 @@ import utils.Utils;
 import utils.exceptions.GenerationException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class MapGeneratorEngine {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private final GenerationHelper generationHelper;
+    private final PostGenerationHelper postGenerationHelper;
 
     private AbstractCoordinateHandler coordinateHandler;
     private MaterialHandler materialHandler;
@@ -126,7 +129,14 @@ public class MapGeneratorEngine {
 
     public void numberRuleChecking() {
         HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
+        HashMap<String, HexagonalBase> sixAndEightMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
         //TODO: implementa la logica, la copia della mappa permette di muoversi liberamente
+        for (Map.Entry<String,HexagonalBase> hexEntry : globalMap.entrySet()) {
+            if (hexEntry != null && hexEntry.getValue() != null && Arrays.asList(Numbers.SIX,Numbers.EIGHT).contains(hexEntry.getValue().getNumber())) {
+                sixAndEightMap.put(hexEntry.getKey(),hexEntry.getValue());
+            }
+        }
+        postGenerationHelper.AreNearThoseOnList(sixAndEightMap);
     }
 
     //implementazione singleton instance
@@ -137,6 +147,7 @@ public class MapGeneratorEngine {
         this.materialHandler = new MaterialHandler();
         this.numberHandler = new NumberHandler();
         this.generationHelper = new GenerationHelper();
+        this.postGenerationHelper = new PostGenerationHelper();
         try {
             this.materialCounter = MaterialCounter.getInstance();
             this.numberCounter = NumberCounter.getInstance();
