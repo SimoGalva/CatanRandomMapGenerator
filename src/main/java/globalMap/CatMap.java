@@ -8,6 +8,7 @@ import hexagon.number.NumberCounter;
 import island.Island;
 import island.IslandController;
 import utils.exceptions.GenerationException;
+import utils.exceptions.IslandNumberException;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -56,13 +57,19 @@ public class CatMap {
         numberCounter.printRemains();
     }
 
-    public void postGeneratingFixing() {
+    public void postGeneratingFixing() throws IslandNumberException{
         logger.info("postGeneratingFixing: starting post generating fixes");
         GlobalMapHandler.populateLimitWaterHexagons(numberOfPlayer);
         fillOcean();
         numberRuleChecking();
+        numberOfIslandChecking();
         logger.info("postGeneratingFixing: process ended.");
     }
+
+     private void numberOfIslandChecking() throws IslandNumberException {
+         logger.info("numberOfIslandChecking: checking that the number of island produced is consistent with user input.");
+         generatorEngine.numberOfIslandChecking(this.islandsNumber);
+     }
 
      public void fillOcean() {
          logger.info("fillOcean: starting to fill with the remaining oceans.");

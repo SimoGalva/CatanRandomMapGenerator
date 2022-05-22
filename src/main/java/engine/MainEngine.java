@@ -4,6 +4,7 @@ import engine.engineParams.Params;
 import frontEnd.FErunner;
 import globalMap.CatMap;
 import utils.exceptions.GenerationException;
+import utils.exceptions.IslandNumberException;
 
 import java.util.logging.Logger;
 
@@ -28,6 +29,9 @@ public class MainEngine implements Runnable {
             this.map.postGeneratingFixing();
         } catch (GenerationException e) {
             logger.severe("Retrying generation after failure. " + e.getMessage());
+            refresh();
+        } catch (IslandNumberException eI) {
+            logger.severe("Retrying generation for incostistent number of island. " + eI.getMessage());
             refresh();
         }
         //todo: implementare un postMappingChecking che controlla la conformità della mappa ai parametri e in caso negativo lanci un referesh automatico.

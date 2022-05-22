@@ -13,6 +13,7 @@ import hexagon.number.Numbers;
 import island.IslandController;
 import utils.Utils;
 import utils.exceptions.GenerationException;
+import utils.exceptions.IslandNumberException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,13 +127,11 @@ public class MapGeneratorEngine {
         }
     }
 
-
     public void numberRuleChecking() {
         long t0 = System.currentTimeMillis();
         logger.info("postGeneratingFixing.numberRuleChecking: starting to fix near 6 and 8.");
         HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
         HashMap<String, HexagonalBase> sixAndEightMap = new HashMap<>();
-        //TODO: implementa la logica, la copia della mappa permette di muoversi liberamente
         boolean isSwitchingNeeded = false;
         do {
             sixAndEightMap.clear();
@@ -148,6 +147,20 @@ public class MapGeneratorEngine {
         } while (isSwitchingNeeded);
         logger.info("postGeneratingFixing.numberRuleChecking: near 6 and 8 fixed. Terminated in [" + (System.currentTimeMillis() - t0) + "]");
         GlobalMapHandler.updateMap(globalMap);
+    }
+
+    public void numberOfIslandChecking(int expectedNumberOfIsland) throws IslandNumberException {
+        //todo: implementare
+        long t0 = System.currentTimeMillis();
+        logger.info("postGeneratingFixing.numberOfIslandChecking: starting to cout actual number of island.");
+        HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
+
+        int actualIslandNumber = this.postGenerationHelper.countIslands(globalMap);
+        if (actualIslandNumber != expectedNumberOfIsland) {
+            throw new IslandNumberException("postGeneratingFixing.numberOfIslandChecking: " + IslandNumberException.MESSAGE);
+        }
+
+        logger.info("postGeneratingFixing.numberOfIslandChecking: number of island count complete and consistent.");
     }
 
     //implementazione singleton instance

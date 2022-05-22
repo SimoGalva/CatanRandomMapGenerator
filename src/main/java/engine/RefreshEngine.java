@@ -8,6 +8,7 @@ import hexagon.material.MaterialCounter;
 import hexagon.number.NumberCounter;
 import island.IslandController;
 import utils.exceptions.GenerationException;
+import utils.exceptions.IslandNumberException;
 
 import java.util.logging.Logger;
 
@@ -33,6 +34,9 @@ public class RefreshEngine implements Runnable {
             this.newMapToRebuild.postGeneratingFixing();
         } catch (GenerationException e) {
             logger.severe("Retrying generation after failure. " + e.getMessage());
+            run();
+        } catch (IslandNumberException eI) {
+            logger.severe("Retrying generation for incostistent number of island. " + eI.getMessage());
             run();
         }
     }

@@ -16,8 +16,8 @@ public class PostGenerationHelper {
 
     HexagonalBase[] tempCoupleOfNearHexagons = new HexagonalBase[2];
 
+    //checking for numbers
     public boolean AreNearThoseOnList(HashMap<String, HexagonalBase> listToCheck) {
-        //todo: implementare questo, deve ritornare un booleano e salvare nell'array con la prima coppia di numeri vicini. in modo da poterla recuperare a posteriori.
         boolean areThereNearSixEight = false;
 
         for (Map.Entry<String,HexagonalBase> pointerBase : listToCheck.entrySet()) {
@@ -40,8 +40,6 @@ public class PostGenerationHelper {
     }
 
     public void switchNearNumber(HashMap<String, HexagonalBase> globalMap, HashMap<String, HexagonalBase> sixAndEightMap) {
-        //todo: funzionerà come segue: lui fa una copia di global map, cilca su sixAndEight e toglie dalla copia global tutti i pointer di tutti gli elementi della lista su cui cicla
-        // quindi cicla sulle rimanenze e toglie tutto il mare  e deserto dalla copia. rimarra una lista di posizioni di dove è possibile mettere 6/8 ne prenderà una random.
         HashMap<String, HexagonalBase> globalCloneInCleaning = Utils.duplicateMap(globalMap);
         for (Map.Entry<String,HexagonalBase> currSixEightEntry: sixAndEightMap.entrySet()) {
             try {
@@ -68,7 +66,7 @@ public class PostGenerationHelper {
         String coordNumberInSwitching = this.tempCoupleOfNearHexagons[0].getHexAsPoint().toString();
         String coordAvailCoordForSwitching = globalCloneInCleaning.get(Utils.getMapFirstEntryKey(globalCloneInCleaning)).getHexAsPoint().toString();
 
-        logger.info("switchNearNumber: switching nombers of coordinate: [" + coordNumberInSwitching + "], [" + coordAvailCoordForSwitching + "].");
+        logger.info("switchNearNumber: switching numbers of coordinate: [" + coordNumberInSwitching + "], [" + coordAvailCoordForSwitching + "].");
         Numbers tempNumber1 = Numbers.fromString(globalMap.get(coordNumberInSwitching).getNumber().name());
         Numbers tempNumber2 = Numbers.fromString(globalMap.get(coordAvailCoordForSwitching).getNumber().name());
         globalMap.get(coordNumberInSwitching).setNumber(tempNumber2);
@@ -81,5 +79,11 @@ public class PostGenerationHelper {
 
         //clearing the attribute that contains switching in cause.
         this.tempCoupleOfNearHexagons = new HexagonalBase[2];
+    }
+
+    //checking for island number
+    public int countIslands(HashMap<String, HexagonalBase> globalMap) {
+        //todo: implementare il conteggio, è un metodo delicato se fatto male fa lanciare sempre e solo eccezioni
+        return 0;
     }
 }
