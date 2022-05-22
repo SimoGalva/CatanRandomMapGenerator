@@ -17,7 +17,7 @@ public class HexagonalBase {
     private HexagonFE hexagonFEToken;
     private final Materials material;
     private HexagonPoint[] pointer;
-    private final Numbers number;
+    private Numbers number;
     private HexagonPoint hexAsPoint;
 
 
@@ -42,6 +42,9 @@ public class HexagonalBase {
 
     public Numbers getNumber() {
         return number;
+    }
+    public void setNumber(Numbers number) {
+        this.number = number;
     }
 
     public HexagonPoint[] getPointer() {

@@ -4,13 +4,17 @@ import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.Materials;
 import hexagon.number.Numbers;
+import utils.Utils;
+import utils.exceptions.UpdateException;
 import utils.pojo.DiagSettingsHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class GlobalMapHandler {
+    private static final Logger logger = Logger.getLogger(GlobalMapHandler.class.getName());
     public static HashMap<String, HexagonalBase> globalMap = new HashMap<>();
 
     public static void populateMap(HexagonalBase hexagonalBase) {
@@ -19,6 +23,20 @@ public class GlobalMapHandler {
 
     public static HashMap<String, HexagonalBase> getGlobalMap() {
         return globalMap;
+    }
+
+
+    public static void updateMap(HashMap<String, HexagonalBase> newMap) {
+        if (newMap.size() == globalMap.size()) {
+            logger.info("updateMap: updating map with new one.");
+            try {
+                Utils.updateMap(globalMap, newMap);
+            } catch (UpdateException e) {
+                logger.severe(e.getMessage());
+            }
+        } else {
+            logger.warning("updateMap: update failed, incompatible sizes. Current map size [" + globalMap.size() + "], new map size [" + newMap.size() + "] ");
+        }
     }
 
     public static String printMap() {

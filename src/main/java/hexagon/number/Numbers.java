@@ -52,7 +52,7 @@ public enum Numbers {
         }
     }
 
-    public Numbers fromString(String number) {
+    public static Numbers fromString(String number) {
         Numbers ret =null;
         try {
             ret = Numbers.valueOf(number);

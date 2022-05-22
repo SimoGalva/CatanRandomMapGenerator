@@ -128,15 +128,26 @@ public class MapGeneratorEngine {
 
 
     public void numberRuleChecking() {
+        long t0 = System.currentTimeMillis();
+        logger.info("postGeneratingFixing.numberRuleChecking: starting to fix near 6 and 8.");
         HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
-        HashMap<String, HexagonalBase> sixAndEightMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
+        HashMap<String, HexagonalBase> sixAndEightMap = new HashMap<>();
         //TODO: implementa la logica, la copia della mappa permette di muoversi liberamente
-        for (Map.Entry<String,HexagonalBase> hexEntry : globalMap.entrySet()) {
-            if (hexEntry != null && hexEntry.getValue() != null && Arrays.asList(Numbers.SIX,Numbers.EIGHT).contains(hexEntry.getValue().getNumber())) {
-                sixAndEightMap.put(hexEntry.getKey(),hexEntry.getValue());
+        boolean isSwitchingNeeded = false;
+        do {
+            sixAndEightMap.clear();
+            for (Map.Entry<String,HexagonalBase> hexEntry : globalMap.entrySet()) {
+                if (hexEntry != null && hexEntry.getValue() != null && Arrays.asList(Numbers.SIX,Numbers.EIGHT).contains(hexEntry.getValue().getNumber())) {
+                    sixAndEightMap.put(hexEntry.getKey(),hexEntry.getValue());
+                }
             }
-        }
-        postGenerationHelper.AreNearThoseOnList(sixAndEightMap);
+            isSwitchingNeeded = postGenerationHelper.AreNearThoseOnList(sixAndEightMap);
+            if (isSwitchingNeeded) {
+                postGenerationHelper.switchNearNumber(globalMap, sixAndEightMap);
+            }
+        } while (isSwitchingNeeded);
+        logger.info("postGeneratingFixing.numberRuleChecking: near 6 and 8 fixed. Terminated in [" + (System.currentTimeMillis() - t0) + "]");
+        GlobalMapHandler.updateMap(globalMap);
     }
 
     //implementazione singleton instance
