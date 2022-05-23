@@ -56,4 +56,12 @@ public class Utils {
             mapToUpdate.put(keyValue, newMap.get(keyValue));
         }
     }
+
+    public static <K> ArrayList<K> listFromArray(K[] arrayToList) {
+        ArrayList<K> ret = new ArrayList<>();
+        for (int i = 0; i < arrayToList.length; i++) {
+            ret.add(arrayToList[i]);
+        }
+        return ret;
+    }
 }

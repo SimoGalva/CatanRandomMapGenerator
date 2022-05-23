@@ -34,7 +34,6 @@ public class MainEngine implements Runnable {
             logger.severe("Retrying generation for incostistent number of island. " + eI.getMessage());
             refresh();
         }
-        //todo: implementare un postMappingChecking che controlla la conformità della mappa ai parametri e in caso negativo lanci un referesh automatico.
         frontRunner.run();
     }
 

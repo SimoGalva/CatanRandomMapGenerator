@@ -12,8 +12,8 @@ public class ParamsValidator {
         boolean isValidParams = false;
         if (params == null) return false;
         if (
-                (params.getIslandNumber() >= 1 && params.getIslandNumber() <= 5 && params.getNumberOfPlayer() <= 4)
-                || (params.getIslandNumber() >= 1 && params.getIslandNumber() <= 6 && params.getNumberOfPlayer() <= 6)
+                ((params.getIslandNumber() >= 1 && params.getIslandNumber() <= 5 && params.getNumberOfPlayer() <= 4)
+                || (params.getIslandNumber() >= 1 && params.getIslandNumber() <= 6 && params.getNumberOfPlayer() <= 6 && params.getNumberOfPlayer() > 4))
             && params.getMainIslandNumber() >= 1 && params.getMainIslandNumber() <= params.getIslandNumber()
             && params.getMainIslandWeight() >=1 && params.getMainIslandWeight() <= 10
             && Arrays.asList(3,4,5,6).contains(params.getNumberOfPlayer())) {
@@ -23,6 +23,8 @@ public class ParamsValidator {
             }
             logger.info("validate: new params are valid.");
             isValidParams = true;
+        } else {
+            logger.info("validate: invalid params. Returning false.");
         }
         return isValidParams;
     }

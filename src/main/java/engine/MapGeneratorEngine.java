@@ -150,7 +150,6 @@ public class MapGeneratorEngine {
     }
 
     public void numberOfIslandChecking(int expectedNumberOfIsland) throws IslandNumberException {
-        //todo: implementare
         long t0 = System.currentTimeMillis();
         logger.info("postGeneratingFixing.numberOfIslandChecking: starting to cout actual number of island.");
         HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());

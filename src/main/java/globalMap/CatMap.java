@@ -61,8 +61,8 @@ public class CatMap {
         logger.info("postGeneratingFixing: starting post generating fixes");
         GlobalMapHandler.populateLimitWaterHexagons(numberOfPlayer);
         fillOcean();
-        numberRuleChecking();
         numberOfIslandChecking();
+        numberRuleChecking();
         logger.info("postGeneratingFixing: process ended.");
     }
 

@@ -6,6 +6,7 @@ import hexagon.material.Materials;
 import hexagon.number.Numbers;
 import utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -83,7 +84,62 @@ public class PostGenerationHelper {
 
     //checking for island number
     public int countIslands(HashMap<String, HexagonalBase> globalMap) {
-        //todo: implementare il conteggio, è un metodo delicato se fatto male fa lanciare sempre e solo eccezioni
-        return 0;
+        HashMap<String, HexagonalBase> waterCleanedGlobalMap = Utils.duplicateMap(globalMap);
+        for (Map.Entry<String,HexagonalBase> currEntry : globalMap.entrySet()) {
+            HexagonalBase entryHexagon = currEntry.getValue();
+            if (Materials.WATER.equals(entryHexagon.getMaterial())) {
+                waterCleanedGlobalMap.remove(currEntry.getKey());
+            }
+        }
+
+        int count = 0;
+        int startingLevel;
+        for (; !waterCleanedGlobalMap.isEmpty(); count++) {
+            startingLevel = 0;
+            ArrayList<HexagonalBase> associatedLand = new ArrayList<>();
+            associatedLand.add(waterCleanedGlobalMap.get(Utils.getMapFirstEntryKey(waterCleanedGlobalMap)));
+            associateNearLand(associatedLand, waterCleanedGlobalMap, startingLevel);
+            if (count > 30) {
+                break;
+            }
+        }
+
+        return count;
     }
+
+    private void associateNearLand(ArrayList<HexagonalBase> associatedLandList, HashMap<String, HexagonalBase> mapInSubject, int level) {
+        level++;
+        logger.info("associateNearLand: entering level [" + level + "]");
+        ArrayList<HexagonalBase> tempHexagnalBaseToStore = new ArrayList<>();
+        ArrayList<String> tempStringToStore = new ArrayList<>();
+
+        for (HexagonalBase baseTogetNearTo : associatedLandList) {
+            ArrayList<HexagonPoint> pointerAsList = Utils.listFromArray(baseTogetNearTo.getPointer());
+            ArrayList<String> pointerStringAsList = new ArrayList<>();
+            for (HexagonPoint tempPoint : pointerAsList) {
+                pointerStringAsList.add(tempPoint.toString());
+            }
+            for (Map.Entry<String, HexagonalBase> mapEntry : mapInSubject.entrySet()) {
+                if (pointerStringAsList.contains(mapEntry.getKey()) && !tempStringToStore.contains(mapEntry.getKey())) {
+                    tempHexagnalBaseToStore.add(mapEntry.getValue());
+                    tempStringToStore.add(mapEntry.getKey());
+                }
+            }
+        }
+        if (!tempHexagnalBaseToStore.isEmpty()) {
+            for (HexagonalBase toStore : tempHexagnalBaseToStore) {
+                mapInSubject.remove(toStore.getHexAsPoint().toString());
+                associatedLandList.add(toStore);
+            }
+            logger.info("associateNearLand: entering next level of association.");
+            associateNearLand(associatedLandList, mapInSubject, level);
+        } else if (tempHexagnalBaseToStore.isEmpty() && level == 1 && associatedLandList.size() == 1) {
+            logger.info("associateNearLand: processing banal island. Process ended. Returning.");
+            mapInSubject.remove(associatedLandList.get(0).getHexAsPoint().toString());
+        }
+        else {
+            logger.info("associateNearLand: rebuild whole island. Returning.");
+        }
+    }
+
 }
