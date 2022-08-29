@@ -4,6 +4,8 @@ import engine.engineParams.Params;
 import engine.engineParams.ParamsValidator;
 import frontEnd.buttons.settingsFrameButtons.ConfirmButton;
 import frontEnd.inputLines.NumberLine;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ import static utils.ConstantsFrontEnd.BACKGROUND_COLOR;
 import static utils.ConstantsFrontEnd.ConstantsTextLines.*;
 
 public class SettingsFrame extends JFrame {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.SETTINGS_FRAME);
 
     private final JPanel paramsPanel;
     private final JPanel buttonPanel;

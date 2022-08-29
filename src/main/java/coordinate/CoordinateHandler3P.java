@@ -1,13 +1,15 @@
 package coordinate;
 
 import hexagon.HexagonPoint;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 
 public class CoordinateHandler3P extends AbstractCoordinateHandler{
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.COORDINATE_HANDLER_3P);
 
     @Override
     public HexagonPoint pickRandomPoint(boolean onBorderAllowed) {

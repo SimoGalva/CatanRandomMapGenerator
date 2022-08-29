@@ -1,10 +1,13 @@
 package engine.engineParams;
 
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
+
 import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class ParamsValidator {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.PARAMS_VALIDATOR);
 
 
     public boolean validate(Params params) {

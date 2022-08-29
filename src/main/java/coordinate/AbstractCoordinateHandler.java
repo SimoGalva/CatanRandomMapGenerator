@@ -1,12 +1,14 @@
 package coordinate;
 
 import hexagon.HexagonPoint;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public abstract class AbstractCoordinateHandler {
-    private static final Logger logger = Logger.getLogger("AbstractCoordinateHandler");
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.ABSTRACT_COORDINATE_HANDLER);
 
     public final static int distance = 3;
 

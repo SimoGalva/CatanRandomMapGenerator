@@ -5,14 +5,19 @@ import frontEnd.buttons.mapFrameButtons.RefreshButton;
 import frontEnd.buttons.mapFrameButtons.SaveButton;
 import frontEnd.buttons.mapFrameButtons.SettingsButton;
 import frontEnd.panels.MapPanel;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.logging.Logger;
 
 import static utils.ConstantsFrontEnd.BACKGROUND_COLOR;
 
 public class MapFrame extends JFrame {
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAP_FRAME);
+
     private MapPanel mapPanel;
     private JPanel refreshButtonPanel;
     private JPanel otherButtonsPanel;

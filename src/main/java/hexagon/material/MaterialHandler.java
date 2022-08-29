@@ -1,12 +1,13 @@
 package hexagon.material;
 
-import hexagon.number.Numbers;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.Random;
 import java.util.logging.Logger;
 
 public class MaterialHandler {
-    private static final Logger logger = Logger.getLogger(Numbers.class.getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MATERIAL_HANDLER);
 
     public static final String LAND = "LAND";
     public static final String LAND_WATER = "LAND_WATER";

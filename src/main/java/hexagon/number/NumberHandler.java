@@ -1,13 +1,15 @@
 package hexagon.number;
 
 import hexagon.material.Materials;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.Arrays;
 import java.util.Random;
 import java.util.logging.Logger;
 
 public class NumberHandler {
-    private static final Logger logger = Logger.getLogger(Numbers.class.getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.NUMBER_HANDLER);
 
     public Numbers pickRandomNumber(Materials material) {
         if (material == null) {

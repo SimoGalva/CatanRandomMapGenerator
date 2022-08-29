@@ -1,6 +1,8 @@
 package hexagon.material;
 
 import utils.exceptions.NoInstanceException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -8,7 +10,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class MaterialCounter {
-    private static final Logger logger = Logger.getLogger(MaterialCounter.class.getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MATERIAL_COUNTER);
 
     private int COUNTER_RIVER;
     private int COUNTER_STONE;

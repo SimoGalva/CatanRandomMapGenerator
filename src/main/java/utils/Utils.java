@@ -1,6 +1,8 @@
 package utils;
 
 import utils.exceptions.UpdateException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +10,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class Utils {
-    private static final Logger logger = Logger.getLogger(Utils.class.getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.UTILS);
 
     public static int getMaxIndex(ArrayList<Integer> list) {
         int checkMax = -1;

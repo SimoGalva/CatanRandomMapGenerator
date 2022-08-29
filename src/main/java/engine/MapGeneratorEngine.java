@@ -14,6 +14,8 @@ import island.IslandController;
 import utils.Utils;
 import utils.exceptions.GenerationException;
 import utils.exceptions.IslandNumberException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +24,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class MapGeneratorEngine {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAP_GENERATOR_ENGINE);
     private final GenerationHelper generationHelper;
     private final PostGenerationHelper postGenerationHelper;
 

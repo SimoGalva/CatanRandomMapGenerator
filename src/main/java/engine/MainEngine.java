@@ -5,12 +5,14 @@ import frontEnd.FErunner;
 import globalMap.CatMap;
 import utils.exceptions.GenerationException;
 import utils.exceptions.IslandNumberException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.logging.Logger;
 
 
 public class MainEngine implements Runnable {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAIN_ENGINE);
 
     private FErunner frontRunner;
     private CatMap map;

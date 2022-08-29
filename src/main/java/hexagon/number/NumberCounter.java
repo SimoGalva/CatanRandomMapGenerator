@@ -1,13 +1,15 @@
 package hexagon.number;
 
 import utils.exceptions.NoInstanceException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
 public class NumberCounter {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.NUMBER_COUNTER);
 
     private int COUNTER_TWO;
     private int COUNTER_THREE;

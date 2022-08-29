@@ -6,6 +6,8 @@ import hexagon.material.Materials;
 import hexagon.number.Numbers;
 import utils.Utils;
 import utils.exceptions.UpdateException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 import utils.pojo.DiagSettingsHolder;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class GlobalMapHandler {
-    private static final Logger logger = Logger.getLogger(GlobalMapHandler.class.getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.GLOBAL_MAP_HANDLER);
     public static HashMap<String, HexagonalBase> globalMap = new HashMap<>();
 
     public static void populateMap(HexagonalBase hexagonalBase) {

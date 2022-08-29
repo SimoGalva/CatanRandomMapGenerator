@@ -1,6 +1,13 @@
 package engine.engineParams;
 
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
+
+import java.util.logging.Logger;
+
 public class Params {
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.PARAMS);
+
     private int islandNumber;
     private int mainIslandNumber;
     private int mainIslandWeight;

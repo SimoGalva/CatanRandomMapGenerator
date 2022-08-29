@@ -4,12 +4,14 @@ import coordinate.AbstractCoordinateHandler;
 import hexagon.material.MaterialCounter;
 import hexagon.material.Materials;
 import hexagon.number.Numbers;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class HexagonalBase {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.HEXAGONAL_BASE);
     private final MaterialCounter materialCounter;
     private final AbstractCoordinateHandler coordinateHandler;
 

@@ -5,14 +5,18 @@ import hexagon.HexagonFE;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.Materials;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 import utils.pojo.DiagSettingsHolder;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 public class MapPanel extends JPanel {
+        private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAP_PANEL);
         private static final long serialVersionUID = 1L;
 
         private int numberOfPlayer;

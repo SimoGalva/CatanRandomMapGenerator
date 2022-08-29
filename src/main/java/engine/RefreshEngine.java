@@ -9,11 +9,13 @@ import hexagon.number.NumberCounter;
 import island.IslandController;
 import utils.exceptions.GenerationException;
 import utils.exceptions.IslandNumberException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.logging.Logger;
 
 public class RefreshEngine implements Runnable {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.REFRESH_ENGINE);
     private Params params;
     private CatMap newMapToRebuild;
 

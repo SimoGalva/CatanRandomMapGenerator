@@ -5,6 +5,8 @@ import hexagon.HexagonalBase;
 import hexagon.material.Materials;
 import hexagon.number.Numbers;
 import utils.Utils;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +15,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class PostGenerationHelper {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.POST_GENERATION_HELPER);
 
     HexagonalBase[] tempCoupleOfNearHexagons = new HexagonalBase[2];
 

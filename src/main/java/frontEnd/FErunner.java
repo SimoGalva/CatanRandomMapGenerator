@@ -4,6 +4,8 @@ import engine.MainEngine;
 import engine.engineParams.Params;
 import frontEnd.frames.MapFrame;
 import frontEnd.frames.SettingsFrame;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,7 @@ import java.util.logging.Logger;
 import static utils.ConstantsFrontEnd.ConstantsButtons.*;
 
 public class FErunner implements Runnable, ActionListener {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.FE_RUNNER);
 
     private MapFrame frame;
     private MainEngine.MainEngineCaller mainEngineCaller;

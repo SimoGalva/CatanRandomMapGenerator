@@ -1,11 +1,14 @@
 package frontEnd.inputLines;
 
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Logger;
 
 public class NumberLine extends JTextField {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.NUMBER_LINE);
 
     public NumberLine(String name) {
         this.setPreferredSize(new Dimension(50,20));

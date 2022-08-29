@@ -9,12 +9,14 @@ import island.Island;
 import island.IslandController;
 import utils.exceptions.GenerationException;
 import utils.exceptions.IslandNumberException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
  //todo: logica del sizeCode delle mappe: la mappa da n player può essere più o meno grande di un blochetto orizzonatale. Dare scelta. (attenzione è una modifica profonda, backend e frontend)
 public class CatMap {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.CAT_MAP);
 
     private Island[] islands;
     private MaterialCounter materialCounter;

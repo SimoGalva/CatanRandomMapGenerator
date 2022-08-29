@@ -6,6 +6,8 @@ import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
 import hexagon.material.Materials;
 import utils.Utils;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 import utils.pojo.SwitchingHexagons;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class IslandController {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.ISLAND_CONTROLLER);
 
     private IslandController[] finiteController = null;
     private boolean isMainIsland;

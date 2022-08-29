@@ -1,5 +1,8 @@
 package hexagon.number;
 
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
+
 import java.util.logging.Logger;
 
 public enum Numbers {
@@ -16,7 +19,7 @@ public enum Numbers {
     M_ONE(-1); // PER MARE E DESERTO.
 
     private int numberInt;
-    private static final Logger logger = Logger.getLogger(Numbers.class.getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.NUMBERS);
 
     Numbers(int numberInt) {
         this.numberInt = numberInt;

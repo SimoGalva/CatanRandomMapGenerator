@@ -12,6 +12,8 @@ import hexagon.number.NumberHandler;
 import hexagon.number.Numbers;
 import island.IslandController;
 import utils.exceptions.GenerationException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 import utils.pojo.SwitchingHexagons;
 
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 public class GenerationHelper {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.GENERATION_HELPER);
 
     private final int LIMIT_ITER_AND_LEVEL = 3500;
 

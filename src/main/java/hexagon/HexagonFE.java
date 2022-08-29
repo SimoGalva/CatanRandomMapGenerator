@@ -1,8 +1,13 @@
 package hexagon;
 
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
+
 import java.awt.*;
+import java.util.logging.Logger;
 
 public class HexagonFE extends Polygon {
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.HEXAGON_FE);
 
     private static final long serialVersionUID = 1L;
 

@@ -1,6 +1,7 @@
 package hexagon.material;
 
-import hexagon.number.Numbers;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.awt.*;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ public enum Materials {
     private int materialCode;
     private Color colorValue;
 
-    private static final Logger logger = Logger.getLogger(Numbers.class.getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MATERIALS);
 
     Materials(int materialCode, Color colorValue) {
         this.materialCode = materialCode;

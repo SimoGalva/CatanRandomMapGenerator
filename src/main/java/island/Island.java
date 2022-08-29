@@ -3,12 +3,14 @@ package island;
 import engine.MapGeneratorEngine;
 import hexagon.HexagonalBase;
 import utils.exceptions.GenerationException;
+import utils.logging.LoggingClassesEnum;
+import utils.logging.SyncedLogger;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class Island {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.ISLAND);
 
     private IslandController controller;
     private MapGeneratorEngine generatorEngine;
