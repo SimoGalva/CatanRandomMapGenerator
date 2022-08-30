@@ -27,7 +27,6 @@ public class GlobalMapHandler {
         return globalMap;
     }
 
-
     public static void updateMap(HashMap<String, HexagonalBase> newMap) {
         if (newMap.size() == globalMap.size()) {
             logger.info("updateMap: updating map with new one.");
@@ -48,7 +47,8 @@ public class GlobalMapHandler {
             byteString.append(i+". coordinate: ["+entry.getKey()+"] has material ["+entry.getValue().getMaterial().toString()+"] with number: ["+entry.getValue().getNumber().toString()+"]; \n");
             i++;
         }
-        System.out.println(byteString);
+        //System.out.println(byteString);
+        logger.info(byteString.toString());
         return byteString.toString();
     }
 

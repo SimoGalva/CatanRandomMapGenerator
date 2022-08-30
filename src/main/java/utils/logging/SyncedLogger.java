@@ -17,8 +17,6 @@ public class SyncedLogger {
         Logger ret = Logger.getLogger(className.getValue());
         String loggingPathSingle = loggingPath + className.getValue() + loggingPathExtension;
 
-
-
         try {
 
             FileHandler fileHandlerhGlobal = createOrGetGlobalHandler();;
