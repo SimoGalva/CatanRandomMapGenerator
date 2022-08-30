@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
-import static utils.ConstantsFrontEnd.ConstantsButtons.*;
+import static utils.Constants.ConstantsButtons.*;
 
 public class FErunner implements Runnable, ActionListener {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.FE_RUNNER);

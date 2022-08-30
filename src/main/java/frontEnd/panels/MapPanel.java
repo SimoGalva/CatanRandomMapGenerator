@@ -1,6 +1,6 @@
 package frontEnd.panels;
 
-import globalMap.GlobalMapHandler;
+import globalMap.MapHandler;
 import hexagon.HexagonFE;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
@@ -24,12 +24,12 @@ public class MapPanel extends JPanel {
         private int HEIGHT = 860;
         private final int SIZE = 9; // valore iviolabile, definisce il giusto numero di righe e la forma della mappa
 
-        private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap();
+        private final static HashMap<String, HexagonalBase> globalMap = MapHandler.getGlobalMap();
 
         private Font font = new Font("Arial", Font.BOLD, 18);
         FontMetrics metrics;
         public MapPanel() {
-            this.numberOfPlayer = GlobalMapHandler.calculateNumberOfPlayerForFront();
+            this.numberOfPlayer = MapHandler.calculateNumberOfPlayerForFront();
             setPreferredSize(new Dimension(WIDTH, HEIGHT));
         }
 
@@ -41,7 +41,7 @@ public class MapPanel extends JPanel {
             g2d.setStroke(new BasicStroke(4.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER));
             g2d.setFont(font);
             metrics = g.getFontMetrics();
-            int radious = GlobalMapHandler.calculateRadiuos();
+            int radious = MapHandler.calculateRadiuos();
             drawCircle(g2d, radious, true, true, 0x4488FF, 0);
             drawHexGridLoop(g2d, origin, 50, 8);
         }
@@ -51,7 +51,7 @@ public class MapPanel extends JPanel {
             double xOff = Math.cos(ang30) * (radius + padding);
             double yOff = Math.sin(ang30) * (radius + padding);
             int half = SIZE / 2;
-            DiagSettingsHolder diagSettings = GlobalMapHandler.calculateDiagSettings();
+            DiagSettingsHolder diagSettings = MapHandler.calculateDiagSettings();
 
             for (int row = 1; row < SIZE -1; row++) {
                 int colsLimit = SIZE - java.lang.Math.abs(row - half);

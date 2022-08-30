@@ -27,7 +27,7 @@ public class CatMap {
     private IslandController islandControllerWrapper;
     private AbstractCoordinateHandler coordinateHandler;
     private MapGeneratorEngine generatorEngine;
-    private final static HashMap<String, HexagonalBase> globalMap = GlobalMapHandler.getGlobalMap(); //sincronzza la mappa sempre e comunque
+    private final static HashMap<String, HexagonalBase> globalMap = MapHandler.getGlobalMap(); //sincronzza la mappa sempre e comunque
 
     public Island[] getIslands() {
         return islands;
@@ -61,7 +61,7 @@ public class CatMap {
 
     public void postGeneratingFixing() throws IslandNumberException{
         logger.info("postGeneratingFixing: starting post generating fixes");
-        GlobalMapHandler.populateLimitWaterHexagons(numberOfPlayer);
+        MapHandler.populateLimitWaterHexagons(numberOfPlayer);
         fillOcean();
         numberOfIslandChecking();
         numberRuleChecking();

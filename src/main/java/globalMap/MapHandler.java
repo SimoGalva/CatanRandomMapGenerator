@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class GlobalMapHandler {
+public class MapHandler {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.GLOBAL_MAP_HANDLER);
     public static HashMap<String, HexagonalBase> globalMap = new HashMap<>();
 

@@ -1,7 +1,7 @@
 package engine;
 
 import coordinate.AbstractCoordinateHandler;
-import globalMap.GlobalMapHandler;
+import globalMap.MapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
@@ -57,7 +57,7 @@ public class MapGeneratorEngine {
             } else {
                 point = coordinateHandler.pickRandomPoint(true);
             }
-            if (GlobalMapHandler.getGlobalMap().isEmpty() || this.generationHelper.isNearIsland(point, GlobalMapHandler.getGlobalMap())) {
+            if (MapHandler.getGlobalMap().isEmpty() || this.generationHelper.isNearIsland(point, MapHandler.getGlobalMap())) {
                 isNearAlreadyGenerated = false;
             }
             else if (nIter > 3500) {
@@ -110,7 +110,7 @@ public class MapGeneratorEngine {
                 && coordinateHandler.consumeCoord(pointEntry)) {
 
                     HexagonalBase oceanBase = HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, coordinateHandler.calculatePointerDimesnsion(pointEntry), pointEntry);
-                    GlobalMapHandler.populateMap(oceanBase);
+                    MapHandler.populateMap(oceanBase);
             }
         }
     }
@@ -124,7 +124,7 @@ public class MapGeneratorEngine {
                 && coordinateHandler.consumeCoord(currentPoint)) {
 
                 HexagonalBase oceanBase = HexagonalBase.createInstance(Materials.WATER, Numbers.M_ONE, currentPoint);
-                GlobalMapHandler.populateMap(oceanBase);
+                MapHandler.populateMap(oceanBase);
             }
         }
     }
@@ -132,7 +132,7 @@ public class MapGeneratorEngine {
     public void numberRuleChecking() {
         long t0 = System.currentTimeMillis();
         logger.info("postGeneratingFixing.numberRuleChecking: starting to fix near 6 and 8.");
-        HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
+        HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(MapHandler.getGlobalMap());
         HashMap<String, HexagonalBase> sixAndEightMap = new HashMap<>();
         boolean isSwitchingNeeded = false;
         do {
@@ -148,13 +148,13 @@ public class MapGeneratorEngine {
             }
         } while (isSwitchingNeeded);
         logger.info("postGeneratingFixing.numberRuleChecking: near 6 and 8 fixed. Terminated in [" + (System.currentTimeMillis() - t0) + "]");
-        GlobalMapHandler.updateMap(globalMap);
+        MapHandler.updateMap(globalMap);
     }
 
     public void numberOfIslandChecking(int expectedNumberOfIsland) throws IslandNumberException {
         long t0 = System.currentTimeMillis();
         logger.info("postGeneratingFixing.numberOfIslandChecking: starting to cout actual number of island.");
-        HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(GlobalMapHandler.getGlobalMap());
+        HashMap<String, HexagonalBase> globalMap = Utils.duplicateMap(MapHandler.getGlobalMap());
 
         int actualIslandNumber = this.postGenerationHelper.countIslands(globalMap);
         if (actualIslandNumber != expectedNumberOfIsland) {

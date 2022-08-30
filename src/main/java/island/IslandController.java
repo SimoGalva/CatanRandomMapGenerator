@@ -1,6 +1,6 @@
 package island;
 
-import globalMap.GlobalMapHandler;
+import globalMap.MapHandler;
 import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.MaterialCounter;
@@ -68,14 +68,14 @@ public class IslandController {
         if (Materials.WATER != hexagonalBase.getMaterial()) {
             numberOfHexagons--;
         }
-        GlobalMapHandler.populateMap(hexagonalBase);
+        MapHandler.populateMap(hexagonalBase);
      }
      public HexagonalBase getHexagonFromMap(HexagonPoint point) {
          HexagonalBase ret;
          if (islandMap.get(point.toString()) != null) {
              ret = islandMap.get(point.toString());
-         } else if (GlobalMapHandler.getGlobalMap().get(point.toString()) != null){
-             ret = GlobalMapHandler.getGlobalMap().get(point.toString());
+         } else if (MapHandler.getGlobalMap().get(point.toString()) != null){
+             ret = MapHandler.getGlobalMap().get(point.toString());
          } else {
              logger.severe("getHexagonFromMap: the selected point ["+point.toString()+"] is not populated. Returning null");
              ret = null;

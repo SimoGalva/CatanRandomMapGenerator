@@ -3,7 +3,7 @@ package engine;
 import coordinate.AbstractCoordinateHandler;
 import engine.engineParams.Params;
 import globalMap.CatMap;
-import globalMap.GlobalMapHandler;
+import globalMap.MapHandler;
 import hexagon.material.MaterialCounter;
 import hexagon.number.NumberCounter;
 import island.IslandController;
@@ -44,7 +44,7 @@ public class RefreshEngine implements Runnable {
     }
 
     private void clearSingleInstances() {
-        GlobalMapHandler.clear();
+        MapHandler.clear();
         IslandController.clearSingletonInstance();
         AbstractCoordinateHandler.clearSingletonInstance();
         MapGeneratorEngine.clearSingletonInstance();

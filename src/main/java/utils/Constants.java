@@ -2,9 +2,15 @@ package utils;
 
 import java.awt.*;
 
-public class ConstantsFrontEnd {
+public class Constants {
 
     public static final Color BACKGROUND_COLOR = new Color(0x6E6E72);
+
+    public final static String NEXT_LINE = " \n";
+    public final static String SEPARATOR = ";";
+
+    public final static String LOAD = "load";
+    public final static String SAVE = "save";
 
     public static class ConstantsButtons {
         public static final String CONFIRM_BUTTON = "ConfirmButton";

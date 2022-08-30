@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
-import static utils.ConstantsFrontEnd.BACKGROUND_COLOR;
+import static utils.Constants.BACKGROUND_COLOR;
 
 public class MapFrame extends JFrame {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAP_FRAME);

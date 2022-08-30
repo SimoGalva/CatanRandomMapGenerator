@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static utils.Constants.NEXT_LINE;
+import static utils.Constants.SEPARATOR;
+
 public class SavingFormatter {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.SAVING_FORMATTER);
-
-    private final static String NEXT_LINE = " \n";
-    private final static String SEPARATOR = ";";
 
     public static String formatSavingMap(HashMap<String, HexagonalBase> map) {
         logger.info("Starting to format map.");
