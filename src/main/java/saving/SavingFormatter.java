@@ -20,7 +20,7 @@ public class SavingFormatter {
     private final static String NEXT_LINE = " \n";
     private final static String SEPARATOR = ";";
 
-    public static String formatSave(HashMap<String, HexagonalBase> map) {
+    public static String formatSavingMap(HashMap<String, HexagonalBase> map) {
         logger.info("Starting to format map.");
 
         StringBuilder formatted = new StringBuilder();
@@ -47,7 +47,7 @@ public class SavingFormatter {
         return formatted.toString();
     }
 
-    public static HashMap<String, HexagonalBase> deformatSave(String formattedMap) {
+    public static HashMap<String, HexagonalBase> deformatSavedMap(String formattedMap) {
         logger.info("Starting to deformat map String.");
 
         AbstractCoordinateHandler coordinateHandler = AbstractCoordinateHandler.getInstance();
