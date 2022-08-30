@@ -13,6 +13,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+/** Note that this class completes its purpose by only using method createInstance:
+ * depending on the String flagLoadSave "load"/"save" and the presence (or not) of the second parameters it decides if it has been instanced for
+ * saving or loading from file and does it directly and will save the results in its attributes.
+ * Then one can retrieve both the string or the map from the object.*/
+
 public class MapSavingHandler implements GenericDataHandler{
 
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAP_SAVING_HANDLER);
@@ -20,8 +25,22 @@ public class MapSavingHandler implements GenericDataHandler{
     private HashMap<String, HexagonalBase> map;
     private String stringMap; //formatted map string, it needs to be deformatted
 
-    //public constructor: handle the choice of correct constructor depending on the operation required
-    private static MapSavingHandler createInstance(String flagLoadSave, HashMap<String, HexagonalBase> map) throws LoadingFileException, LoadingException, SavingInFileException {
+    public HashMap<String, HexagonalBase> getMap() {
+        return map;
+    }
+    public void setMap(HashMap<String, HexagonalBase> map) {
+        this.map = map;
+    }
+
+    public String getStringMap() {
+        return stringMap;
+    }
+    public void setStringMap(String stringMap) {
+        this.stringMap = stringMap;
+    }
+
+    //public constructor: handles the choice of correct constructor depending on the operation required
+    public static MapSavingHandler createInstance(String flagLoadSave, HashMap<String, HexagonalBase> map) throws LoadingFileException, LoadingException, SavingInFileException {
         if (map == null && Constants.LOAD.equals(flagLoadSave)) {
             try {
                 return new MapSavingHandler();
