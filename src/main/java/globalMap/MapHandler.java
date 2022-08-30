@@ -4,6 +4,7 @@ import hexagon.HexagonPoint;
 import hexagon.HexagonalBase;
 import hexagon.material.Materials;
 import hexagon.number.Numbers;
+import utils.Constants;
 import utils.Utils;
 import utils.exceptions.UpdateException;
 import utils.logging.LoggingClassesEnum;
@@ -97,13 +98,13 @@ public class MapHandler {
 
     public static DiagSettingsHolder calculateDiagSettings() {
         switch (globalMap.size()) {
-            case 44: // 3 giocatori
+            case Constants.PiecesForPlayers.PLAYER_3: // 3 giocatori
                 return new DiagSettingsHolder(1,0);
-            case 51: // 4 giocatori
+            case Constants.PiecesForPlayers.PLAYER_4: // 4 giocatori
                 return new DiagSettingsHolder(0,0);
-            case 58: // 5 giocatori
+            case Constants.PiecesForPlayers.PLAYER_5: // 5 giocatori
                 return new DiagSettingsHolder(0,1);
-            case 65: // 6 giocatori
+            case Constants.PiecesForPlayers.PLAYER_6: // 6 giocatori
                 return new DiagSettingsHolder(-1,1);
             default: // errore da qualche parte
                 return null;
@@ -112,13 +113,13 @@ public class MapHandler {
 
     public static int calculateNumberOfPlayerForFront() {
         switch (globalMap.size()) {
-            case 44: // 3 giocatori
+            case Constants.PiecesForPlayers.PLAYER_3: // 3 giocatori
                 return 3;
-            case 51: // 4 giocatori
+            case Constants.PiecesForPlayers.PLAYER_4: // 4 giocatori
                 return 4;
-            case 58: // 5 giocatori
+            case Constants.PiecesForPlayers.PLAYER_5: // 5 giocatori
                 return 5;
-            case 65: // 6 giocatori
+            case Constants.PiecesForPlayers.PLAYER_6: // 6 giocatori
                 return 6;
             default: // errore da qualche parte
                 return 0;
@@ -127,13 +128,13 @@ public class MapHandler {
 
     public static int calculateRadiuos() {
         switch (globalMap.size()) {
-            case 44: // 3 giocatori
+            case Constants.PiecesForPlayers.PLAYER_3: // 3 giocatori
                 return 450;
-            case 51: // 4 giocatori
+            case Constants.PiecesForPlayers.PLAYER_4: // 4 giocatori
                 return 450;
-            case 58: // 5 giocatori
+            case Constants.PiecesForPlayers.PLAYER_5: // 5 giocatori
                 return 450;
-            case 65: // 6 giocatori
+            case Constants.PiecesForPlayers.PLAYER_6: // 6 giocatori
                 return 550;
             default: // errore da qualche parte
                 return 0;

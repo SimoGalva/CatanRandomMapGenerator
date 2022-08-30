@@ -26,4 +26,11 @@ public class Constants {
         public static final String MAIN_ISLAND_WEIGHT = "MainIslandWeight";
         public static final String PLAYER_NUMBER = "PlayerNumber";
     }
+
+    public static class PiecesForPlayers {
+        public static final int PLAYER_3 = 44;
+        public static final int PLAYER_4 = 51;
+        public static final int PLAYER_5 = 58;
+        public static final int PLAYER_6 = 65;
+    }
 }
