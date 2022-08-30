@@ -33,7 +33,7 @@ public class MapFrame extends JFrame {
         otherButtonsPanel = new JPanel();
         refreshButton = new RefreshButton(listenerFErunner);
         printButton = new ModifyButton();
-        saveButton = new SaveButton();
+        saveButton = new SaveButton(listenerFErunner);
         settingsButton = new SettingsButton(listenerFErunner);
 
         refreshButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING,5, 0));

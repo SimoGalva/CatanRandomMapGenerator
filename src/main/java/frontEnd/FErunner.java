@@ -4,6 +4,9 @@ import engine.MainEngine;
 import engine.engineParams.Params;
 import frontEnd.frames.MapFrame;
 import frontEnd.frames.SettingsFrame;
+import globalMap.MapHandler;
+import saving.MapSavingHandler;
+import utils.Constants;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 
@@ -90,6 +93,13 @@ public class FErunner implements Runnable, ActionListener {
                 if (!settingsFrame.isBeforeRun()) {
                     settingsFrame.dispose();
                 } //todo: implementare una seplice warning frame?
+                break;
+            case SAVE_BUTTON:
+                try {
+                    MapSavingHandler.createInstance(Constants.SAVE, MapHandler.getGlobalMap());
+                } catch (Exception ex) {
+                    //todo: implementare una finestra di fallimento di salvataggio dei dati.
+                }
                 break;
         }
     }

@@ -100,11 +100,11 @@ public class MapSavingHandler implements GenericDataHandler{
         this.map = map;
         this.stringMap = SavingFormatter.formatSavingMap(this.map);
 
-        if (save()) {
+        if (save(SAVING_PATH + "/" + SAVING_FILE_NAME)) {
             logger.info("Saving process ended.");
         } else {
             logger.warning("Saving did not work correctly. Retrying one more time.");
-            if (save()) {
+            if (save(SAVING_PATH + "/" + SAVING_FILE_NAME)) {
                 logger.info("Saving process ended during second try.");
             } else {
                 this.stringMap = null;
@@ -114,9 +114,10 @@ public class MapSavingHandler implements GenericDataHandler{
         }
     }
 
+    //impostato come save(path) così se si volesse introdurre la possibilità di chiedere il path in input lo si può gestire quasi totalmente gratis
     @Override
-    public boolean save() {
-        File savingFile = new File(SAVING_PATH + "/" + SAVING_FILE_NAME );
+    public boolean save(String path) {
+        File savingFile = new File(path);
 
         BufferedWriter bufferedWriter = null;
         try {
@@ -136,7 +137,6 @@ public class MapSavingHandler implements GenericDataHandler{
         return true;
     }
 
-    //impostato come load(path) così se si volesse introdurre la possibilità di chiedere il path in input lo si può gestire quasi totalmente gratis
     @Override
     public boolean load() {
         if (this.stringMap != null) {
@@ -151,6 +151,7 @@ public class MapSavingHandler implements GenericDataHandler{
         return true;
     }
 
+    //impostato come loadFromFile(path) così se si volesse introdurre la possibilità di chiedere il path in input lo si può gestire quasi totalmente gratis
     @Override
     public boolean loadFromFile(String path) {
         File loadingFile = new File(path);
