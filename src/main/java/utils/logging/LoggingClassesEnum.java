@@ -23,7 +23,7 @@ public enum LoggingClassesEnum {
     SETTINGS_FRAME 	                            ("SettingsFrame"),
     NUMBER_LINE 	                            ("NumberLine"),
     FE_RUNNER 	                                ("FErunner"),
-    CAT_MAP 	                                ("CatMap"),
+    CAT_MAP 	                                ("CatanMap"),
     GLOBAL_MAP_HANDLER 	                        ("MapHandler"),
     MATERIAL_COUNTER 	                        ("MaterialCounter"),
     MATERIAL_HANDLER 	                        ("MaterialHandler"),

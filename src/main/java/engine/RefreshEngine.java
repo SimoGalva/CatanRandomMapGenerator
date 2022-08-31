@@ -2,7 +2,7 @@ package engine;
 
 import coordinate.AbstractCoordinateHandler;
 import engine.engineParams.Params;
-import globalMap.CatMap;
+import globalMap.CatanMap;
 import globalMap.MapHandler;
 import hexagon.material.MaterialCounter;
 import hexagon.number.NumberCounter;
@@ -17,9 +17,9 @@ import java.util.logging.Logger;
 public class RefreshEngine implements Runnable {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.REFRESH_ENGINE);
     private Params params;
-    private CatMap newMapToRebuild;
+    private CatanMap newMapToRebuild;
 
-    public CatMap getNewMapToRebuild() {
+    public CatanMap getNewMapToRebuild() {
         return newMapToRebuild;
     }
 
@@ -30,7 +30,7 @@ public class RefreshEngine implements Runnable {
     @Override
     public void run() {
         clearSingleInstances();
-        this.newMapToRebuild = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(), params.getMainIslandWeight(), params.getNumberOfPlayer());
+        this.newMapToRebuild = new CatanMap(params.getIslandNumber(), params.getMainIslandNumber(), params.getMainIslandWeight(), params.getNumberOfPlayer());
         try {
             this.newMapToRebuild.generateIslands();
             this.newMapToRebuild.postGeneratingFixing();

@@ -15,7 +15,7 @@ import utils.logging.SyncedLogger;
 import java.util.HashMap;
 import java.util.logging.Logger;
  //todo: logica del sizeCode delle mappe: la mappa da n player può essere più o meno grande di un blochetto orizzonatale. Dare scelta. (attenzione è una modifica profonda, backend e frontend)
-public class CatMap {
+public class CatanMap {
      private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.CAT_MAP);
 
     private Island[] islands;
@@ -33,7 +33,7 @@ public class CatMap {
         return islands;
     }
 
-    public CatMap(int islandsNumber, int mainIslandsNumber, int mainIslandWeight, int numberOfPlayer) {
+    public CatanMap(int islandsNumber, int mainIslandsNumber, int mainIslandWeight, int numberOfPlayer) {
         this.coordinateHandler = AbstractCoordinateHandler.getInstance(numberOfPlayer);
         this.islands = new Island[islandsNumber];
         this.materialCounter = MaterialCounter.createInstance(numberOfPlayer);
@@ -48,13 +48,13 @@ public class CatMap {
 
      public void generateIslands() throws GenerationException {
         for (int i = 0; i < this.islandsNumber; i++) {
-            logger.info("globalMap.CatMap.generateMapIsland: setting center for "+ (this.islandControllerWrapper.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]).");
+            logger.info("globalMap.CatanMap.generateMapIsland: setting center for "+ (this.islandControllerWrapper.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]).");
             this.islands[i] = new Island(this.islandControllerWrapper.getFiniteController()[i]);
-            logger.info("globalMap.CatMap.generateMapIsland: starting "+ (this.islandControllerWrapper.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]) generation process.");
+            logger.info("globalMap.CatanMap.generateMapIsland: starting "+ (this.islandControllerWrapper.getFiniteController()[i].isMainIsland() ? "main" : "") +"island number ["+(i+1)+"] (of ["+islandsNumber+"]) generation process.");
             islands[i].generateIsland();
             generatorEngine.fillIslandBorderSea(this.islandControllerWrapper.getFiniteController()[i]);
         }
-        logger.info("globalMap.CatMap.generateMapIsland: generation process ended.");
+        logger.info("globalMap.CatanMap.generateMapIsland: generation process ended.");
         materialCounter.printRemains();
         numberCounter.printRemains();
     }

@@ -2,7 +2,7 @@ package engine;
 
 import engine.engineParams.Params;
 import frontEnd.FErunner;
-import globalMap.CatMap;
+import globalMap.CatanMap;
 import utils.exceptions.GenerationException;
 import utils.exceptions.IslandNumberException;
 import utils.logging.LoggingClassesEnum;
@@ -15,7 +15,7 @@ public class MainEngine implements Runnable {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAIN_ENGINE);
 
     private FErunner frontRunner;
-    private CatMap map;
+    private CatanMap map;
     public Params params;
 
     public MainEngine() {
@@ -25,7 +25,7 @@ public class MainEngine implements Runnable {
 
     @Override
     public void run() {
-        this.map = new CatMap(params.getIslandNumber(), params.getMainIslandNumber(),params.getMainIslandWeight(), params.getNumberOfPlayer());
+        this.map = new CatanMap(params.getIslandNumber(), params.getMainIslandNumber(),params.getMainIslandWeight(), params.getNumberOfPlayer());
         try {
             this.map.generateIslands();
             this.map.postGeneratingFixing();
