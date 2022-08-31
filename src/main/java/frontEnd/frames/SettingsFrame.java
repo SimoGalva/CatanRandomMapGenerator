@@ -155,7 +155,6 @@ public class SettingsFrame extends JFrame {
         return (isThereNewIslandNumber || isThereNewMainIslandNumber || isThereNewMainIslandWeight || isThereNewPlayerNumber);
     }
 
-
     public void handleNewParams() throws ParamsValidatorException {
         logger.info("SettingsFrame.actionPerformed: confirmation button pressed.");
         if (this.isThereNewContents()) {

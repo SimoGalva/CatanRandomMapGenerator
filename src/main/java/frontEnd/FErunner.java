@@ -67,8 +67,8 @@ public class FErunner implements Runnable, ActionListener {
         loadSaveFrame.setVisible(true);
     }
 
-    private void runGenericErrorFrame(String errorTypeStr) {
-        errorFrame = new GenericErrorFrame(this,errorTypeStr);
+    private void runGenericErrorFrame(String errorStr) {
+        errorFrame = new GenericErrorFrame(this,errorStr);
 
         errorFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         errorFrame.pack();
@@ -123,7 +123,7 @@ public class FErunner implements Runnable, ActionListener {
                         }
                         if (!settingsFrame.isBeforeRun()) {
                             settingsFrame.dispose();
-                        } //todo: implementare una seplice warning frame?
+                        }
                         break;
                 case CONFIRM_BUTTON_SAVE:
                     try {
@@ -140,9 +140,7 @@ public class FErunner implements Runnable, ActionListener {
                         runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_SAVE);
                     } catch (NotAPathException nope) {
                         runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_SAVE);
-                    } catch (Exception dummy) {
-                        //nothing to do, sono le loading exception non è il caso
-                    }
+                    } catch (Exception dummy) {/*nothing to do, sono le loading exception non è il caso*/}
                     break;
                 case CONFIRM_BUTTON_ERROR:
                     errorFrame.dispose();
@@ -158,12 +156,9 @@ public class FErunner implements Runnable, ActionListener {
                 try {
                     MapSavingHandler.createInstance(Constants.SAVE, MapHandler.getGlobalMap());
                     loadSaveFrame.dispose();
-                } catch (Exception ex) {
-                    //nope, it must work
-                }
+                } catch (Exception ex) {/*nope, it must work*/}
                 break;
         }
     }
-
 
 }
