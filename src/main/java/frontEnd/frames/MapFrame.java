@@ -1,9 +1,6 @@
 package frontEnd.frames;
 
-import frontEnd.buttons.mapFrameButtons.ModifyButton;
-import frontEnd.buttons.mapFrameButtons.RefreshButton;
-import frontEnd.buttons.mapFrameButtons.SaveButton;
-import frontEnd.buttons.mapFrameButtons.SettingsButton;
+import frontEnd.buttons.mapFrameButtons.*;
 import frontEnd.panels.MapPanel;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
@@ -24,6 +21,7 @@ public class MapFrame extends JFrame {
     private JButton refreshButton;
     private JButton printButton;
     private JButton saveButton;
+    private JButton loadButton;
     private JButton settingsButton;
 
     public MapFrame(ActionListener listenerFErunner) {
@@ -34,6 +32,7 @@ public class MapFrame extends JFrame {
         refreshButton = new RefreshButton(listenerFErunner);
         printButton = new ModifyButton();
         saveButton = new SaveButton(listenerFErunner);
+        loadButton = new LoadButton(listenerFErunner);
         settingsButton = new SettingsButton(listenerFErunner);
 
         refreshButtonPanel.setLayout(new FlowLayout(FlowLayout.LEADING,5, 0));
@@ -42,6 +41,7 @@ public class MapFrame extends JFrame {
         otherButtonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT,5, 5));
         otherButtonsPanel.add(printButton);
         otherButtonsPanel.add(saveButton);
+        otherButtonsPanel.add(loadButton);
         otherButtonsPanel.add(settingsButton);
 
         LayoutManager layout = new BorderLayout(-110,0);
