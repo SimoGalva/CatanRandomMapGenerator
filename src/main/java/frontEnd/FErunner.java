@@ -2,12 +2,15 @@ package frontEnd;
 
 import engine.MainEngine;
 import engine.engineParams.Params;
+import frontEnd.frames.GenericErrorFrame;
 import frontEnd.frames.LoadSaveFrame;
 import frontEnd.frames.MapFrame;
 import frontEnd.frames.SettingsFrame;
 import globalMap.MapHandler;
 import saving.MapSavingHandler;
 import utils.Constants;
+import utils.exceptions.NotAPathException;
+import utils.exceptions.ParamsValidatorException;
 import utils.exceptions.SavingInFileException;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
@@ -26,6 +29,7 @@ public class FErunner implements Runnable, ActionListener {
     private MainEngine.MainEngineCaller mainEngineCaller;
     private SettingsFrame settingsFrame;
     private LoadSaveFrame loadSaveFrame;
+    private GenericErrorFrame errorFrame;
 
     public FErunner(MainEngine.MainEngineCaller mainEngineCaller) {
         this.mainEngineCaller = mainEngineCaller;
@@ -63,6 +67,15 @@ public class FErunner implements Runnable, ActionListener {
         loadSaveFrame.setVisible(true);
     }
 
+    private void runGenericErrorFrame(String errorTypeStr) {
+        errorFrame = new GenericErrorFrame(this,errorTypeStr);
+
+        errorFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        errorFrame.pack();
+        errorFrame.setLocationRelativeTo(null);
+        errorFrame.setVisible(true);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String[] callingClassDecomposed = e.getSource().getClass().getName().split("\\.");
@@ -82,32 +95,36 @@ public class FErunner implements Runnable, ActionListener {
                 logger.info("FErunner.actionPeformed: confirm button pressed.");
                 switch (e.getActionCommand()) {
                     case CONFIRM_BUTTON_SETTINGS:
-                    settingsFrame.handleNewParams();
-                    Params newParams = settingsFrame.getNewParams();
-                    if (newParams != null && (mainEngineCaller.getParams() == null || !mainEngineCaller.getParams().equals(newParams))) {
-                        boolean isChangedNumberOfPlayer = true;
-                        if (mainEngineCaller.getParams() != null) {
-                            isChangedNumberOfPlayer = mainEngineCaller.getParams().getNumberOfPlayer() != newParams.getNumberOfPlayer();
+                        try {
+                            settingsFrame.handleNewParams();
+                        } catch (ParamsValidatorException pve) {
+                            runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_INVALID_PARAMS);
                         }
-                        mainEngineCaller.setParams(newParams);
-                        if (frame != null) {
-                            if (!isChangedNumberOfPlayer) {
-                                mainEngineCaller.runRefreshing();
-                                frame.refreshMap();
-                            } else {
-                                mainEngineCaller.runRefreshing();
-                                frame.dispose();
-                                this.run();
+                        Params newParams = settingsFrame.getNewParams();
+                        if (newParams != null && (mainEngineCaller.getParams() == null || !mainEngineCaller.getParams().equals(newParams))) {
+                            boolean isChangedNumberOfPlayer = true;
+                            if (mainEngineCaller.getParams() != null) {
+                                isChangedNumberOfPlayer = mainEngineCaller.getParams().getNumberOfPlayer() != newParams.getNumberOfPlayer();
                             }
-                        } else {
-                            mainEngineCaller.run();
-                            settingsFrame.dispose();
+                            mainEngineCaller.setParams(newParams);
+                            if (frame != null) {
+                                if (!isChangedNumberOfPlayer) {
+                                    mainEngineCaller.runRefreshing();
+                                    frame.refreshMap();
+                                } else {
+                                    mainEngineCaller.runRefreshing();
+                                    frame.dispose();
+                                    this.run();
+                                }
+                            } else {
+                                mainEngineCaller.run();
+                                settingsFrame.dispose();
+                            }
                         }
-                    }
-                    if (!settingsFrame.isBeforeRun()) {
-                        settingsFrame.dispose();
-                    } //todo: implementare una seplice warning frame?
-                    break;
+                        if (!settingsFrame.isBeforeRun()) {
+                            settingsFrame.dispose();
+                        } //todo: implementare una seplice warning frame?
+                        break;
                 case CONFIRM_BUTTON_SAVE:
                     try {
                         if (loadSaveFrame.isThereNewContents()) {
@@ -120,10 +137,16 @@ public class FErunner implements Runnable, ActionListener {
                             loadSaveFrame.dispose();
                         }
                     } catch (SavingInFileException se) {
-                        //todo: lancio della frame di errore.
+                        runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_SAVE);
+                    } catch (NotAPathException nope) {
+                        runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_SAVE);
                     } catch (Exception dummy) {
                         //nothing to do, sono le loading exception non è il caso
                     }
+                    break;
+                case CONFIRM_BUTTON_ERROR:
+                    errorFrame.dispose();
+                    errorFrame = null;
                     break;
                 }
                 break;

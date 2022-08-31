@@ -18,6 +18,7 @@ public class Constants {
         public static final String CONFIRM_BUTTON_SETTINGS = "ConfirmButtonForSettings";
         public static final String CONFIRM_BUTTON_SAVE = "ConfirmButtonForSave";
         public static final String CONFIRM_BUTTON_LOAD = "ConfirmButtonForLoad";
+        public static final String CONFIRM_BUTTON_ERROR = "ConfirmButtonError";
         public static final String REFRESH_BUTTON = "RefreshButton";
         public static final String SETTINGS_BUTTON = "SettingsButton";
         public static final String SAVE_BUTTON = "SaveButton";
@@ -32,6 +33,9 @@ public class Constants {
 
         public static final String PATH = "Path";
         public static final String FILE_NAME = "File Name";
+
+        public static final String ERROR_FRAME_MASSAGE_SAVE = "An error occurred while saving data. \n Please retry with different path and file name.";
+        public static final String ERROR_FRAME_MASSAGE_INVALID_PARAMS = "Inserted Invalid parameters retry inserting new ones.";
     }
 
     public static class PiecesForPlayers {

@@ -5,6 +5,7 @@ import engine.engineParams.ParamsValidator;
 import frontEnd.buttons.commonButtons.ConfirmButton;
 import frontEnd.inputLines.NumberLine;
 import utils.Constants;
+import utils.exceptions.ParamsValidatorException;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 
@@ -155,13 +156,14 @@ public class SettingsFrame extends JFrame {
     }
 
 
-    public void handleNewParams() {
+    public void handleNewParams() throws ParamsValidatorException {
         logger.info("SettingsFrame.actionPerformed: confirmation button pressed.");
         if (this.isThereNewContents()) {
             ParamsValidator validator = new ParamsValidator();
             if (!validator.validate(this.newParams)) {
                 logger.info("SettingsFrame.actionPerformed: validation process returned [false]. Settings new params to null.");
                 newParams = null;
+                throw new ParamsValidatorException(ParamsValidatorException.MESSAGE);
             } else {
              logger.info("SettingsFrame.actionPerformed: new params setted: " + newParams.toString());
             }
