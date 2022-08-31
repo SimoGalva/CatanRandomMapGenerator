@@ -1,13 +1,13 @@
-package frontEnd.buttons.settingsFrameButtons;
+package frontEnd.buttons.loadSaveFrameButtons;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class ConfirmButton extends JButton {
-    public ConfirmButton(ActionListener... listener) {
-        this.setText("confirm");
-        this.setPreferredSize(new Dimension(365,20));
+public class DefaultLoadSavePathButton extends JButton {
+    public DefaultLoadSavePathButton(ActionListener... listener) {
+        this.setText("use default");
+        this.setPreferredSize(new Dimension(180, 20));
         this.setBackground(new Color(0xC40303));
         this.setForeground(new Color(0xFFFFFFF));
         this.setFocusPainted(false);

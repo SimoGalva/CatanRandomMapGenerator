@@ -2,11 +2,13 @@ package frontEnd;
 
 import engine.MainEngine;
 import engine.engineParams.Params;
+import frontEnd.frames.LoadSaveFrame;
 import frontEnd.frames.MapFrame;
 import frontEnd.frames.SettingsFrame;
 import globalMap.MapHandler;
 import saving.MapSavingHandler;
 import utils.Constants;
+import utils.exceptions.SavingInFileException;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 
@@ -23,6 +25,7 @@ public class FErunner implements Runnable, ActionListener {
     private MapFrame frame;
     private MainEngine.MainEngineCaller mainEngineCaller;
     private SettingsFrame settingsFrame;
+    private LoadSaveFrame loadSaveFrame;
 
     public FErunner(MainEngine.MainEngineCaller mainEngineCaller) {
         this.mainEngineCaller = mainEngineCaller;
@@ -51,6 +54,15 @@ public class FErunner implements Runnable, ActionListener {
         settingsFrame.setVisible(true);
     }
 
+    private void runLoadSaveFrame(boolean isBeforeLaunch, boolean isLoad) {
+        loadSaveFrame = new LoadSaveFrame(this, isBeforeLaunch, isLoad);
+
+        loadSaveFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        loadSaveFrame.pack();
+        loadSaveFrame.setLocationRelativeTo(null);
+        loadSaveFrame.setVisible(true);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String[] callingClassDecomposed = e.getSource().getClass().getName().split("\\.");
@@ -68,37 +80,63 @@ public class FErunner implements Runnable, ActionListener {
                 break;
             case CONFIRM_BUTTON:
                 logger.info("FErunner.actionPeformed: confirm button pressed.");
-                settingsFrame.handleNewParams();
-                Params newParams = settingsFrame.getNewParams();
-                if (newParams != null && (mainEngineCaller.getParams() == null || !mainEngineCaller.getParams().equals(newParams))) {
-                    boolean isChangedNumberOfPlayer = true;
-                    if (mainEngineCaller.getParams() != null) {
-                        isChangedNumberOfPlayer = mainEngineCaller.getParams().getNumberOfPlayer() != newParams.getNumberOfPlayer();
-                    }
-                    mainEngineCaller.setParams(newParams);
-                    if (frame != null) {
-                        if (!isChangedNumberOfPlayer) {
-                            mainEngineCaller.runRefreshing();
-                            frame.refreshMap();
-                        } else {
-                            mainEngineCaller.runRefreshing();
-                            frame.dispose();
-                            this.run();
+                switch (e.getActionCommand()) {
+                    case CONFIRM_BUTTON_SETTINGS:
+                    settingsFrame.handleNewParams();
+                    Params newParams = settingsFrame.getNewParams();
+                    if (newParams != null && (mainEngineCaller.getParams() == null || !mainEngineCaller.getParams().equals(newParams))) {
+                        boolean isChangedNumberOfPlayer = true;
+                        if (mainEngineCaller.getParams() != null) {
+                            isChangedNumberOfPlayer = mainEngineCaller.getParams().getNumberOfPlayer() != newParams.getNumberOfPlayer();
                         }
-                    } else {
-                        mainEngineCaller.run();
-                        settingsFrame.dispose();
+                        mainEngineCaller.setParams(newParams);
+                        if (frame != null) {
+                            if (!isChangedNumberOfPlayer) {
+                                mainEngineCaller.runRefreshing();
+                                frame.refreshMap();
+                            } else {
+                                mainEngineCaller.runRefreshing();
+                                frame.dispose();
+                                this.run();
+                            }
+                        } else {
+                            mainEngineCaller.run();
+                            settingsFrame.dispose();
+                        }
                     }
+                    if (!settingsFrame.isBeforeRun()) {
+                        settingsFrame.dispose();
+                    } //todo: implementare una seplice warning frame?
+                    break;
+                case CONFIRM_BUTTON_SAVE:
+                    try {
+                        if (loadSaveFrame.isThereNewContents()) {
+                            String path = loadSaveFrame.retrieveContent().get("PATH");
+                            String fileName = loadSaveFrame.retrieveContent().get("FILE_NAME");
+                            MapSavingHandler.createInstance(path, fileName, Constants.SAVE, MapHandler.getGlobalMap());
+                            loadSaveFrame.dispose();
+                        } else {
+                            MapSavingHandler.createInstance(Constants.SAVE, MapHandler.getGlobalMap()); //come se fosse stato cliccato il default
+                            loadSaveFrame.dispose();
+                        }
+                    } catch (SavingInFileException se) {
+                        //todo: lancio della frame di errore.
+                    } catch (Exception dummy) {
+                        //nothing to do, sono le loading exception non è il caso
+                    }
+                    break;
                 }
-                if (!settingsFrame.isBeforeRun()) {
-                    settingsFrame.dispose();
-                } //todo: implementare una seplice warning frame?
                 break;
             case SAVE_BUTTON:
+                logger.info("FErunner.actionPeformed: settings button pressed.");
+                this.runLoadSaveFrame( false, false);
+                break;
+            case DEFAULT_SAVE_LOAD_PATH_BUTTON:
                 try {
                     MapSavingHandler.createInstance(Constants.SAVE, MapHandler.getGlobalMap());
+                    loadSaveFrame.dispose();
                 } catch (Exception ex) {
-                    //todo: implementare una finestra di fallimento di salvataggio dei dati.
+                    //nope, it must work
                 }
                 break;
         }

@@ -8,8 +8,9 @@ public interface GenericDataHandler {
     */
     public static final String CONFIG_PATH = System.getProperty("user.dir");
     public static final String CONFIG_FILE_NAME = "CatMapConfig.config";
-    public static String SAVING_FILE_NAME = "MapSavings.map";
+    public static final String SAVING_FILE_NAME = "MapSavings.map";
     public static final String SAVING_PATH = "C:/GitRep/cat-random-map-generator/savings"; //temp: sarà il file config a deciderlo
+    public static final String EXTESION_MAP = ".map"; //temp: sarà il file config a deciderlo
 
     public boolean save(String path);
     

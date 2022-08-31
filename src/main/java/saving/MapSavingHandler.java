@@ -24,6 +24,8 @@ public class MapSavingHandler implements GenericDataHandler{
 
     private HashMap<String, HexagonalBase> map;
     private String stringMap; //formatted map string, it needs to be deformatted
+    private static String pathOverride = null;
+    private static String fileNameOverride = null;
 
     public HashMap<String, HexagonalBase> getMap() {
         return map;
@@ -39,7 +41,13 @@ public class MapSavingHandler implements GenericDataHandler{
         this.stringMap = stringMap;
     }
 
-    //public constructor: handles the choice of correct constructor depending on the operation required
+    public static MapSavingHandler createInstance(String path, String fileName,String flagLoadSave, HashMap<String, HexagonalBase> map) throws LoadingFileException, LoadingException, SavingInFileException {
+        pathOverride = path;
+        fileNameOverride = fileName.trim();
+        return createInstance(flagLoadSave,map);
+    }
+
+    //public constructor: handles the choice of correct constructor depending on the operation required it uses default path, fileName
     public static MapSavingHandler createInstance(String flagLoadSave, HashMap<String, HexagonalBase> map) throws LoadingFileException, LoadingException, SavingInFileException {
         if (map == null && Constants.LOAD.equals(flagLoadSave)) {
             try {
@@ -65,13 +73,26 @@ public class MapSavingHandler implements GenericDataHandler{
     private MapSavingHandler() throws LoadingFileException, LoadingException {
         boolean check1;
         boolean check2;
+        String path;
+        String fileName;
+
+        if (pathOverride == null) {
+            path = SAVING_PATH;
+        } else {
+            path = pathOverride;
+        }
+        if (fileNameOverride == null) {
+            fileName = SAVING_FILE_NAME;
+        } else {
+            fileName = fileNameOverride + EXTESION_MAP;
+        }
 
         map = null;
         if (stringMap == null) {
-            check1 = loadFromFile(SAVING_PATH + "/" + SAVING_FILE_NAME);
+            check1 = loadFromFile(path + "/" + fileName);
         } else {
             logger.warning("Deleting current saved strigMap. Loading a new data.");
-            check1 = loadFromFile(SAVING_PATH + "/" + SAVING_FILE_NAME);
+            check1 = loadFromFile(path + "/" + fileName);
         }
         if (check1) {
             logger.info("New stringMap loaded from file correctly. Starting elaboration.");
@@ -100,11 +121,25 @@ public class MapSavingHandler implements GenericDataHandler{
         this.map = map;
         this.stringMap = SavingFormatter.formatSavingMap(this.map);
 
-        if (save(SAVING_PATH + "/" + SAVING_FILE_NAME)) {
+        String path;
+        String fileName;
+
+        if (pathOverride == null) {
+            path = SAVING_PATH;
+        } else {
+            path = pathOverride;
+        }
+        if (fileNameOverride == null) {
+            fileName = SAVING_FILE_NAME;
+        } else {
+            fileName = fileNameOverride + EXTESION_MAP;
+        }
+
+        if (save(path + "/" + fileName)) {
             logger.info("Saving process ended.");
         } else {
             logger.warning("Saving did not work correctly. Retrying one more time.");
-            if (save(SAVING_PATH + "/" + SAVING_FILE_NAME)) {
+            if (save(path + "/" + fileName)) {
                 logger.info("Saving process ended during second try.");
             } else {
                 this.stringMap = null;

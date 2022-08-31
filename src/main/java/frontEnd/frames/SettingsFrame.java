@@ -2,8 +2,9 @@ package frontEnd.frames;
 
 import engine.engineParams.Params;
 import engine.engineParams.ParamsValidator;
-import frontEnd.buttons.settingsFrameButtons.ConfirmButton;
+import frontEnd.buttons.commonButtons.ConfirmButton;
 import frontEnd.inputLines.NumberLine;
+import utils.Constants;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 
@@ -38,7 +39,7 @@ public class SettingsFrame extends JFrame {
 
         paramsPanel = new JPanel();
         buttonPanel = new JPanel();
-        confirmButton = new ConfirmButton(listenerFeRunner);
+        confirmButton = new ConfirmButton(Constants.ConstantsButtons.CONFIRM_BUTTON_SETTINGS, listenerFeRunner);
         islandNumberLine = new NumberLine(ISLAND_NUMBER);
         mainIslandNumberLine = new NumberLine(MAIN_ISLAND_NUMBER);
         mainIslandWeightLine = new NumberLine(MAIN_ISLAND_WEIGHT);
