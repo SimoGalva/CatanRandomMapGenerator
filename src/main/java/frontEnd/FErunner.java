@@ -153,6 +153,7 @@ public class FErunner implements Runnable, ActionListener {
                 this.runLoadSaveFrame( false, false);
                 break;
             case DEFAULT_SAVE_LOAD_PATH_BUTTON:
+                if (1==1){}//todo: capire come gestire l'azione dello stesso tasto
                 try {
                     MapSavingHandler.createInstance(Constants.SAVE, MapHandler.getGlobalMap());
                     loadSaveFrame.dispose();

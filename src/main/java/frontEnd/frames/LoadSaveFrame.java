@@ -43,10 +43,11 @@ public class LoadSaveFrame extends JFrame {
         buttonPanel = new JPanel();
         if (isLoad) {
             confirmButton = new ConfirmButton(Constants.ConstantsButtons.CONFIRM_BUTTON_LOAD, listenerFeRunner);
+            defaultPathButton = new DefaultLoadSavePathButton(Constants.LOAD, listenerFeRunner);
         } else {
             confirmButton = new ConfirmButton(Constants.ConstantsButtons.CONFIRM_BUTTON_SAVE, listenerFeRunner);
+            defaultPathButton = new DefaultLoadSavePathButton(Constants.SAVE, listenerFeRunner);
         }
-        defaultPathButton = new DefaultLoadSavePathButton(listenerFeRunner);
         pathLine = new StringLine(PATH);
         fileNameLine = new StringLine(FILE_NAME);
 
