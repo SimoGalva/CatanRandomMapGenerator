@@ -29,6 +29,7 @@ public class SavingFormatter {
         String rowCoordStr;
         String materialStr;
         String numberStr;
+        String pointerDim;
         int i = 1;
 
         for (Map.Entry<String, HexagonalBase> entry : map.entrySet()) {
@@ -36,10 +37,11 @@ public class SavingFormatter {
             rowCoordStr = entry.getKey().split(":")[1];
             materialStr = entry.getValue().getMaterial().toString();
             numberStr = entry.getValue().getNumber().toString();
+            pointerDim = String.valueOf(entry.getValue().getPointer().length);
             if (map.entrySet().size() != i){
-                formatted.append(diagCoordStr).append(SEPARATOR).append(rowCoordStr).append(SEPARATOR).append(materialStr).append(SEPARATOR).append(numberStr).append(SEPARATOR).append(NEXT_LINE);
+                formatted.append(diagCoordStr).append(SEPARATOR).append(rowCoordStr).append(SEPARATOR).append(materialStr).append(SEPARATOR).append(numberStr).append(SEPARATOR).append(pointerDim).append(SEPARATOR).append(NEXT_LINE);
             } else {
-                formatted.append(diagCoordStr).append(SEPARATOR).append(rowCoordStr).append(SEPARATOR).append(materialStr).append(SEPARATOR).append(numberStr).append(SEPARATOR);
+                formatted.append(diagCoordStr).append(SEPARATOR).append(rowCoordStr).append(SEPARATOR).append(materialStr).append(SEPARATOR).append(numberStr).append(SEPARATOR).append(pointerDim).append(SEPARATOR);
             }
             i++;
         }
@@ -58,6 +60,7 @@ public class SavingFormatter {
         String rowCoordStr;
         String materialStr;
         String numberStr;
+        String pointerDim;
 
         HexagonalBase tempHexagonalBase = null;
         Materials tempMaterial = null;
@@ -77,14 +80,15 @@ public class SavingFormatter {
             rowCoordStr = lineData[1];
             materialStr = lineData[2];
             numberStr = lineData[3];
+            pointerDim = lineData[4];
 
             tempHexagonalPoint = new HexagonPoint(diagCoordStr + ":" + rowCoordStr);
             tempEntryKey = tempHexagonalPoint.toString();
             tempMaterial = Materials.fromString(materialStr);
             tempNumber = Numbers.fromString(numberStr);
-            tempPointerDim = coordinateHandler.calculatePointerDimesnsion(tempHexagonalPoint);
+            tempPointerDim = Integer.parseInt(pointerDim);
 
-            if (tempHexagonalPoint != null && tempEntryKey != null && tempMaterial != null && tempNumber != null && tempPointerDim > 0) {
+            if (tempHexagonalPoint != null && tempEntryKey != null && tempMaterial != null && tempNumber != null && tempPointerDim >= 0) {
                 tempHexagonalBase = HexagonalBase.createInstance(tempMaterial, tempNumber, tempPointerDim, tempHexagonalPoint);
                 deformattedMap.put(tempEntryKey, tempHexagonalBase);
             } else {

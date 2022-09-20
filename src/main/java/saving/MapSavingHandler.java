@@ -64,6 +64,8 @@ public class MapSavingHandler implements GenericDataHandler{
             } catch (Exception e) {
                 logger.warning("Unhandled exception in loading data.");
                 throw e;
+            } finally {
+                clearOverrideData();
             }
         } else if (map != null && Constants.SAVE.equals(flagLoadSave)) {
             try {
@@ -71,6 +73,8 @@ public class MapSavingHandler implements GenericDataHandler{
             } catch (Exception e) {
                 logger.warning("Unhandled exception in saving data.");
                 return null;
+            } finally {
+                clearOverrideData();
             }
         } else {
             logger.severe("Error in construction of MapSavingHandler. Invalid Params, returning null.");
@@ -101,6 +105,7 @@ public class MapSavingHandler implements GenericDataHandler{
                 check1 = loadFromFile(path + "/" + fileName);
             } else {
                 logger.warning("Deleting current saved strigMap. Loading a new data.");
+                stringMap = null;
                 check1 = loadFromFile(path + "/" + fileName);
             }
             if (check1) {
@@ -150,6 +155,7 @@ public class MapSavingHandler implements GenericDataHandler{
             logger.warning("Saving did not work correctly. Retrying one more time.");
             if (save(path + "/" + fileName)) {
                 logger.info("Saving process ended during second try.");
+                this.stringMap = null;
             } else {
                 this.stringMap = null;
                 this.map = null;
@@ -216,5 +222,10 @@ public class MapSavingHandler implements GenericDataHandler{
 
     public static HashMap<String, HexagonalBase> getCurrentMap() {
         return map;
+    }
+
+    private static void clearOverrideData() {
+        pathOverride = null;
+        fileNameOverride = null;
     }
 }
