@@ -79,7 +79,7 @@ public class MainEngine implements Runnable {
         //setta a dei valori ad hoc tutti i parametri a seguito di un load from file.
         public void forceLoadParams() {
             logger.info("forcing loading params: [-100,-100,-100," + MapHandler.calculateNumberOfPlayerForFront() + "].");
-            updateHasBeenLoaded();
+            hasBeenLoaded = true;
             params = new Params(-100,-100,-100, MapHandler.calculateNumberOfPlayerForFront());
         }
 
