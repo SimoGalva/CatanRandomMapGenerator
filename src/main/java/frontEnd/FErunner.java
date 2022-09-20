@@ -195,7 +195,6 @@ public class FErunner implements Runnable, ActionListener {
                 this.runLoadSaveFrame( false, true);
                 break;
             case DEFAULT_SAVE_LOAD_PATH_BUTTON:
-                System.out.println(event.getActionCommand());
                 if (Constants.SAVE.equals(event.getActionCommand())) {
                     try {
                         MapSavingHandler.createInstance(Constants.SAVE, MapHandler.getGlobalMap());

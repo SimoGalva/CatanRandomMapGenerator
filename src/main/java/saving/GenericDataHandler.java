@@ -1,6 +1,7 @@
 package saving;
 
 import utils.exceptions.GenericLoadingException;
+import utils.exceptions.SavingInFileException;
 
 public interface GenericDataHandler {
     /* todo: da implementare ho creato un interfaccia perchè sarebbe sensato anche salvare l'ultima confiugazione utilizzata per il lancio del programma così
@@ -14,9 +15,9 @@ public interface GenericDataHandler {
     public static final String SAVING_PATH = "C:/GitRep/cat-random-map-generator/savings"; //temp: sarà il file config a deciderlo
     public static final String EXTESION_MAP = ".map"; //temp: sarà il file config a deciderlo
 
-    public boolean save(String path);
+    public boolean save(String path) throws SavingInFileException;
     
     public boolean load() throws GenericLoadingException;
 
-    public boolean loadFromFile(String path);
+    public boolean loadFromFile(String path) throws GenericLoadingException;
 }

@@ -85,12 +85,12 @@ public class MapSavingHandler implements GenericDataHandler{
             String path;
             String fileName;
 
-            if (pathOverride == null) {
+            if (pathOverride == null || "".equals(pathOverride)) {
                 path = SAVING_PATH;
             } else {
                 path = pathOverride;
             }
-            if (fileNameOverride == null) {
+            if (fileNameOverride == null || "".equals(fileNameOverride)) {
                 fileName = SAVING_FILE_NAME;
             } else {
                 fileName = fileNameOverride + EXTESION_MAP;
@@ -133,12 +133,12 @@ public class MapSavingHandler implements GenericDataHandler{
         String path;
         String fileName;
 
-        if (pathOverride == null) {
+        if (pathOverride == null || "".equals(pathOverride)) {
             path = SAVING_PATH;
         } else {
             path = pathOverride;
         }
-        if (fileNameOverride == null) {
+        if (fileNameOverride == null || "".equals(fileNameOverride)) {
             fileName = SAVING_FILE_NAME;
         } else {
             fileName = fileNameOverride + EXTESION_MAP;
@@ -160,7 +160,7 @@ public class MapSavingHandler implements GenericDataHandler{
 
     //impostato come save(path) così se si volesse introdurre la possibilità di chiedere il path in input lo si può gestire quasi totalmente gratis
     @Override
-    public boolean save(String path) {
+    public boolean save(String path) throws SavingInFileException {
         File savingFile = new File(path);
 
         BufferedWriter bufferedWriter = null;
@@ -170,7 +170,7 @@ public class MapSavingHandler implements GenericDataHandler{
 
         } catch (IOException e) {
             System.out.println("Exception occurred in saving file: " + e.getMessage());
-            return false;
+            throw new SavingInFileException(SavingInFileException.MESSAGE);
         } finally {
             if (bufferedWriter != null) {
                 try {
@@ -197,7 +197,7 @@ public class MapSavingHandler implements GenericDataHandler{
 
     //impostato come loadFromFile(path) così se si volesse introdurre la possibilità di chiedere il path in input lo si può gestire quasi totalmente gratis
     @Override
-    public boolean loadFromFile(String path) {
+    public boolean loadFromFile(String path) throws GenericLoadingException {
         File loadingFile = new File(path);
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -208,7 +208,7 @@ public class MapSavingHandler implements GenericDataHandler{
             }
         } catch (IOException e) {
             System.out.println("Exception occurred in loading from file: " + e.getMessage());
-            return false;
+            throw new LoadingFileException(LoadingFileException.MESSAGE);
         }
         this.stringMap = contentBuilder.toString();
         return true;
