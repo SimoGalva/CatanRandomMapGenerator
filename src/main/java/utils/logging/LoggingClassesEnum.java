@@ -42,7 +42,8 @@ public enum LoggingClassesEnum {
     LOGGING_CLASSES_ENUM 	                    ("LoggingClassesEnum"),
     UTILS 	                                    ("Utils"),
     SAVING_FORMATTER                            ("SavingFormatter"),
-MAP_SAVING_HANDLER                              ("MapSavingHandler");
+    MAP_SAVING_HANDLER                          ("MapSavingHandler"),
+    CONFING_SAVING_HANDLER                      ("ConfingSavingHandler");
 
     private String className;
 

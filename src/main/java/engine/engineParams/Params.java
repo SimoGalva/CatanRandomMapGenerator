@@ -22,6 +22,7 @@ public class Params {
         this.mainIslandNumber = mainIslandNumber;
         this.mainIslandWeight = mainIslandWeight;
         this.numberOfPlayer = numberOfPlayer;
+
     }
 
     public static Params getRandomConstrainedParams(String constrain, int... value) {
