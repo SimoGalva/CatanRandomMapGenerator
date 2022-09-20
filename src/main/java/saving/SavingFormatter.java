@@ -6,6 +6,7 @@ import hexagon.HexagonalBase;
 import hexagon.material.Materials;
 import hexagon.number.Numbers;
 import utils.Utils;
+import utils.exceptions.LoadingException;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 
@@ -47,7 +48,7 @@ public class SavingFormatter {
         return formatted.toString();
     }
 
-    public static HashMap<String, HexagonalBase> deformatSavedMap(String formattedMap) {
+    public static HashMap<String, HexagonalBase> deformatSavedMap(String formattedMap) throws LoadingException {
         logger.info("Starting to deformat map String.");
 
         AbstractCoordinateHandler coordinateHandler = AbstractCoordinateHandler.getInstance();
@@ -89,8 +90,8 @@ public class SavingFormatter {
             } else {
                 logger.warning("Something went wrong in deformatting String map: \n" +
                         "[" + formattedMap + "]. \n" +
-                        "returning null.");
-                return null;
+                        "Throwing exception.");
+                throw new LoadingException(LoadingException.MESSAGE);
             }
 
             tempHexagonalPoint = null;

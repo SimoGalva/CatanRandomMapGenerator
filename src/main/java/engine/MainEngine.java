@@ -3,6 +3,8 @@ package engine;
 import engine.engineParams.Params;
 import frontEnd.FErunner;
 import globalMap.CatanMap;
+import globalMap.MapHandler;
+import utils.Constants;
 import utils.exceptions.GenerationException;
 import utils.exceptions.IslandNumberException;
 import utils.logging.LoggingClassesEnum;
@@ -17,6 +19,7 @@ public class MainEngine implements Runnable {
     private FErunner frontRunner;
     private CatanMap map;
     public Params params;
+    public boolean hasBeenLoaded = false;
 
     public MainEngine() {
         this.frontRunner = new FErunner(new MainEngineCaller());
@@ -50,6 +53,11 @@ public class MainEngine implements Runnable {
     public class MainEngineCaller {
         //classe che può essere istanziata da altre classi per chiamare metodi del Main engine
         public void runRefreshing() {
+            if (hasBeenLoaded) {
+                hasBeenLoaded = false;
+                params = Params.getRandomConstrainedParams(Constants.RANDOM_LOCK_NUMBER_PLAYER, params.getNumberOfPlayer());
+                logger.info("Created new random params: [ " + params.toString() + " ] ");
+            }
             refresh();
         }
 
@@ -63,6 +71,13 @@ public class MainEngine implements Runnable {
 
         public void run() {
             MainEngine.this.run();
+        }
+
+        //setta a dei valori ad hoc tutti i parametri a seguito di un load from file.
+        public void forceLoadParams() {
+            logger.info("forcing loading params: [-100,-100,-100," + MapHandler.calculateNumberOfPlayerForFront() + "].");
+            hasBeenLoaded = true;
+            params = new Params(-100,-100,-100, MapHandler.calculateNumberOfPlayerForFront());
         }
     }
 }

@@ -1,8 +1,12 @@
 package engine.engineParams;
 
+import utils.Constants;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 
+import java.util.Arrays;
+import java.util.PrimitiveIterator;
+import java.util.Random;
 import java.util.logging.Logger;
 
 public class Params {
@@ -18,6 +22,27 @@ public class Params {
         this.mainIslandNumber = mainIslandNumber;
         this.mainIslandWeight = mainIslandWeight;
         this.numberOfPlayer = numberOfPlayer;
+    }
+
+    public static Params getRandomConstrainedParams(String constrain, int... value) {
+        switch (constrain) {
+            case Constants.RANDOM_LOCK_NUMBER_PLAYER:
+                logger.info("Generating params with constrain = [" + Constants.RANDOM_LOCK_NUMBER_PLAYER + "].");
+                Random randomizer = new Random();
+
+                PrimitiveIterator.OfInt iterator = Arrays.stream(value).iterator();
+                int firstValue = iterator.nextInt();
+                
+                int numberOfIslandBound = (firstValue == 5 || firstValue == 4) ? 5 : 6;
+                int numberOfIsland = randomizer.nextInt(numberOfIslandBound) + 1;
+                int numberOfMainIsland = randomizer.nextInt(numberOfIsland) +1;
+                int mainIslandWeight = (numberOfMainIsland == numberOfIsland) ? 10 : randomizer.nextInt(10)+1;
+                
+                return new Params(numberOfIsland,numberOfMainIsland ,mainIslandWeight, firstValue);
+            default:
+                logger.info("Invalid constrains. Returning null.");
+                return null;
+        }
     }
 
     public int getNumberOfPlayer() {

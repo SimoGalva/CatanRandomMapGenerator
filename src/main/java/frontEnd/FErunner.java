@@ -9,6 +9,7 @@ import frontEnd.frames.SettingsFrame;
 import globalMap.MapHandler;
 import saving.MapSavingHandler;
 import utils.Constants;
+import utils.exceptions.GenericLoadingException;
 import utils.exceptions.NotAPathException;
 import utils.exceptions.ParamsValidatorException;
 import utils.exceptions.SavingInFileException;
@@ -59,7 +60,7 @@ public class FErunner implements Runnable, ActionListener {
     }
 
     private void runLoadSaveFrame(boolean isBeforeLaunch, boolean isLoad) {
-        loadSaveFrame = new LoadSaveFrame(this, isBeforeLaunch, isLoad);
+        loadSaveFrame = new LoadSaveFrame(this, isLoad, isBeforeLaunch);
 
         loadSaveFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         loadSaveFrame.pack();
@@ -77,8 +78,8 @@ public class FErunner implements Runnable, ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        String[] callingClassDecomposed = e.getSource().getClass().getName().split("\\.");
+    public void actionPerformed(ActionEvent event) {
+        String[] callingClassDecomposed = event.getSource().getClass().getName().split("\\.");
         String callingClass = callingClassDecomposed[callingClassDecomposed.length - 1];
 
         switch (callingClass) {
@@ -93,7 +94,7 @@ public class FErunner implements Runnable, ActionListener {
                 break;
             case CONFIRM_BUTTON:
                 logger.info("FErunner.actionPeformed: confirm button pressed.");
-                switch (e.getActionCommand()) {
+                switch (event.getActionCommand()) {
                     case CONFIRM_BUTTON_SETTINGS:
                         try {
                             settingsFrame.handleNewParams();
@@ -140,7 +141,33 @@ public class FErunner implements Runnable, ActionListener {
                         runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_SAVE);
                     } catch (NotAPathException nope) {
                         runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_SAVE);
-                    } catch (Exception dummy) {/*nothing to do, sono le loading exception non è il caso*/}
+                    } catch (GenericLoadingException dummy) {/*nothing to do, sono le loading exception non è il caso*/}
+                    break;
+                case CONFIRM_BUTTON_LOAD:
+                    try {
+                        if (loadSaveFrame.isThereNewContents()) {
+                            String path = loadSaveFrame.retrieveContent().get("PATH");
+                            String fileName = loadSaveFrame.retrieveContent().get("FILE_NAME");
+                            MapSavingHandler.createInstance(path, fileName, Constants.LOAD);
+                            MapHandler.loadMap(MapSavingHandler.getCurrentMap());
+                            mainEngineCaller.forceLoadParams();
+                            loadSaveFrame.dispose();
+                            frame.refreshMap();
+                        } else {
+                            MapSavingHandler.createInstance(Constants.LOAD, null);
+                            MapHandler.loadMap(MapSavingHandler.getCurrentMap());
+                            mainEngineCaller.forceLoadParams();
+                            loadSaveFrame.dispose();
+                            frame.refreshMap();
+                        }
+                    } catch (NotAPathException noap) {
+                        runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_LOAD);
+                    } catch (GenericLoadingException gle) {
+                        runGenericErrorFrame(gle.getMessage());
+                        loadSaveFrame.dispose();
+                    } catch (SavingInFileException e) {
+                        //not interesting
+                    }
                     break;
                 case CONFIRM_BUTTON_ERROR:
                     errorFrame.dispose();
@@ -152,12 +179,33 @@ public class FErunner implements Runnable, ActionListener {
                 logger.info("FErunner.actionPeformed: settings button pressed.");
                 this.runLoadSaveFrame( false, false);
                 break;
+            case LOAD_BUTTON:
+                logger.info("FErunner.actionPeformed: settings button pressed.");
+                this.runLoadSaveFrame( false, true);
+                break;
             case DEFAULT_SAVE_LOAD_PATH_BUTTON:
-                if (1==1){}//todo: capire come gestire l'azione dello stesso tasto
-                try {
-                    MapSavingHandler.createInstance(Constants.SAVE, MapHandler.getGlobalMap());
-                    loadSaveFrame.dispose();
-                } catch (Exception ex) {/*nope, it must work*/}
+                System.out.println(event.getActionCommand());
+                if (Constants.SAVE.equals(event.getActionCommand())) {
+                    try {
+                        MapSavingHandler.createInstance(Constants.SAVE, MapHandler.getGlobalMap());
+                        loadSaveFrame.dispose();
+                    } catch (Exception ex) {/*nope, it must work*/}
+                } else if (Constants.LOAD.equals(event.getActionCommand())) {
+                    try {
+                        MapSavingHandler.createInstance(Constants.LOAD, null);
+                        MapHandler.printMap();
+                        MapHandler.loadMap(MapSavingHandler.getCurrentMap());
+                        MapHandler.printMap();
+                        mainEngineCaller.forceLoadParams();
+                        loadSaveFrame.dispose();
+                        frame.refreshMap();
+                    } catch (GenericLoadingException gle) {
+                        runGenericErrorFrame(gle.getMessage());
+                        loadSaveFrame.dispose();
+                    } catch (SavingInFileException e) {
+                        //noting to do we are loading
+                    }
+                }
                 break;
         }
     }

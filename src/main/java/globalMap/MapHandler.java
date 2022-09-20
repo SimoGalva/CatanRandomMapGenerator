@@ -6,12 +6,14 @@ import hexagon.material.Materials;
 import hexagon.number.Numbers;
 import utils.Constants;
 import utils.Utils;
+import utils.exceptions.LoadingException;
 import utils.exceptions.UpdateException;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 import utils.pojo.DiagSettingsHolder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -19,6 +21,7 @@ import java.util.logging.Logger;
 public class MapHandler {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.GLOBAL_MAP_HANDLER);
     public static HashMap<String, HexagonalBase> globalMap = new HashMap<>();
+    public static boolean isLoaded = false;
 
     public static void populateMap(HexagonalBase hexagonalBase) {
         globalMap.put(hexagonalBase.getHexAsPoint().toString(),hexagonalBase);
@@ -38,6 +41,17 @@ public class MapHandler {
             }
         } else {
             logger.warning("updateMap: update failed, incompatible sizes. Current map size [" + globalMap.size() + "], new map size [" + newMap.size() + "] ");
+        }
+    }
+
+    public static void loadMap(HashMap<String, HexagonalBase> loadedMap) throws LoadingException {
+        if (Arrays.asList(Constants.PiecesForPlayers.PLAYER_3,Constants.PiecesForPlayers.PLAYER_4,Constants.PiecesForPlayers.PLAYER_5,Constants.PiecesForPlayers.PLAYER_6).contains(loadedMap.size())) {
+            logger.info("Map correctly loaded and in charge.");
+            globalMap.clear();
+            globalMap = null;
+            globalMap = Utils.duplicateMap(loadedMap);
+        } else {
+            throw new LoadingException(LoadingException.MESSAGE_NOT_USABLE_MAP);
         }
     }
 

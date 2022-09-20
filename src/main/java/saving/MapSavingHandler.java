@@ -2,6 +2,7 @@ package saving;
 
 import hexagon.HexagonalBase;
 import utils.Constants;
+import utils.exceptions.GenericLoadingException;
 import utils.exceptions.LoadingException;
 import utils.exceptions.LoadingFileException;
 import utils.exceptions.SavingInFileException;
@@ -22,8 +23,8 @@ public class MapSavingHandler implements GenericDataHandler{
 
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAP_SAVING_HANDLER);
 
-    private HashMap<String, HexagonalBase> map;
-    private String stringMap; //formatted map string, it needs to be deformatted
+    private static HashMap<String, HexagonalBase> map;
+    private static String stringMap; //formatted map string, it needs to be deformatted
     private static String pathOverride = null;
     private static String fileNameOverride = null;
 
@@ -41,20 +42,28 @@ public class MapSavingHandler implements GenericDataHandler{
         this.stringMap = stringMap;
     }
 
-    public static MapSavingHandler createInstance(String path, String fileName,String flagLoadSave, HashMap<String, HexagonalBase> map) throws LoadingFileException, LoadingException, SavingInFileException {
+    //to call for save
+    public static MapSavingHandler createInstance(String path, String fileName,String flagLoadSave, HashMap<String, HexagonalBase> map) throws GenericLoadingException, SavingInFileException {
         pathOverride = path;
         fileNameOverride = fileName.trim();
         return createInstance(flagLoadSave,map);
     }
 
+    //to call for load
+    public static MapSavingHandler createInstance(String path, String fileName,String flagLoadSave) throws GenericLoadingException, SavingInFileException {
+        pathOverride = path;
+        fileNameOverride = fileName.trim();
+        return createInstance(flagLoadSave,null);
+    }
+
     //public constructor: handles the choice of correct constructor depending on the operation required it uses default path, fileName
-    public static MapSavingHandler createInstance(String flagLoadSave, HashMap<String, HexagonalBase> map) throws LoadingFileException, LoadingException, SavingInFileException {
+    public static MapSavingHandler createInstance(String flagLoadSave, HashMap<String, HexagonalBase> map) throws GenericLoadingException, SavingInFileException {
         if (map == null && Constants.LOAD.equals(flagLoadSave)) {
             try {
                 return new MapSavingHandler();
             } catch (Exception e) {
                 logger.warning("Unhandled exception in loading data.");
-                return null;
+                throw e;
             }
         } else if (map != null && Constants.SAVE.equals(flagLoadSave)) {
             try {
@@ -70,50 +79,50 @@ public class MapSavingHandler implements GenericDataHandler{
     }
 
     //constructor for loading, cleans saved map to load a new one saved in map
-    private MapSavingHandler() throws LoadingFileException, LoadingException {
-        boolean check1;
-        boolean check2;
-        String path;
-        String fileName;
+    private MapSavingHandler() throws GenericLoadingException {
+            boolean check1;
+            boolean check2;
+            String path;
+            String fileName;
 
-        if (pathOverride == null) {
-            path = SAVING_PATH;
-        } else {
-            path = pathOverride;
-        }
-        if (fileNameOverride == null) {
-            fileName = SAVING_FILE_NAME;
-        } else {
-            fileName = fileNameOverride + EXTESION_MAP;
-        }
-
-        map = null;
-        if (stringMap == null) {
-            check1 = loadFromFile(path + "/" + fileName);
-        } else {
-            logger.warning("Deleting current saved strigMap. Loading a new data.");
-            check1 = loadFromFile(path + "/" + fileName);
-        }
-        if (check1) {
-            logger.info("New stringMap loaded from file correctly. Starting elaboration.");
-            check2 = load();
-            if (check2) {
-                logger.info("Loading completed. Map has been correctly restored from saved data.");
+            if (pathOverride == null) {
+                path = SAVING_PATH;
             } else {
-                logger.warning("Failed loading from stringMap to map. File may be corrupted. Retrying once.");
-                if (load()) {
+                path = pathOverride;
+            }
+            if (fileNameOverride == null) {
+                fileName = SAVING_FILE_NAME;
+            } else {
+                fileName = fileNameOverride + EXTESION_MAP;
+            }
+
+            map = null;
+            if (stringMap == null) {
+                check1 = loadFromFile(path + "/" + fileName);
+            } else {
+                logger.warning("Deleting current saved strigMap. Loading a new data.");
+                check1 = loadFromFile(path + "/" + fileName);
+            }
+            if (check1) {
+                logger.info("New stringMap loaded from file correctly. Starting elaboration.");
+                check2 = load();
+                if (check2) {
                     logger.info("Loading completed. Map has been correctly restored from saved data.");
                 } else {
-                    logger.severe("Unable to load data from stringMap, throwing exception.");
-                    this.stringMap = null;
-                    throw new LoadingException(LoadingException.MESSAGE);
+                    logger.warning("Failed loading from stringMap to map. File may be corrupted. Retrying once.");
+                    if (load()) {
+                        logger.info("Loading completed. Map has been correctly restored from saved data.");
+                    } else {
+                        logger.severe("Unable to load data from stringMap, throwing exception.");
+                        this.stringMap = null;
+                        throw new LoadingException(LoadingException.MESSAGE);
+                    }
                 }
+            } else {
+                logger.severe("Unable to load data from file, throwing exception.");
+                this.stringMap = null;
+                throw new LoadingFileException(LoadingFileException.MESSAGE);
             }
-        } else {
-            logger.severe("Unable to load data from file, throwing exception.");
-            this.stringMap = null;
-            throw new LoadingFileException(LoadingFileException.MESSAGE);
-        }
     }
 
     //costructor for saving, construct a map and cleans stringMap
@@ -173,7 +182,7 @@ public class MapSavingHandler implements GenericDataHandler{
     }
 
     @Override
-    public boolean load() {
+    public boolean load() throws GenericLoadingException {
         if (this.stringMap != null) {
             this.map = SavingFormatter.deformatSavedMap(this.stringMap);
             if (!Arrays.asList(Constants.PiecesForPlayers.PLAYER_3,Constants.PiecesForPlayers.PLAYER_4,Constants.PiecesForPlayers.PLAYER_5,Constants.PiecesForPlayers.PLAYER_6).contains(this.map.size())) {
@@ -203,5 +212,9 @@ public class MapSavingHandler implements GenericDataHandler{
         }
         this.stringMap = contentBuilder.toString();
         return true;
+    }
+
+    public static HashMap<String, HexagonalBase> getCurrentMap() {
+        return map;
     }
 }

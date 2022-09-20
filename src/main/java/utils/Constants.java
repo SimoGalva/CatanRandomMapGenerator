@@ -11,6 +11,7 @@ public class Constants {
 
     public final static String LOAD = "load";
     public final static String SAVE = "save";
+    public static final String RANDOM_LOCK_NUMBER_PLAYER = "random_NP_Lock";
 
     public static class ConstantsButtons {
         public static final String DEFAULT_SAVE_LOAD_PATH_BUTTON = "DefaultLoadSavePathButton";
@@ -22,6 +23,7 @@ public class Constants {
         public static final String REFRESH_BUTTON = "RefreshButton";
         public static final String SETTINGS_BUTTON = "SettingsButton";
         public static final String SAVE_BUTTON = "SaveButton";
+        public static final String LOAD_BUTTON = "LoadButton";
         public static final String MODIFY_BUTTON = "ModifyButton";
     }
 
@@ -35,6 +37,7 @@ public class Constants {
         public static final String FILE_NAME = "File Name";
 
         public static final String ERROR_FRAME_MASSAGE_SAVE = "An error occurred while saving data. \n Please retry with different path and file name.";
+        public static final String ERROR_FRAME_MASSAGE_LOAD = "An error occurred while loading data. \n Please retry with different path and file name.";
         public static final String ERROR_FRAME_MASSAGE_INVALID_PARAMS = "Inserted Invalid parameters retry inserting new ones.";
     }
 

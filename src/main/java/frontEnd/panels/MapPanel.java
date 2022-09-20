@@ -24,11 +24,12 @@ public class MapPanel extends JPanel {
         private int HEIGHT = 860;
         private final int SIZE = 9; // valore iviolabile, definisce il giusto numero di righe e la forma della mappa
 
-        private final static HashMap<String, HexagonalBase> globalMap = MapHandler.getGlobalMap();
+        private static HashMap<String, HexagonalBase> globalMap;
 
         private Font font = new Font("Arial", Font.BOLD, 18);
         FontMetrics metrics;
         public MapPanel() {
+            globalMap = MapHandler.getGlobalMap();
             this.numberOfPlayer = MapHandler.calculateNumberOfPlayerForFront();
             setPreferredSize(new Dimension(WIDTH, HEIGHT));
         }

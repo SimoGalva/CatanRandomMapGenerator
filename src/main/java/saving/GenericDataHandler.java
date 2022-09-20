@@ -1,5 +1,7 @@
 package saving;
 
+import utils.exceptions.GenericLoadingException;
+
 public interface GenericDataHandler {
     /* todo: da implementare ho creato un interfaccia perchè sarebbe sensato anche salvare l'ultima confiugazione utilizzata per il lancio del programma così
         da non dover riempire tutte le righe ei dati ogni volta. Ci sarà al lancio del codice da implementare un syncConfig che fa la configurazione dei parametri.
@@ -14,7 +16,7 @@ public interface GenericDataHandler {
 
     public boolean save(String path);
     
-    public boolean load();
+    public boolean load() throws GenericLoadingException;
 
     public boolean loadFromFile(String path);
 }
