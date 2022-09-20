@@ -22,6 +22,8 @@ import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
 import static utils.Constants.ConstantsButtons.*;
+import static utils.Constants.ConstrainsReloading.FORCE_RELOAD_FROM_SCRATCH;
+import static utils.Constants.ConstrainsReloading.NORMAL_RELOADING;
 
 public class FErunner implements Runnable, ActionListener {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.FE_RUNNER);
@@ -86,7 +88,7 @@ public class FErunner implements Runnable, ActionListener {
             case REFRESH_BUTTON:
                 logger.info("FErunner.actionPeformed: refresh button pressed.");
                 mainEngineCaller.runRefreshing();
-                frame.refreshMap();
+                this.handleRefreshingFrame(NORMAL_RELOADING);
                 break;
             case SETTINGS_BUTTON:
                 logger.info("FErunner.actionPeformed: settings button pressed.");
@@ -111,15 +113,17 @@ public class FErunner implements Runnable, ActionListener {
                             if (frame != null) {
                                 if (!isChangedNumberOfPlayer) {
                                     mainEngineCaller.runRefreshing();
-                                    frame.refreshMap();
+                                    this.handleRefreshingFrame(NORMAL_RELOADING);
                                 } else {
                                     mainEngineCaller.runRefreshing();
-                                    frame.dispose();
-                                    this.run();
+                                    this.handleRefreshingFrame(FORCE_RELOAD_FROM_SCRATCH);
                                 }
                             } else {
                                 mainEngineCaller.run();
                                 settingsFrame.dispose();
+                            }
+                            if(mainEngineCaller.hasBeenLoaded()) {
+                                mainEngineCaller.updateHasBeenLoaded();
                             }
                         }
                         if (!settingsFrame.isBeforeRun()) {
@@ -144,21 +148,28 @@ public class FErunner implements Runnable, ActionListener {
                     } catch (GenericLoadingException dummy) {/*nothing to do, sono le loading exception non è il caso*/}
                     break;
                 case CONFIRM_BUTTON_LOAD:
+                    String refreshingConstrain = FORCE_RELOAD_FROM_SCRATCH;
                     try {
                         if (loadSaveFrame.isThereNewContents()) {
                             String path = loadSaveFrame.retrieveContent().get("PATH");
                             String fileName = loadSaveFrame.retrieveContent().get("FILE_NAME");
                             MapSavingHandler.createInstance(path, fileName, Constants.LOAD);
+                            if (MapHandler.getGlobalMap().size() == MapSavingHandler.getCurrentMap().size()) {
+                                refreshingConstrain = NORMAL_RELOADING;
+                            }
                             MapHandler.loadMap(MapSavingHandler.getCurrentMap());
                             mainEngineCaller.forceLoadParams();
                             loadSaveFrame.dispose();
-                            frame.refreshMap();
+                            this.handleRefreshingFrame(refreshingConstrain);
                         } else {
                             MapSavingHandler.createInstance(Constants.LOAD, null);
+                            if (MapHandler.getGlobalMap().size() == MapSavingHandler.getCurrentMap().size()) {
+                                refreshingConstrain = NORMAL_RELOADING;
+                            }
                             MapHandler.loadMap(MapSavingHandler.getCurrentMap());
                             mainEngineCaller.forceLoadParams();
                             loadSaveFrame.dispose();
-                            frame.refreshMap();
+                            this.handleRefreshingFrame(refreshingConstrain);
                         }
                     } catch (NotAPathException noap) {
                         runGenericErrorFrame(Constants.ConstantsTextLines.ERROR_FRAME_MASSAGE_LOAD);
@@ -191,14 +202,16 @@ public class FErunner implements Runnable, ActionListener {
                         loadSaveFrame.dispose();
                     } catch (Exception ex) {/*nope, it must work*/}
                 } else if (Constants.LOAD.equals(event.getActionCommand())) {
+                    String refreshingConstrain = FORCE_RELOAD_FROM_SCRATCH;
                     try {
                         MapSavingHandler.createInstance(Constants.LOAD, null);
-                        MapHandler.printMap();
+                        if (MapHandler.getGlobalMap().size() == MapSavingHandler.getCurrentMap().size()) {
+                            refreshingConstrain = NORMAL_RELOADING;
+                        }
                         MapHandler.loadMap(MapSavingHandler.getCurrentMap());
-                        MapHandler.printMap();
                         mainEngineCaller.forceLoadParams();
                         loadSaveFrame.dispose();
-                        frame.refreshMap();
+                        this.handleRefreshingFrame(refreshingConstrain);
                     } catch (GenericLoadingException gle) {
                         runGenericErrorFrame(gle.getMessage());
                         loadSaveFrame.dispose();
@@ -210,4 +223,15 @@ public class FErunner implements Runnable, ActionListener {
         }
     }
 
+    private void handleRefreshingFrame(String constrain) {
+        switch (constrain) {
+            case FORCE_RELOAD_FROM_SCRATCH:
+                frame.dispose();
+                this.run();
+                break;
+            case NORMAL_RELOADING:
+                frame.refreshMap();
+                break;
+        }
+    }
 }

@@ -47,4 +47,10 @@ public class Constants {
         public static final int PLAYER_5 = 58;
         public static final int PLAYER_6 = 65;
     }
+
+    public class ConstrainsReloading {
+        public static final String FORCE_RELOAD_FROM_SCRATCH = "FORCE_RELOAD_FROM_SCRATCH";
+        public static final String MAY_NEED_RELOADING_FROM_SCRATCH = "MAY_RELOAD_FROM_SCRATCH";
+        public static final String NORMAL_RELOADING = "NORMAL_RELOAD";
+    }
 }

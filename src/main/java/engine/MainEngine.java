@@ -54,7 +54,7 @@ public class MainEngine implements Runnable {
         //classe che può essere istanziata da altre classi per chiamare metodi del Main engine
         public void runRefreshing() {
             if (hasBeenLoaded) {
-                hasBeenLoaded = false;
+                updateHasBeenLoaded();
                 params = Params.getRandomConstrainedParams(Constants.RANDOM_LOCK_NUMBER_PLAYER, params.getNumberOfPlayer());
                 logger.info("Created new random params: [ " + params.toString() + " ] ");
             }
@@ -62,6 +62,9 @@ public class MainEngine implements Runnable {
         }
 
         public Params getParams() {
+            if (hasBeenLoaded) {
+                return new Params(0,0,0,0);
+            }
             return params;
         }
 
@@ -76,8 +79,17 @@ public class MainEngine implements Runnable {
         //setta a dei valori ad hoc tutti i parametri a seguito di un load from file.
         public void forceLoadParams() {
             logger.info("forcing loading params: [-100,-100,-100," + MapHandler.calculateNumberOfPlayerForFront() + "].");
-            hasBeenLoaded = true;
+            updateHasBeenLoaded();
             params = new Params(-100,-100,-100, MapHandler.calculateNumberOfPlayerForFront());
+        }
+
+        public boolean hasBeenLoaded() {
+            return hasBeenLoaded;
+        }
+
+        public void updateHasBeenLoaded() {
+            if (hasBeenLoaded) hasBeenLoaded = false;
+            else hasBeenLoaded = true;
         }
     }
 }
