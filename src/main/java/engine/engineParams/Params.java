@@ -1,6 +1,6 @@
 package engine.engineParams;
 
-import saving.ConfingHandler;
+import saving.ConfigHandler;
 import utils.Constants;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
@@ -24,12 +24,20 @@ public class Params {
         this.mainIslandWeight = mainIslandWeight;
         this.numberOfPlayer = numberOfPlayer;
 
-        boolean isSavedConfing = ConfingHandler.getInstance().forceConfingSync(islandNumber, mainIslandNumber, mainIslandWeight, numberOfPlayer);
+        boolean isSavedConfing = ConfigHandler.getInstance().forceConfingSync(islandNumber, mainIslandNumber, mainIslandWeight, numberOfPlayer);
         if (isSavedConfing) {
             logger.info("New params configuration saved: [" + this + "]");
         } else {
             logger.warning("Something went wrong in saving new params configuration. Data are lost.");
         }
+    }
+
+    //costruttore solo per i parametri da file config
+    private Params(int[] parmasArray) {
+        this.islandNumber = parmasArray[0];
+        this.mainIslandNumber = parmasArray[1];
+        this.mainIslandWeight = parmasArray[2];
+        this.numberOfPlayer = parmasArray[3];
     }
 
     public static Params getRandomConstrainedParams(String constrain, int... value) {
@@ -55,6 +63,11 @@ public class Params {
         }
 
         return ret;
+    }
+
+    public static Params getLoadedParams() {
+        int[] parmasFromConfig = ConfigHandler.getInstance().retrieveData();
+        return new Params(parmasFromConfig);
     }
 
     public int getNumberOfPlayer() {

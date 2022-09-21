@@ -7,6 +7,7 @@ import frontEnd.frames.LoadSaveFrame;
 import frontEnd.frames.MapFrame;
 import frontEnd.frames.SettingsFrame;
 import globalMap.MapHandler;
+import saving.ConfigHandler;
 import saving.MapSavingHandler;
 import utils.Constants;
 import utils.exceptions.GenericLoadingException;
@@ -39,7 +40,9 @@ public class FErunner implements Runnable, ActionListener {
     }
 
     public void runBeforeLaunch(){
-        runSettingsFrame(new Params(0,0,0,0), true);
+        ConfigHandler.clearSingletonInstance();
+        ConfigHandler.getInstance();
+        runSettingsFrame(Params.getLoadedParams(), true);
     }
 
     @Override

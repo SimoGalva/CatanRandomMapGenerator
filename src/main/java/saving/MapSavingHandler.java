@@ -23,6 +23,8 @@ public class MapSavingHandler implements GenericDataHandler{
 
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAP_SAVING_HANDLER);
 
+    public static String SAVING_PATH = "C:/GitRep/cat-random-map-generator/savings";
+
     private static HashMap<String, HexagonalBase> map;
     private static String stringMap; //formatted map string, it needs to be deformatted
     private static String pathOverride = null;
@@ -217,6 +219,10 @@ public class MapSavingHandler implements GenericDataHandler{
         }
         this.stringMap = contentBuilder.toString();
         return true;
+    }
+
+    public static void setSavingPathFromConfig(String savingPath) {
+        SAVING_PATH = savingPath;
     }
 
     public static HashMap<String, HexagonalBase> getCurrentMap() {

@@ -117,6 +117,7 @@ public class SettingsFrame extends JFrame {
     }
 
     private boolean isThereNewContents() {
+
         Integer islandNumberMayBe = 0;
         boolean isThereNewIslandNumber = false;
         Integer mainIslandNumberMayBe = 0;
@@ -149,10 +150,10 @@ public class SettingsFrame extends JFrame {
             isThereNewMainIslandWeight = false;
             isThereNewPlayerNumber = false;
         }
-        if (isThereNewIslandNumber || isThereNewMainIslandNumber || isThereNewMainIslandWeight || isThereNewPlayerNumber) {
+        if (isThereNewIslandNumber || isThereNewMainIslandNumber || isThereNewMainIslandWeight || isThereNewPlayerNumber || isBeforeRun()) {
             this.newParams = new Params(islandNumberMayBe, mainIslandNumberMayBe, mainIslandWeightMayBe, playerNumberMayBe);
         }
-        return (isThereNewIslandNumber || isThereNewMainIslandNumber || isThereNewMainIslandWeight || isThereNewPlayerNumber);
+        return (isThereNewIslandNumber || isThereNewMainIslandNumber || isThereNewMainIslandWeight || isThereNewPlayerNumber || isBeforeRun());
     }
 
     public void handleNewParams() throws ParamsValidatorException {

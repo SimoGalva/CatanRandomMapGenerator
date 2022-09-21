@@ -12,7 +12,6 @@ public interface GenericDataHandler {
     public static final String CONFIG_PATH = System.getProperty("user.dir") + "/confing";
     public static final String CONFIG_FILE_NAME = "CatMapConfig.cnfg";
     public static final String SAVING_FILE_NAME = "MapSavings.map";
-    public static String SAVING_PATH = "C:/GitRep/cat-random-map-generator/savings";  //todo: fai in modo che sia deciso all'inizio dal file config
     public static final String EXTESION_MAP = ".map";
 
     public boolean save(String path) throws SavingInFileException;
