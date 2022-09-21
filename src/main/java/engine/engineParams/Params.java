@@ -1,5 +1,6 @@
 package engine.engineParams;
 
+import saving.ConfingHandler;
 import utils.Constants;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
@@ -23,9 +24,16 @@ public class Params {
         this.mainIslandWeight = mainIslandWeight;
         this.numberOfPlayer = numberOfPlayer;
 
+        boolean isSavedConfing = ConfingHandler.getInstance().forceConfingSync(islandNumber, mainIslandNumber, mainIslandWeight, numberOfPlayer);
+        if (isSavedConfing) {
+            logger.info("New params configuration saved: [" + this + "]");
+        } else {
+            logger.warning("Something went wrong in saving new params configuration. Data are lost.");
+        }
     }
 
     public static Params getRandomConstrainedParams(String constrain, int... value) {
+        Params ret = null;
         switch (constrain) {
             case Constants.RANDOM_LOCK_NUMBER_PLAYER:
                 logger.info("Generating params with constrain = [" + Constants.RANDOM_LOCK_NUMBER_PLAYER + "].");
@@ -39,11 +47,14 @@ public class Params {
                 int numberOfMainIsland = randomizer.nextInt(numberOfIsland) +1;
                 int mainIslandWeight = (numberOfMainIsland == numberOfIsland) ? 10 : randomizer.nextInt(10)+1;
                 
-                return new Params(numberOfIsland,numberOfMainIsland ,mainIslandWeight, firstValue);
+                ret = new Params(numberOfIsland,numberOfMainIsland ,mainIslandWeight, firstValue);
+                break;
             default:
                 logger.info("Invalid constrains. Returning null.");
-                return null;
+                break;
         }
+
+        return ret;
     }
 
     public int getNumberOfPlayer() {

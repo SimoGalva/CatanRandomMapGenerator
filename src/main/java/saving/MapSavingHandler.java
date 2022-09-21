@@ -164,7 +164,6 @@ public class MapSavingHandler implements GenericDataHandler{
         }
     }
 
-    //impostato come save(path) così se si volesse introdurre la possibilità di chiedere il path in input lo si può gestire quasi totalmente gratis
     @Override
     public boolean save(String path) throws SavingInFileException {
         File savingFile = new File(path);

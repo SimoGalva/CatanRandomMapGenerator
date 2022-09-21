@@ -98,13 +98,14 @@ public class Main extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame f = new JFrame();
+/*        JFrame f = new JFrame();
         Main p = new Main();
 
         f.setContentPane(p);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setLocationRelativeTo(null);
-        f.setVisible(true);
+        f.setVisible(true);*/
+        System.out.println(System.getProperty("user.dir"));
     }
 }

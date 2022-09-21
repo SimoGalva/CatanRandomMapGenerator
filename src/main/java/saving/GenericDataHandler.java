@@ -9,11 +9,11 @@ public interface GenericDataHandler {
         SaveFormatter avrà sia i metodi di fortmattazione della mappa sia della configurazione.
         ci sarà un saving handler per map e per config. Implementeranno quest'interfaccia.
     */
-    public static final String CONFIG_PATH = System.getProperty("user.dir");
-    public static final String CONFIG_FILE_NAME = "CatMapConfig.config";
+    public static final String CONFIG_PATH = System.getProperty("user.dir") + "/confing";
+    public static final String CONFIG_FILE_NAME = "CatMapConfig.cnfg";
     public static final String SAVING_FILE_NAME = "MapSavings.map";
-    public static final String SAVING_PATH = "C:/GitRep/cat-random-map-generator/savings"; //temp: sarà il file config a deciderlo
-    public static final String EXTESION_MAP = ".map"; //temp: sarà il file config a deciderlo
+    public static String SAVING_PATH = "C:/GitRep/cat-random-map-generator/savings";  //todo: fai in modo che sia deciso all'inizio dal file config
+    public static final String EXTESION_MAP = ".map";
 
     public boolean save(String path) throws SavingInFileException;
     
