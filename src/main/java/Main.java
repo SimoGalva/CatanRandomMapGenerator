@@ -1,6 +1,6 @@
 import engine.MainEngine;
 
-public class MainTest {
+public class Main {
 
     public static void main(String[] args){
         MainEngine engine = new MainEngine();
