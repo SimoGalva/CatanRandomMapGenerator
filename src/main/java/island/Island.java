@@ -15,6 +15,7 @@ public class Island {
     private IslandController controller;
     private MapGeneratorEngine generatorEngine;
     private HashMap<String,HexagonalBase> islandCoordHexagonMap;
+    private int testInutile;
 
     public Island(IslandController controller) throws GenerationException {
         this.generatorEngine = MapGeneratorEngine.getInstance();
