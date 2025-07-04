@@ -6,7 +6,7 @@
 /cat-random-map-generator.iml
 /savings/
 /confing/
-**/launcher.vbs
-**/launcher.bat
-**/manifest.txt
-**/myProgram.jar
+launcher.vbs
+launcher.bat
+manifest.txt
+myProgram.jar
