@@ -52,7 +52,7 @@ public class MapGeneratorEngine {
             nIter ++;
             if (controller.isMainIsland() && isOnBorderAllowedOverride) {
                 //pickRandomPoint è giustificato all'interno della classe AbstractCoordinateHandler perchè la generazione random dipende strettamente dalla dimensione del tabellone,
-                // ergo dal numero di giocatori, così posso eventualmente ricilcare più codice per 6 giocatori;
+                // ergo dal numero di giocatori
                 point = coordinateHandler.pickRandomPoint(false);
             } else {
                 point = coordinateHandler.pickRandomPoint(true);
