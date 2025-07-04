@@ -172,7 +172,7 @@ public class FErunner implements Runnable, ActionListener {
                     try {
                         if (loadSaveFrame.isThereNewContents()) {
                             String path = loadSaveFrame.retrieveContent().get("PATH");
-                            String fileName = loadSaveFrame.retrieveContent().get("FILE_NAME");
+                            String fileName = loadSaveFrame.retrieveContent().get("");
                             MapSavingHandler.createInstance(path, fileName, Constants.LOAD);
                             if (MapHandler.getGlobalMap().size() == MapSavingHandler.getCurrentMap().size()) {
                                 refreshingConstrain = NORMAL_RELOADING;

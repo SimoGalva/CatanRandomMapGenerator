@@ -18,7 +18,7 @@ import static utils.Utils.getNextAvailableFileName;
 public class Printer {
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.PRINTER);
 
-    public static String folderPath = MapSavingHandler.SAVING_PATH;
+    public static String folderPath = MapSavingHandler.SAVING_PATH + "/"+SCREENSHOT +"s";
     private static final String PNG = "png";
 
     public static void saveImage(JPanel mapToPrint) {

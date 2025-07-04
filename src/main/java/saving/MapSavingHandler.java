@@ -48,14 +48,18 @@ public class MapSavingHandler implements GenericDataHandler{
     //to call for save
     public static MapSavingHandler createInstance(String path, String fileName,String flagLoadSave, HashMap<String, HexagonalBase> map) throws GenericLoadingException, SavingInFileException {
         pathOverride = path;
-        fileNameOverride = fileName.trim();
+        if (Constants.SAVE.equals(flagLoadSave)){
+            fileNameOverride = fileName.trim();
+        }
+        else {
+            fileNameOverride = "";
+        }
         return createInstance(flagLoadSave,map);
     }
 
     //to call for load
     public static MapSavingHandler createInstance(String path, String fileName,String flagLoadSave) throws GenericLoadingException, SavingInFileException {
         pathOverride = path;
-        fileNameOverride = fileName.trim();
         return createInstance(flagLoadSave,null);
     }
 
@@ -97,19 +101,14 @@ public class MapSavingHandler implements GenericDataHandler{
             } else {
                 path = pathOverride;
             }
-            if (fileNameOverride == null || "".equals(fileNameOverride)) {
-                fileName = SAVING_FILE_NAME;
-            } else {
-                fileName = fileNameOverride + EXTESION_MAP;
-            }
 
             map = null;
             if (stringMap == null) {
-                check1 = loadFromFile(path + "/" + fileName);
+                check1 = loadFromFile(path);
             } else {
                 logger.warning("Deleting current saved strigMap. Loading a new data.");
                 stringMap = null;
-                check1 = loadFromFile(path + "/" + fileName);
+                check1 = loadFromFile(path);
             }
             if (check1) {
                 logger.info("New stringMap loaded from file correctly. Starting elaboration.");
