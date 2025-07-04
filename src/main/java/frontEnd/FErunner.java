@@ -189,6 +189,10 @@ public class FErunner implements Runnable, ActionListener {
                     break;
                 }
                 break;
+            case PRINT_BUTTON:
+                logger.info("FErunner.actionPeformed: print button pressed.");
+                Printer.saveImage(frame.getMapPanel());
+                break;
             case SAVE_BUTTON:
                 logger.info("FErunner.actionPeformed: settings button pressed.");
                 this.runLoadSaveFrame( false, false);

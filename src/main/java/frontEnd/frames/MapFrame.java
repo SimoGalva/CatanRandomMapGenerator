@@ -30,7 +30,7 @@ public class MapFrame extends JFrame {
         refreshButtonPanel = new JPanel();
         otherButtonsPanel = new JPanel();
         refreshButton = new RefreshButton(listenerFErunner);
-        printButton = new ModifyButton();
+        printButton = new PrintButton(listenerFErunner);
         saveButton = new SaveButton(listenerFErunner);
         loadButton = new LoadButton(listenerFErunner);
         settingsButton = new SettingsButton(listenerFErunner);
@@ -61,5 +61,9 @@ public class MapFrame extends JFrame {
     public void refreshMap() {
         mapPanel = new MapPanel();
         this.repaint();
+    }
+
+    public JPanel getMapPanel() {
+        return mapPanel;
     }
 }

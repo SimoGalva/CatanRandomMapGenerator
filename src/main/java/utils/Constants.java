@@ -12,6 +12,9 @@ public class Constants {
     public final static String LOAD = "load";
     public final static String SAVE = "save";
     public static final String RANDOM_LOCK_NUMBER_PLAYER = "random_NP_Lock";
+    public static final String SCREENSHOT = "screenshot";
+
+
 
     public static class ConstantsButtons {
         public static final String DEFAULT_SAVE_LOAD_PATH_BUTTON = "DefaultLoadSavePathButton";
@@ -24,7 +27,7 @@ public class Constants {
         public static final String SETTINGS_BUTTON = "SettingsButton";
         public static final String SAVE_BUTTON = "SaveButton";
         public static final String LOAD_BUTTON = "LoadButton";
-        public static final String MODIFY_BUTTON = "ModifyButton";
+        public static final String PRINT_BUTTON = "PrintButton";
     }
 
     public static class ConstantsTextLines {

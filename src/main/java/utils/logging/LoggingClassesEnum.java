@@ -13,7 +13,7 @@ public enum LoggingClassesEnum {
     MAP_GENERATOR_ENGINE 	                    ("MapGeneratorEngine"),
     POST_GENERATION_HELPER 	                    ("PostGenerationHelper"),
     REFRESH_ENGINE 	                            ("RefreshEngine"),
-    MODIFY_BUTTON 	                            ("ModifyButton"),
+    MODIFY_BUTTON 	                            ("PrintButton"),
     REFRESH_BUTTON 	                            ("RefreshButton"),
     SAVE_BUTTON 	                            ("SaveButton"),
     SETTINGS_BUTTON 	                        ("SettingsButton"),
@@ -43,6 +43,7 @@ public enum LoggingClassesEnum {
     UTILS 	                                    ("Utils"),
     SAVING_FORMATTER                            ("SavingFormatter"),
     MAP_SAVING_HANDLER                          ("MapSavingHandler"),
+    PRINTER                                     ("Printer"),
     CONFING_SAVING_HANDLER                      ("ConfigHandler");
 
     private String className;

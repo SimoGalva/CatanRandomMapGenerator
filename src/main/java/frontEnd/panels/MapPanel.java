@@ -11,6 +11,8 @@ import utils.pojo.DiagSettingsHolder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -20,8 +22,11 @@ public class MapPanel extends JPanel {
         private static final long serialVersionUID = 1L;
 
         private int numberOfPlayer;
-        private int WIDTH = 1120;
-        private int HEIGHT = 860;
+        private int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()*0.85);
+        private int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()*0.85);
+        private int HEX_RADIUS = 50;
+        private int PADDING = 8;
+
         private final int SIZE = 9; // valore iviolabile, definisce il giusto numero di righe e la forma della mappa
 
         private static HashMap<String, HexagonalBase> globalMap;
@@ -44,7 +49,7 @@ public class MapPanel extends JPanel {
             metrics = g.getFontMetrics();
             int radious = MapHandler.calculateRadiuos();
             drawCircle(g2d, radious, true, true, 0x4488FF, 0);
-            drawHexGridLoop(g2d, origin, 50, 8);
+            drawHexGridLoop(g2d, origin, HEX_RADIUS, PADDING);
         }
 
         private void drawHexGridLoop(Graphics g, Point origin, int radius, int padding) {
@@ -90,32 +95,38 @@ public class MapPanel extends JPanel {
             return (value > 0 ? "+" : "") + Integer.toString(value);
         }
 
-        public void drawCircle(Graphics2D g, int radius,
-                               boolean centered, boolean filled, int colorValue, int lineThickness) {
-            // Store before changing.
-            Stroke tmpS = g.getStroke();
-            Color tmpC = g.getColor();
+    public void drawCircle(Graphics2D g, int radius,
+                           boolean centered, boolean filled, int colorValue, int lineThickness) {
+        Stroke tmpS = g.getStroke();
+        Color tmpC = g.getColor();
 
-            Point origin = setCircleOrigin();
+        Point origin = setCircleOrigin();
 
-            g.setColor(new Color(colorValue));
-            g.setStroke(new BasicStroke(lineThickness, BasicStroke.CAP_ROUND,
-                    BasicStroke.JOIN_ROUND));
+        g.setColor(new Color(colorValue));
+        g.setStroke(new BasicStroke(lineThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-            int diameterX = radius * 2 + getHorizontalExpansion();
-            int diameterY = 800 + getVerticalExpansion(); //non ho cercato una forma di calcolo esplicito, l'ho settato in modo che pagasse l'occhio
-            int x2 = centered ? origin.x - radius : origin.x;
-            int y2 = centered ? origin.y - radius + 50 : origin.y; // anche a traslazione di +50 è per motivi estetici, la deformazione del cerchio crea casini
+        int diameterX = radius * 2 + getHorizontalExpansion();
+        int diameterY = 800 + getVerticalExpansion();
+        int x2 = centered ? origin.x - radius : origin.x;
+        int y2 = centered ? origin.y - radius + 50 : origin.y;
 
-            if (filled)
-                g.fillOval(x2, y2, diameterX, diameterY);
-            else
-                g.drawOval(x2, y2, diameterX, diameterY);
+        // Create the full oval
+        Ellipse2D.Double oval = new Ellipse2D.Double(x2, y2, diameterX, diameterY);
+        Area capsule = new Area(oval);
 
-            // Set values to previous when done.
-            g.setColor(tmpC);
-            g.setStroke(tmpS);
-        }
+        // Remove top and bottom areas to simulate flat ends
+        int trimHeight = getTrimming(diameterY);
+        capsule.subtract(new Area(new Rectangle(x2, y2, diameterX, trimHeight+this.trimmingUpperAdjustment())));
+        capsule.subtract(new Area(new Rectangle(x2, y2 + diameterY - trimHeight, diameterX, trimHeight)));
+
+        if (filled)
+            g.fill(capsule);
+        else
+            g.draw(capsule);
+
+        g.setColor(tmpC);
+        g.setStroke(tmpS);
+    }
 
     private int getHorizontalExpansion() {
         switch (this.numberOfPlayer){
@@ -142,6 +153,26 @@ public class MapPanel extends JPanel {
                 return 0;
             case 6: //6 Player
                 return 40;
+            default:
+                return 0;
+        }
+    }
+
+    private int getTrimming(int diameterY){
+        int gridHeight = (int) (2*(SIZE-2)*(HEX_RADIUS)*0.90); // SIZE-2 is the effecctive number of lines, the 0.90 is to take arbitrary 90% which works fine
+        return (diameterY- gridHeight)/2;
+    }
+
+    private int trimmingUpperAdjustment() {
+        switch (this.numberOfPlayer){
+            case 3: //3 Player
+                return 1;
+            case 4: //4 Player
+                return 2;
+            case 5: //5 Player
+                return 0;
+            case 6: //6 Player
+                return 2;
             default:
                 return 0;
         }

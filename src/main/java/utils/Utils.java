@@ -4,6 +4,7 @@ import utils.exceptions.UpdateException;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,5 +66,24 @@ public class Utils {
             ret.add(arrayToList[i]);
         }
         return ret;
+    }
+
+    public static String getNextAvailableFileName(String folder, String baseName, String extension) {
+        File dir = new File(folder);
+        if (!dir.exists()) {
+            dir.mkdirs(); // Crea la cartella se non esiste
+        }
+
+        int counter = 1;
+        String fileName;
+        File file;
+
+        do {
+            fileName = baseName + counter + "." + extension;
+            file = new File(dir, fileName);
+            counter++;
+        } while (file.exists());
+
+        return file.getAbsolutePath();
     }
 }
