@@ -105,6 +105,8 @@ public class LoadSaveFrame extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
+        browseButton.setBackground(new Color(0xC40303)); // rosso
+        browseButton.setForeground(new Color(0xFFFFFF)); // bianco
 
         // Path label + path field + browse
         gbc.gridx = 0;
