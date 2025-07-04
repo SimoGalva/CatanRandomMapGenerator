@@ -10,6 +10,7 @@ import utils.logging.SyncedLogger;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.logging.Logger;
 
@@ -63,7 +64,14 @@ public class PathChoiceFrame extends JFrame {
             String pathInserted = pathField.getText();
             Paths.get(pathInserted); // checks if the path makes sense, not necessary exists
             MapSavingHandler.SAVING_PATH = pathInserted;
-            logger.info("Updated saving path: " + MapSavingHandler.SAVING_PATH);
+            try{
+                Paths.get(MapSavingHandler.SAVING_PATH);
+                File dir = new File(MapSavingHandler.SAVING_PATH);
+                if (!dir.exists()) dir.mkdirs();
+            } catch (Exception ee) {
+                logger.severe("The path given is unvalid.");
+            }
+            logger.info("Updated saving path: " + MapSavingHandler.SAVING_PATH + " . If not existing but valid it is created." );
         } catch (Exception e) {
             logger.warning("No valid path inserted from the user. Using default: " + MapSavingHandler.SAVING_PATH);
         }

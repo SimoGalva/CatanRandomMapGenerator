@@ -145,7 +145,7 @@ public class LoadSaveFrame extends JFrame {
         Path pathToCheck = Paths.get(isLoad ? pathMayBe : Paths.get(pathMayBe).toAbsolutePath().toString());
 
         if (!Files.exists(pathToCheck)) {
-            throw new NotAPathException(NotAPathException.MESSAGE_PATH_DONT_EXIST);
+            boolean wasCreated = new File(pathMayBe).mkdirs();
         }
 
         if (isLoad) {
