@@ -44,7 +44,8 @@ public enum LoggingClassesEnum {
     SAVING_FORMATTER                            ("SavingFormatter"),
     MAP_SAVING_HANDLER                          ("MapSavingHandler"),
     PRINTER                                     ("Printer"),
-    CONFING_SAVING_HANDLER                      ("ConfigHandler");
+    CONFING_SAVING_HANDLER                      ("ConfigHandler"),
+    PATH_CHOICE_FRAME                           ("PathChoiceFrame");
 
     private String className;
 

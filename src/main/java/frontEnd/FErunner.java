@@ -2,10 +2,7 @@ package frontEnd;
 
 import engine.MainEngine;
 import engine.engineParams.Params;
-import frontEnd.frames.GenericErrorFrame;
-import frontEnd.frames.LoadSaveFrame;
-import frontEnd.frames.MapFrame;
-import frontEnd.frames.SettingsFrame;
+import frontEnd.frames.*;
 import globalMap.MapHandler;
 import saving.ConfigHandler;
 import saving.MapSavingHandler;
@@ -34,6 +31,7 @@ public class FErunner implements Runnable, ActionListener {
     private SettingsFrame settingsFrame;
     private LoadSaveFrame loadSaveFrame;
     private GenericErrorFrame errorFrame;
+    private PathChoiceFrame pathChoiceFrame;
 
     public FErunner(MainEngine.MainEngineCaller mainEngineCaller) {
         this.mainEngineCaller = mainEngineCaller;
@@ -41,8 +39,15 @@ public class FErunner implements Runnable, ActionListener {
 
     public void runBeforeLaunch(){
         ConfigHandler.clearSingletonInstance();
-        ConfigHandler.getInstance();
-        runSettingsFrame(Params.getLoadedParams(), true);
+        //TODO : Riparti da qui
+        try {
+            ConfigHandler.getInstance(true);
+        } catch (GenericLoadingException e){
+            runPathChoiceFrame();
+            try {
+                ConfigHandler.getInstance();
+            } catch (GenericLoadingException ex) {/*lo rilancio sapendo che ho chiesto il path. Dovre*/}
+        }
     }
 
     @Override
@@ -63,6 +68,17 @@ public class FErunner implements Runnable, ActionListener {
         settingsFrame.setLocationRelativeTo(null);
         settingsFrame.setVisible(true);
     }
+
+    private void runPathChoiceFrame() {
+        pathChoiceFrame = new PathChoiceFrame(this);
+
+        pathChoiceFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pathChoiceFrame.pack();
+        pathChoiceFrame.setLocationRelativeTo(null);
+        pathChoiceFrame.setVisible(true);
+    }
+
+
 
     private void runLoadSaveFrame(boolean isBeforeLaunch, boolean isLoad) {
         loadSaveFrame = new LoadSaveFrame(this, isLoad, isBeforeLaunch);
@@ -186,6 +202,11 @@ public class FErunner implements Runnable, ActionListener {
                 case CONFIRM_BUTTON_ERROR:
                     errorFrame.dispose();
                     errorFrame = null;
+                    break;
+                case CONFIRM_BUTTON_PATH_SELECTION:
+                    runSettingsFrame(Params.getLoadedParams(), true);
+                    pathChoiceFrame.dispose();
+                    pathChoiceFrame= null;
                     break;
                 }
                 break;

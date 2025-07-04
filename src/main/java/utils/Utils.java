@@ -86,4 +86,16 @@ public class Utils {
 
         return file.getAbsolutePath();
     }
+
+    public static String getCallingClassName() {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        // stackTrace[0] = Thread.getStackTrace()
+        // stackTrace[1] = getCallingClassName
+        // stackTrace[2] = metodo che chiama getCallingClassName
+        // stackTrace[3] = CHIAMANTE del metodo che chiama getCallingClassName
+        if (stackTrace.length >= 4) {
+            return stackTrace[3].getClassName();
+        }
+        return null;
+    }
 }

@@ -28,6 +28,7 @@ public class Constants {
         public static final String SAVE_BUTTON = "SaveButton";
         public static final String LOAD_BUTTON = "LoadButton";
         public static final String PRINT_BUTTON = "PrintButton";
+        public static final String CONFIRM_BUTTON_PATH_SELECTION = "ConfirmButtonPathChoice";
     }
 
     public static class ConstantsTextLines {

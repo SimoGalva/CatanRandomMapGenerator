@@ -18,7 +18,10 @@ public class ConfirmButton extends JButton {
         } else if (Constants.ConstantsButtons.CONFIRM_BUTTON_ERROR.equals(name)) {
             //its adaptive and is calculated depending on error frame dimension
             this.setPreferredSize(new Dimension(100, 20));
+        } else if (Constants.ConstantsButtons.CONFIRM_BUTTON_PATH_SELECTION.equals(name)) {
+            this.setPreferredSize(new Dimension(120, 20));
         }
+
         this.setBackground(new Color(0xC40303));
         this.setForeground(new Color(0xFFFFFFF));
         this.setFocusPainted(false);

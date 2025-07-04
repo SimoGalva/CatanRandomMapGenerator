@@ -10,6 +10,7 @@ public interface GenericDataHandler {
         ci sarà un saving handler per map e per config. Implementeranno quest'interfaccia.
     */
     public static final String CONFIG_PATH = System.getProperty("user.dir") + "/confing";
+    //public static final String CONFIG_PATH = System.getProperty("user.home") + "/.catmap/config";
     public static final String CONFIG_FILE_NAME = "CatMapConfig.cnfg";
     public static final String SAVING_FILE_NAME = "MapSavings.map";
     public static final String EXTESION_MAP = ".map";

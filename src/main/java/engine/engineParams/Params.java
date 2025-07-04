@@ -2,6 +2,7 @@ package engine.engineParams;
 
 import saving.ConfigHandler;
 import utils.Constants;
+import utils.exceptions.GenericLoadingException;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
 
@@ -24,7 +25,10 @@ public class Params {
         this.mainIslandWeight = mainIslandWeight;
         this.numberOfPlayer = numberOfPlayer;
 
-        boolean isSavedConfing = ConfigHandler.getInstance().forceConfingSync(islandNumber, mainIslandNumber, mainIslandWeight, numberOfPlayer);
+        boolean isSavedConfing = false;
+         try {
+             isSavedConfing = ConfigHandler.getInstance().forceConfingSync(islandNumber, mainIslandNumber, mainIslandWeight, numberOfPlayer);
+         }catch (GenericLoadingException e){/*non dovrebbe succedere mai*/}
         if (isSavedConfing) {
             logger.info("New params configuration saved: [" + this + "]");
         } else {
@@ -66,7 +70,10 @@ public class Params {
     }
 
     public static Params getLoadedParams() {
-        int[] parmasFromConfig = ConfigHandler.getInstance().retrieveData();
+        int[] parmasFromConfig = null;
+        try {
+            parmasFromConfig  = ConfigHandler.getInstance().retrieveData();
+        } catch (GenericLoadingException e){/*non dovrebbe succedere*/}
         return new Params(parmasFromConfig);
     }
 

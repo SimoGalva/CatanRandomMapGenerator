@@ -26,7 +26,7 @@ public class ConfigHandler implements GenericDataHandler{
     private String configString = "";
 
     //costruttore della signleton instance: lancia anche il caricamento dei dati
-    private ConfigHandler() {
+    private ConfigHandler(boolean isInLaunch) throws GenericLoadingException {
         try {
             if (loadFromFile(CONFIG_PATH)) {
                 if (configString != null && !"".equals(configString)) {
@@ -40,7 +40,8 @@ public class ConfigHandler implements GenericDataHandler{
                 logger.warning("Failed to load data from file: file is corrupted or not found. Setting params to 0.");
             }
         } catch (GenericLoadingException e) {
-            logger.warning(e.getMessage());
+            if (isInLaunch)
+                throw e;
         }
     }
 
@@ -96,7 +97,7 @@ public class ConfigHandler implements GenericDataHandler{
             bufferedWriter.write(configString);
 
         } catch (IOException e) {
-            System.out.println("Exception occurred in saving confing file: " + e.getMessage());
+            logger.warning("Exception occurred in saving confing file: " + e.getMessage());
             throw new SavingInFileException(SavingInFileException.CONFING_MESSAGE);
         } finally {
             if (bufferedWriter != null) {
@@ -164,7 +165,7 @@ public class ConfigHandler implements GenericDataHandler{
                 contentBuilder.append(sCurrentLine).append(" \n");
             }
         } catch (IOException e) {
-            System.out.println("Exception occurred in loading config from file: " + e.getMessage());
+            logger.warning("Exception occurred in loading config from file: " + e.getMessage());
             throw new LoadingFileException(LoadingFileException.CONFIG_MESSAGE);
         }
         this.configString = contentBuilder.toString();
@@ -177,13 +178,17 @@ public class ConfigHandler implements GenericDataHandler{
     // Singleton instance implementation
     private static ConfigHandler singletonInstance = null;
 
-    public static ConfigHandler getInstance() {
-        return singletonInstance == null ? getInstanceSafely() : singletonInstance;
+    public static ConfigHandler getInstance() throws GenericLoadingException {
+        return singletonInstance == null ? getInstanceSafely(false) : singletonInstance;
     }
 
-    private static ConfigHandler getInstanceSafely() {
+    public static ConfigHandler getInstance(boolean isInLaunch) throws GenericLoadingException {
+        return singletonInstance == null ? getInstanceSafely(isInLaunch) : singletonInstance;
+    }
+
+    private static ConfigHandler getInstanceSafely(boolean isInLaunch) throws GenericLoadingException {
         if (singletonInstance == null) {
-            singletonInstance = new ConfigHandler();
+            singletonInstance = new ConfigHandler(isInLaunch);
         }
         return singletonInstance;
     }
