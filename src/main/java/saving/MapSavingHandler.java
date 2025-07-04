@@ -23,7 +23,7 @@ public class MapSavingHandler implements GenericDataHandler{
 
     private static final Logger logger = SyncedLogger.getLogger(LoggingClassesEnum.MAP_SAVING_HANDLER);
 
-    public static String SAVING_PATH = System.getProperty("user.home") + "/.catmap/saving";
+    public static String SAVING_PATH = System.getProperty("user.home").replace("\\", "/") + "/.catmap/saving";
     //public static String SAVING_PATH = System.getProperty("user.dir") + "/saving";
 
     private static HashMap<String, HexagonalBase> map;
