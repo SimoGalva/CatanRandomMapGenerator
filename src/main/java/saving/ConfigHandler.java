@@ -84,7 +84,7 @@ public class ConfigHandler implements GenericDataHandler{
         //controlla che la cartella esista
         File directory = new File(String.valueOf(path));
         if (!directory.exists()) {
-            directory.mkdir();
+            directory.mkdirs();
         }
 
         path = path + "/" + CONFIG_FILE_NAME;
@@ -173,8 +173,6 @@ public class ConfigHandler implements GenericDataHandler{
         logger.info("Ended loading from file [" + path + "]");
         return true;
     }
-
-
 
     // Singleton instance implementation
     private static ConfigHandler singletonInstance = null;

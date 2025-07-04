@@ -59,8 +59,11 @@ public class MapFrame extends JFrame {
     }
 
     public void refreshMap() {
-        mapPanel = new MapPanel();
-        this.repaint();
+        this.getContentPane().remove(mapPanel);  // Rimuovi il vecchio
+        this.mapPanel = new MapPanel();;                // Assegna il nuovo
+        this.getContentPane().add(mapPanel);     // Aggiungi il nuovo
+        this.revalidate();                       // Ricalcola il layout
+        this.repaint();                          // Ridisegna tutto
     }
 
     public JPanel getMapPanel() {
