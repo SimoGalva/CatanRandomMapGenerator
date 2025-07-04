@@ -103,7 +103,8 @@ public class ConfigHandler implements GenericDataHandler{
             if (bufferedWriter != null) {
                 try {
                     bufferedWriter.close();
-                } catch (Exception ex) {/*:(*/}
+                } catch (Exception ex) {/*:(*/
+                ex.printStackTrace();}
             }
         }
 

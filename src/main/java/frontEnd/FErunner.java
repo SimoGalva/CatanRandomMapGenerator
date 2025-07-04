@@ -39,7 +39,6 @@ public class FErunner implements Runnable, ActionListener {
 
     public void runBeforeLaunch(){
         ConfigHandler.clearSingletonInstance();
-        //TODO : Riparti da qui
         try {
             ConfigHandler.getInstance(true);
             runSettingsFrame(Params.getLoadedParams(), true);
@@ -206,6 +205,7 @@ public class FErunner implements Runnable, ActionListener {
                     errorFrame = null;
                     break;
                 case CONFIRM_BUTTON_PATH_SELECTION:
+                    pathChoiceFrame.updatePath();
                     runSettingsFrame(Params.getLoadedParams(), true);
                     pathChoiceFrame.dispose();
                     pathChoiceFrame= null;

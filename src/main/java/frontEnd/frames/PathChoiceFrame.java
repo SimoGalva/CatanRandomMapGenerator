@@ -2,7 +2,7 @@ package frontEnd.frames;
 
 import frontEnd.buttons.BrowseButton;
 import frontEnd.buttons.commonButtons.ConfirmButton;
-import saving.GenericDataHandler;
+import saving.MapSavingHandler;
 import utils.Constants;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
@@ -10,6 +10,7 @@ import utils.logging.SyncedLogger;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import static utils.Constants.BACKGROUND_COLOR;
@@ -26,8 +27,8 @@ public class PathChoiceFrame extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
 
-        pathField = new JTextField(GenericDataHandler.CONFIG_PATH);
-        JButton browseButton = new BrowseButton(pathField, listenerFeRunner);
+        pathField = new JTextField(MapSavingHandler.SAVING_PATH);
+        JButton browseButton = new BrowseButton(pathField);
         JButton confirmButton = new ConfirmButton(Constants.ConstantsButtons.CONFIRM_BUTTON_PATH_SELECTION, listenerFeRunner);
 
         // Pannello centrale per campo + bottone sfoglia
@@ -55,5 +56,17 @@ public class PathChoiceFrame extends JFrame {
         buttonPanel.setBackground(BACKGROUND_COLOR);
         inputPanel.setBackground(BACKGROUND_COLOR);
         this.getContentPane().setBackground(BACKGROUND_COLOR);
+    }
+
+    public void updatePath(){
+        try{
+            String pathInserted = pathField.getText();
+            Paths.get(pathInserted); // checks if the path makes sense, not necessary exists
+            MapSavingHandler.SAVING_PATH = pathInserted;
+            logger.info("Updated saving path: " + MapSavingHandler.SAVING_PATH);
+        } catch (Exception e) {
+            logger.warning("No valid path inserted from the user. Using default: " + MapSavingHandler.SAVING_PATH);
+        }
+        return;
     }
 }
