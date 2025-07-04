@@ -33,11 +33,18 @@ public class PathChoiceFrame extends JFrame {
         // Pannello centrale per campo + bottone sfoglia
         JPanel inputPanel = new JPanel(new BorderLayout(5, 5));
         inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
-        inputPanel.add(pathField, BorderLayout.CENTER);
-        inputPanel.add(browseButton, BorderLayout.EAST);
+        JPanel topFieldPanel = new JPanel(new BorderLayout(5, 5));
+        topFieldPanel.setBackground(BACKGROUND_COLOR);
+        JLabel label = new JLabel("Choose the folder for saving files:");
+        label.setForeground(Color.WHITE); // se vuoi colore testo bianco
+        topFieldPanel.add(label, BorderLayout.NORTH);
+        topFieldPanel.add(pathField, BorderLayout.CENTER);
+        topFieldPanel.add(browseButton, BorderLayout.EAST);
+
+        inputPanel.add(topFieldPanel, BorderLayout.CENTER);
 
         // Pannello inferiore per conferma
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
         buttonPanel.add(confirmButton);
 
