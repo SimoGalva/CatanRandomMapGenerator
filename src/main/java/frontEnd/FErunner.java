@@ -42,12 +42,14 @@ public class FErunner implements Runnable, ActionListener {
         //TODO : Riparti da qui
         try {
             ConfigHandler.getInstance(true);
+            runSettingsFrame(Params.getLoadedParams(), true);
         } catch (GenericLoadingException e){
             runPathChoiceFrame();
             try {
                 ConfigHandler.getInstance();
             } catch (GenericLoadingException ex) {/*lo rilancio sapendo che ho chiesto il path. Dovre*/}
         }
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package frontEnd.frames;
 
 import frontEnd.buttons.BrowseButton;
 import frontEnd.buttons.commonButtons.ConfirmButton;
+import saving.GenericDataHandler;
 import utils.Constants;
 import utils.logging.LoggingClassesEnum;
 import utils.logging.SyncedLogger;
@@ -9,7 +10,6 @@ import utils.logging.SyncedLogger;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.logging.Logger;
 
 import static utils.Constants.BACKGROUND_COLOR;
@@ -26,7 +26,7 @@ public class PathChoiceFrame extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
 
-        pathField = new JTextField(System.getProperty("user.dir") + File.separator + "config");
+        pathField = new JTextField(GenericDataHandler.CONFIG_PATH);
         JButton browseButton = new BrowseButton(pathField, listenerFeRunner);
         JButton confirmButton = new ConfirmButton(Constants.ConstantsButtons.CONFIRM_BUTTON_PATH_SELECTION, listenerFeRunner);
 
