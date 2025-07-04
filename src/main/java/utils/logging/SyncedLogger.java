@@ -29,11 +29,11 @@ public class SyncedLogger {
 
             ret.addHandler(fileHandlerhGlobal);
             ret.addHandler(fileHandlerhSingleton);
-            // disattiva i log
-            // ret.setLevel(Level.OFF);
         } catch(Exception e) {
             //:(
         }
+        // disattiva i log
+        // ret.setLevel(Level.OFF);
         return ret;
     }
 
