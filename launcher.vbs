@@ -1,9 +1,10 @@
 Set WshShell = CreateObject("WScript.Shell")
 
-' Inserisci qui il percorso assoluto dove si trova il bat o il jar
-batPath = """C:\GitRep\cat-random-map-generator\launcher.bat"""
+' Set the folder where the .bat is located
+WshShell.CurrentDirectory = "C:\Development\Java\cat-random-map-generator"
 
-' Lancia il bat senza mostrare la console
+' Then run the .bat file
+batPath = "launcher.bat"
 WshShell.Run batPath, 0
 
 Set WshShell = Nothing
