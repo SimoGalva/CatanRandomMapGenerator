@@ -18,10 +18,10 @@ Map generation adheres to key gameplay constraints like token adjacency and reso
 ![GUI Screenshot](fileExamples/UIScreenshot.png)
 
 ### Settings
-![Settings Screenshot](fileExamples/settingsScreenshot.png)
+![Settings Screenshot](fileExamples/SettingsScreenshot.png)
 
 ### Sample Config File
-![Config Example](fileExamples/configScreenshot.png)
+![Config Example](fileExamples/ConfigScreenshot.png)
 
 ### Sample `.map` File
 ![Map File Example](fileExamples/MapFileScreenshot.png)
